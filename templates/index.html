@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BASIS增强型智能Agent</title>
+    <link href="/static/css/tailwind.min.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/collapsible.css">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- 顶部导航栏 -->
+    <header class="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <span class="text-2xl">🤖</span>
+                <h1 class="text-xl font-bold">BASIS增强型智能Agent</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <!-- <button id="statusBtn" class="px-3 py-1 rounded hover:bg-white hover:bg-opacity-20 transition-colors">
+                    <span>📊</span> 状态
+                </button> -->
+                <button id="memoryBtn" class="px-3 py-1 rounded hover:bg-white hover:bg-opacity-20 transition-colors">
+                    <span>🧠</span> 对话记忆
+                </button>
+                <button id="historyBtn" class="px-3 py-1 rounded hover:bg-white hover:bg-opacity-20 transition-colors">
+                    <span>📋</span> 工具执行历史
+                </button>
+                <button id="clearBtn" class="px-3 py-1 rounded hover:bg-white hover:bg-opacity-20 transition-colors">
+                    <span>🗑️</span> 清除
+                </button>
+                <!-- 用户功能下拉菜单 -->
+                <div class="relative" id="userDropdown">
+                    <button id="userMenuBtn" class="flex items-center px-3 py-1 rounded hover:bg-white hover:bg-opacity-20 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-30">
+                        <span>👤</span>
+                        <span class="ml-1">{{ username }}</span>
+                        <span class="ml-1">▼</span>
+                    </button>
+                    <div id="userDropdownMenu" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible transition-all duration-200 transform translate-y-2 z-50">
+                        <div class="py-1">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onclick="showProfile(); return false;">个人资料</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onclick="showChangePassword(); return false;">修改密码</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" onclick="showSettings(); return false;">设置</a>
+                            <div class="border-t border-gray-200 my-1"></div>
+                            <a href="/logout" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100">退出登录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="flex-grow container mx-auto px-4 py-6 flex flex-col lg:flex-row gap-6">
+        <!-- 左侧工具和模型配置面板 -->
+        <aside id="mainPanel" class="lg:w-1/3 bg-white rounded-lg shadow-md overflow-hidden h-fit collapsible-panel">
+            <div id="mainHeader" class="p-4 bg-gray-100 border-b collapsible-header">
+                <h2 class="text-lg font-semibold flex items-center">
+                    <span class="mr-2 text-blue-500">🔧</span>
+                    <span class="panel-title-text">配置面板</span>
+                </h2>
+                <span class="collapse-icon text-gray-500">▼</span>
+            </div>
+            <div class="p-4 collapsible-content">
+                <!-- 可用工具部分 - 可折叠子面板 -->
+                <div class="mb-4">
+                    <div id="toolsSubHeader" class="flex items-center justify-between p-2 bg-gray-50 rounded-t-lg border border-gray-200 cursor-pointer">
+                        <h3 class="text-md font-medium text-gray-700">可用工具</h3>
+                        <div class="flex items-center">
+                            <button 
+                                id="addToolBtn" 
+                                class="bg-blue-600 text-white px-3 py-1 text-sm rounded-md hover:bg-blue-700 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                            >
+                                <span class="mr-1">+</span> 添加工具
+                            </button>
+                            <span id="toolsSubCollapseIcon" class="text-gray-500">▼</span>
+                        </div>
+                    </div>
+                    <div id="toolsSubContent" class="p-3 bg-white border-x border-b border-gray-200 rounded-b-lg">
+                        <div id="toolsContainer" class="max-h-64 overflow-y-auto">
+                            {% for tool in tools %}
+                            <div class="tool-item mb-4 p-3 bg-blue-50 rounded border-l-4 border-blue-500" data-tool-id="{{ tool.id if tool.id is defined else tool.tool_id }}">
+                                <div class="font-medium text-blue-700">
+                                    <span class="mr-1">📦</span>
+                                    {{ tool.tool_name }}
+                                </div>
+                                <div class="text-sm text-gray-600 mt-1">
+                                    {{ tool.description }}
+                                </div>
+                                {% if tool.parameters %}
+                                <div class="mt-2 text-xs text-gray-500">
+                                    <strong>参数:</strong>
+                                    <ul class="list-disc list-inside">
+                                        {% for param in tool.parameters %}
+                                        <li>
+                                            {{ param.name }} {% if param.required %}<span class="text-red-500">*</span>{% endif %}
+                                            {% if param.description %}<span class="ml-1 text-gray-400">- {{ param.description }}</span>{% endif %}
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% endif %}
+                                {% if tool.code_content %}
+                                <div class="mt-2 text-xs text-gray-500">
+                                    <strong>工具代码:</strong>
+                                    <pre class="bg-gray-100 p-2 rounded mt-1 text-xs overflow-x-auto">
+                                        {{ tool.code_content }}
+                                    </pre>
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 模型信息表 - 可折叠子面板 -->
+                <div class="mt-4">
+                    <div id="modelsSubHeader" class="flex items-center justify-between p-2 bg-gray-50 rounded-t-lg border border-gray-200 cursor-pointer">
+                        <h3 class="text-md font-medium text-gray-700">模型管理</h3>
+                        <div class="flex items-center">
+                            <button 
+                                id="addModelBtn" 
+                                class="bg-blue-600 text-white px-3 py-1 text-sm rounded-md hover:bg-blue-700 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                            >
+                                <span class="mr-1">+</span> 添加模型
+                            </button>
+                            <span id="modelsSubCollapseIcon" class="text-gray-500">▼</span>
+                        </div>
+                    </div>
+                    <div id="modelsSubContent" class="p-3 bg-white border-x border-b border-gray-200 rounded-b-lg">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                        <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">模型</th>
+                                        <!-- <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">模型地址</th> -->
+                                        <!-- <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">API Key</th> -->
+                                        <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Temperature</th>
+                                        <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Max Tokens</th>
+                                        <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">添加时间</th>
+                                        <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">启用状态</th>
+                                        <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">描述</th>
+                                        <th scope="col" class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    {% if models %}
+                                        {% for model in models %}
+                                            <tr>
+                                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-900">{{ model.model_id }}</td>
+                                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-900">{{ model.model_name }}</td>
+                                                <!-- <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-500 truncate max-w-[120px]" title="{{ model.model_url }}">{{ model.model_url }}</td> -->
+                                                <!-- <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-500 truncate max-w-[80px]" title="{{ model.api_key }}">{{ model.api_key[:8] + '...' + model.api_key[-4:] if model.api_key else '' }}</td> -->
+                                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-500">{{ model.temperature if model.temperature else '0.7' }}</td>
+                                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-500">{{ model.max_tokens if model.max_tokens else '4096' }}</td>
+                                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-500">{{ model.add_time }}</td>
+                                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-500">
+                                                    <label class="inline-flex items-center cursor-pointer">
+                                                        <input 
+                                                            type="checkbox" 
+                                                            class="form-checkbox h-5 w-5 text-blue-600" 
+                                                            data-model-id="{{ model.model_id }}" 
+                                                            {{ 'checked' if model.is_active else '' }} 
+                                                            onchange="toggleModelActive(this)"
+                                                        >
+                                                        <span class="ml-2">{{ '已启用' if model.is_active else '已禁用' }}</span>
+                                                    </label>
+                                                </td>
+                                                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-900">{{ model.desc }}</td>
+                                                <td class="px-3 py-2 whitespace-nowrap text-sm font-medium">
+                                                    <button onclick="editModel('{{ model.model_id }}')" class="text-blue-600 hover:text-blue-900 mr-2">编辑</button>
+                                                    <button onclick="deleteModel('{{ model.model_id }}')" class="text-red-600 hover:text-red-900">删除</button>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="9" class="px-3 py-4 text-center text-sm text-gray-500">暂无模型信息</td>
+                                        </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 中间聊天区域 -->
+        <section id="chatSection" class="lg:flex-grow flex flex-col">
+            <div class="bg-white rounded-lg shadow-md p-4 flex-grow flex flex-col">
+                <!-- 聊天历史 -->
+                <div id="chatHistory" class="flex-grow overflow-y-auto mb-4 p-2 space-y-4">
+                    <div class="bot-message p-3 rounded-lg bg-gray-100 max-w-3xl">
+                        <div class="flex items-start">
+                            <div class="bg-blue-600 text-white rounded-full p-2 mr-3">
+                                🤖
+                            </div>
+                            <div>
+                                <p class="text-gray-800">欢迎使用BASIS增强型智能Agent！我可以帮助您解决问题、查询信息或执行计算。</p>
+                                <p class="text-gray-600 text-sm mt-1">提示：输入问题开始对话，可修改左侧配置哦</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 输入区域 -->
+                <div class="border-t pt-4">
+                    <form id="chatForm" class="flex gap-2">
+                    <div class="relative flex-grow">
+                        <select 
+                            id="modelSelect" 
+                            placeholder="请选择模型(内部默认qwen-flash)"
+                            class="absolute left-0 top-0 bottom-0 w-44 px-3 py-2 rounded-l-lg border border-gray-300 bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        >
+                            <option value="">加载中...</option>
+                        </select>
+                        <input 
+                            type="text" 
+                            id="userInput" 
+                            placeholder="请输入您的问题或命令..."
+                            class="pl-48 pr-4 py-2 rounded-r-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow w-full"
+                        >
+                    </div>
+                    <button 
+                        type="submit" 
+                        class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                    >
+                        📤 发送
+                    </button>
+                </form>
+                
+                <script>
+                // 加载启用的模型列表
+                function loadModels() {
+                    fetch('/api/models')
+                        .then(response => response.json())
+                        .then(data => {
+                            const modelSelect = document.getElementById('modelSelect');
+                            modelSelect.innerHTML = '';
+                            
+                            let hasActiveModels = false;
+                            
+                            if (data.models && data.models.length > 0) {
+                                data.models.forEach(model => {
+                                    if (model.is_active) {
+                                        const option = document.createElement('option');
+                                        option.value = model.model_id;
+                                        option.textContent = model.model_name;
+                                        modelSelect.appendChild(option);
+                                        hasActiveModels = true;
+                                    }
+                                });
+                            }
+                            
+                            // 如果没有可用模型，显示默认模型
+                            if (!hasActiveModels) {
+                                const option = document.createElement('option');
+                                option.value = 'default';
+                                option.textContent = 'qwen-flash (默认)';
+                                modelSelect.appendChild(option);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('加载模型失败:', error);
+                            const modelSelect = document.getElementById('modelSelect');
+                            modelSelect.innerHTML = '';
+                            // 错误时也显示默认模型
+                            const option = document.createElement('option');
+                            option.value = 'default';
+                            option.textContent = 'qwen-flash (默认)';
+                            modelSelect.appendChild(option);
+                        });
+                }
+                
+                // 页面加载时调用
+                document.addEventListener('DOMContentLoaded', loadModels);
+                </script>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 底部状态栏 -->
+    <footer class="bg-gray-800 text-white py-3">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="text-sm">BASIS增强型智能Agent v1.0</div>
+            <div class="flex space-x-4 text-sm">
+                <span id="memoryStatus">短期记忆: 0</span>
+                <span>•</span>
+                <span>可用工具: {{ tools|length }}</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 加载动画 -->
+    <div id="loadingModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full">
+            <div class="flex flex-col items-center">
+                <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
+                <p id="loadingMessage" class="text-gray-700">正在处理您的请求...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/collapsible.js"></script>
+    
+    <!-- 模型管理相关功能 -->
+    <script src="/static/js/model-management.js"></script>
+    <!-- 工具管理相关功能 -->
+    <script src="/static/js/tool-management.js"></script>
+</body>
+</html>

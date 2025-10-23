@@ -1,0 +1,257 @@
+/* 自定义样式 */
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* 固定聊天框布局 */
+#chatSection {
+    min-height: 0; /* 确保flex容器正确计算高度 */
+}
+
+#chatSection > div {
+    min-height: 60vh; /* 设置聊天区域最小高度 */
+    max-height: 80vh; /* 设置聊天区域最大高度 */
+    display: flex;
+    flex-direction: column;
+}
+
+/* 确保聊天历史区域可以滚动 */
+#chatHistory {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* 修复Firefox中的flex布局问题 */
+}
+
+/* 输入区域固定在底部 */
+#chatSection > div > .border-t {
+    flex-shrink: 0; /* 防止输入区域被压缩 */
+}
+
+/* 聊天消息动画 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.user-message,
+.bot-message {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.user-message {
+    margin-left: auto;
+}
+
+.bot-message {
+    margin-right: auto;
+}
+
+/* 工具卡片悬停效果 */
+.tool-item {
+    transition: all 0.2s ease;
+}
+
+.tool-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 输入框焦点效果 */
+#userInput:focus {
+    animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+    }
+}
+
+/* 响应式设计优化 */
+@media (max-width: 1024px) {
+    main {
+        flex-direction: column !important;
+    }
+    
+    aside {
+        width: 100% !important;
+    }
+    
+    section {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 640px) {
+    header .container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    footer .container {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+    
+    #chatForm {
+        flex-direction: column;
+    }
+    
+    #chatForm button {
+        width: 100%;
+    }
+}
+
+/* 按钮交互效果 */
+header button,
+#chatForm button {
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+header button::after,
+#chatForm button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%, -50%);
+    transform-origin: 50% 50%;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(100, 100);
+        opacity: 0;
+    }
+}
+
+header button:focus:not(:active)::after,
+#chatForm button:focus:not(:active)::after {
+    animation: ripple 1s ease-out;
+}
+
+/* 状态和记忆命令的特殊样式 */
+.status-message,
+.memory-message {
+    background-color: #f0f4ff !important;
+    border-left: 4px solid #3b82f6;
+}
+
+/* 代码块样式 */
+code {
+    background-color: #f3f4f6;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+}
+
+pre {
+    background-color: #f3f4f6;
+    padding: 1em;
+    border-radius: 5px;
+    overflow-x: auto;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+
+/* 执行历史样式 */
+.execution-history {
+    margin-top: 15px;
+}
+
+.execution-history h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-size: 18px;
+}
+
+/* 文本格式的执行历史样式 */
+.execution-text {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    padding: 12px;
+    margin: 0;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* 表格样式的执行历史 */
+.execution-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.execution-table th {
+    background-color: #4a6fa5;
+    color: white;
+    padding: 12px 8px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.execution-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #e0e0e0;
+    vertical-align: top;
+}
+
+.execution-table tr:last-child td {
+    border-bottom: none;
+}
+
+.execution-table tr:hover {
+    background-color: #f5f5f5;
+}

@@ -1,0 +1,54 @@
+.collapsible-panel {
+    transition: transform 0.3s ease, width 0.3s ease;
+    overflow: hidden;
+}
+
+.collapsible-header {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.collapsible-header .collapse-icon {
+    transition: transform 0.3s ease;
+}
+
+.collapsible-panel.collapsed .collapse-icon {
+    transform: rotate(-90deg);
+}
+
+.collapsible-content {
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    max-height: 1000px; /* 足够大的值 */
+    opacity: 1;
+    overflow: hidden;
+}
+
+.collapsible-panel.collapsed .collapsible-content {
+    max-height: 0;
+    opacity: 0;
+}
+
+/* 折叠时的通用样式 */
+.collapsible-panel.collapsed .panel-title-text {
+    display: none;
+}
+
+.collapsible-panel.collapsed .tool-item, 
+.collapsible-panel.collapsed #modelConfigPanel {
+    display: none;
+}
+
+.collapsible-panel.collapsed .collapsible-header {
+    justify-content: center;
+}
+
+/* 用于窄屏的样式 */
+@media (max-width: 1023px) {
+    .lg\:w-1\/4.collapsed {
+        width: 60px;
+        min-width: 60px;
+    }
+}

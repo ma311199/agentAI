@@ -1,0 +1,635 @@
+2025-10-19 15:06:18 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 15:06:18 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 15:06:18 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 15:06:18 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 15:06:18 - AgentAI - INFO - log.py:76 - 开始初始化Agent实例...
+2025-10-19 15:06:18 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 15:06:18 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 15:06:18 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 9
+2025-10-19 15:06:18 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 15:06:18 - AgentAI - INFO - log.py:76 - 内部工具自动化注册完成
+2025-10-19 15:06:18 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 15:06:19 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 15:06:19 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 15:06:19 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 15:06:19 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 15:06:19 - AgentAI - INFO - log.py:76 - 开始初始化Agent实例...
+2025-10-19 15:06:19 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 15:06:19 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 15:06:19 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 9
+2025-10-19 15:06:19 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 15:06:19 - AgentAI - INFO - log.py:76 - 内部工具自动化注册完成
+2025-10-19 15:06:19 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 15:27:00 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 15:27:00 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 15:27:00 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 15:27:00 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 15:27:00 - AgentAI - INFO - log.py:76 - 开始初始化Agent实例...
+2025-10-19 15:27:00 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 15:27:00 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 15:27:00 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 9
+2025-10-19 15:27:00 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 15:27:00 - AgentAI - INFO - log.py:76 - 内部工具自动化注册完成
+2025-10-19 15:27:00 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 15:27:01 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 15:27:01 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 15:27:01 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 15:27:01 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 15:27:01 - AgentAI - INFO - log.py:76 - 开始初始化Agent实例...
+2025-10-19 15:27:01 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 15:27:01 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 15:27:01 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 9
+2025-10-19 15:27:01 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 15:27:01 - AgentAI - INFO - log.py:76 - 内部工具自动化注册完成
+2025-10-19 15:27:01 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 15:27:40 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 9
+2025-10-19 15:27:40 - AgentAI - INFO - log.py:131 - API Call - GET /, Status: 200, User: 1, Response Time: 7.089853286743164ms
+2025-10-19 15:59:45 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 15:59:45 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 15:59:45 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 15:59:45 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 15:59:45 - AgentAI - INFO - log.py:76 - 开始初始化Agent实例...
+2025-10-19 15:59:45 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 15:59:46 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 15:59:46 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 9
+2025-10-19 15:59:46 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 15:59:46 - AgentAI - INFO - log.py:76 - 内部工具自动化注册完成
+2025-10-19 15:59:46 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 17:37:45 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 17:37:45 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 17:37:45 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 17:37:45 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 17:37:45 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 17:37:45 - AgentAI - INFO - log.py:76 - 内部工具自动化注册完成
+2025-10-19 17:37:45 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 17:37:45 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 17:37:45 - AgentAI - ERROR - log.py:84 - Agent实例初始化失败: 'Tool' object has no attribute 'tools'
+2025-10-19 17:37:45 - AgentAI - ERROR - log.py:92 - Agent初始化异常
+Traceback (most recent call last):
+  File "c:\Users\MM\Desktop\agentAI_new_v1\app.py", line 45, in initialize_agent
+    agent = ReactAgent(llm=llm, tools=tool.tools)
+                                      ^^^^^^^^^^
+AttributeError: 'Tool' object has no attribute 'tools'
+2025-10-19 17:37:45 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 17:38:17 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 17:38:17 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 17:38:17 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 17:38:17 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 17:38:17 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 17:38:17 - AgentAI - INFO - log.py:76 - 函数工具添加成功 - 工具名称: hana, 工具ID: 10
+2025-10-19 17:38:17 - AgentAI - INFO - log.py:76 - 内部工具自动化注册完成
+2025-10-19 17:38:17 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 17:38:17 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 17:38:17 - AgentAI - ERROR - log.py:84 - Agent实例初始化失败: 'Tool' object has no attribute 'tools'
+2025-10-19 17:38:17 - AgentAI - ERROR - log.py:92 - Agent初始化异常
+Traceback (most recent call last):
+  File "c:\Users\MM\Desktop\agentAI_new_v1\app.py", line 45, in initialize_agent
+    agent = ReactAgent(llm=llm, tools=tool.tools)
+                                      ^^^^^^^^^^
+AttributeError: 'Tool' object has no attribute 'tools'
+2025-10-19 17:38:17 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 17:38:18 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 17:38:18 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 17:38:18 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 17:38:18 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 17:38:18 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 17:38:18 - AgentAI - INFO - log.py:76 - 内部工具自动化注册完成
+2025-10-19 17:38:18 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 17:38:18 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 17:38:18 - AgentAI - ERROR - log.py:84 - Agent实例初始化失败: 'Tool' object has no attribute 'tools'
+2025-10-19 17:38:18 - AgentAI - ERROR - log.py:92 - Agent初始化异常
+Traceback (most recent call last):
+  File "c:\Users\MM\Desktop\agentAI_new_v1\app.py", line 45, in initialize_agent
+    agent = ReactAgent(llm=llm, tools=tool.tools)
+                                      ^^^^^^^^^^
+AttributeError: 'Tool' object has no attribute 'tools'
+2025-10-19 17:38:18 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 17:40:40 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 17:40:40 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 17:40:40 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 17:40:40 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 17:40:40 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 17:40:40 - AgentAI - INFO - log.py:76 - 内部工具自动化注册完成
+2025-10-19 17:40:40 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 17:40:40 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 17:40:40 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 17:40:40 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 17:40:40 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 17:42:38 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 17:42:38 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 17:42:38 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 17:42:38 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 17:42:38 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 17:42:38 - AgentAI - INFO - log.py:76 - 函数工具添加成功 - 工具名称: add, 工具ID: 1
+2025-10-19 17:42:38 - AgentAI - INFO - log.py:76 - 函数工具添加成功 - 工具名称: subtract, 工具ID: 2
+2025-10-19 17:42:38 - AgentAI - INFO - log.py:76 - 函数工具添加成功 - 工具名称: multiply, 工具ID: 3
+2025-10-19 17:42:38 - AgentAI - INFO - log.py:76 - 函数工具添加成功 - 工具名称: divide, 工具ID: 4
+2025-10-19 17:42:38 - AgentAI - INFO - log.py:76 - 函数工具添加成功 - 工具名称: search, 工具ID: 5
+2025-10-19 17:42:38 - AgentAI - INFO - log.py:76 - 函数工具添加成功 - 工具名称: hana, 工具ID: 6
+2025-10-19 17:42:38 - AgentAI - INFO - log.py:76 - 内部工具自动化注册完成
+2025-10-19 17:42:38 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 17:42:39 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 17:42:39 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 17:42:39 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 17:42:39 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 17:42:39 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 17:42:39 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 17:42:39 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 17:42:39 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 17:42:39 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 17:42:39 - AgentAI - INFO - log.py:76 - 内部工具自动化注册完成
+2025-10-19 17:42:39 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 17:42:39 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 17:42:39 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 17:42:39 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 17:42:39 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 17:42:46 - AgentAI - INFO - log.py:131 - API Call - GET /login, Status: 200
+2025-10-19 17:43:00 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-19 17:43:00 - AgentAI - INFO - log.py:131 - API Call - GET /, Status: 200, User: 1, Response Time: 5.226373672485352ms
+2025-10-19 17:43:01 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-19 17:57:43 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 17:57:43 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 17:57:43 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 17:57:43 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 17:57:43 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 17:57:43 - AgentAI - INFO - log.py:76 - 内部工具自动化注册完成
+2025-10-19 17:57:43 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 17:57:43 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 17:57:43 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 17:57:43 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 17:57:43 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 17:57:44 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 17:57:44 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 17:57:44 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 17:57:44 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 17:57:44 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 17:57:44 - AgentAI - INFO - log.py:76 - 内部工具自动化注册完成
+2025-10-19 17:57:44 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 17:57:44 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 17:57:44 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 17:57:44 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 17:57:44 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 18:09:10 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 18:09:10 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 18:09:10 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 18:09:10 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 18:09:10 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 18:09:10 - AgentAI - INFO - log.py:76 - 工具实例初始化完成
+2025-10-19 18:09:10 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 18:09:10 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 18:09:10 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 18:09:10 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 18:09:10 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 18:09:10 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 18:09:11 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 18:09:11 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 18:09:11 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 18:09:11 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 18:09:11 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 18:09:11 - AgentAI - INFO - log.py:76 - 工具实例初始化完成
+2025-10-19 18:09:11 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 18:09:11 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 18:09:11 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 18:09:11 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 18:09:11 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 18:09:11 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 18:09:21 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 18:09:21 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 18:09:21 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 18:09:21 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 18:09:21 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 18:09:21 - AgentAI - INFO - log.py:76 - 工具实例初始化完成
+2025-10-19 18:09:21 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 18:09:21 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 18:09:22 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 18:09:22 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 18:09:22 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 18:09:22 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 18:09:22 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 18:09:22 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 18:09:22 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 18:09:22 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 18:09:22 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 18:09:22 - AgentAI - INFO - log.py:76 - 工具实例初始化完成
+2025-10-19 18:09:22 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 18:09:22 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 18:09:22 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 18:09:22 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 18:09:22 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 18:09:22 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 18:11:28 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 18:11:28 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 18:11:28 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 18:11:28 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 18:11:28 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 18:11:28 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 18:11:28 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 18:11:28 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 18:11:28 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 18:11:28 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 18:11:28 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 18:11:28 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 18:11:41 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 18:11:41 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 18:11:41 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 18:11:41 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 18:11:41 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 18:11:41 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 18:11:41 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 18:11:41 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 18:11:41 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 18:11:41 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 18:11:41 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 18:11:41 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 18:11:42 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 18:11:42 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 18:11:42 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 18:11:42 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 18:11:42 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 18:11:42 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 18:11:42 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 18:11:42 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 18:11:42 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 18:11:42 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 18:11:42 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 18:11:42 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 18:12:05 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 18:12:05 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 18:12:05 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 18:12:05 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 18:12:05 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 18:12:05 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 18:12:05 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 18:12:05 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 18:12:05 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 18:12:05 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 18:12:05 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 18:12:05 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 18:12:21 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 18:12:21 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 18:12:21 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 18:12:21 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 18:12:21 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 18:12:21 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 18:12:21 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 18:12:21 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 18:12:21 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 18:12:21 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 18:12:21 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 18:12:21 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 18:12:22 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 18:12:22 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 18:12:22 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 18:12:22 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 18:12:22 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 18:12:22 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 18:12:22 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 18:12:22 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 18:12:22 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 18:12:22 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 18:12:22 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 18:12:22 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 18:12:34 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 18:12:34 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 18:12:34 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 18:12:34 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 18:12:34 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 18:12:34 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 18:12:34 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 18:12:34 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 18:12:34 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 18:12:34 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 18:12:34 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 18:12:34 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 18:21:07 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 18:21:07 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 18:21:07 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 18:21:07 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 18:21:07 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 18:21:07 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 18:21:07 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 18:21:07 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 18:21:07 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 18:21:07 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 18:21:07 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 18:21:07 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 18:23:06 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 18:23:06 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 18:23:06 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 18:23:06 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 18:23:06 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 18:23:06 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 18:23:06 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 18:23:06 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 18:23:06 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 18:23:06 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 18:23:06 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 18:23:06 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 18:23:42 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 18:23:42 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 18:23:42 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 18:23:42 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 18:23:42 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 18:23:42 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 18:23:42 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 18:23:42 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 18:23:42 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 18:23:42 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 18:23:42 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 18:23:42 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 18:24:26 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-19 18:24:26 - AgentAI - INFO - log.py:131 - API Call - GET /, Status: 200, User: 1, Response Time: 5.151033401489258ms
+2025-10-19 18:24:27 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-19 18:24:37 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-19 18:24:37 - AgentAI - INFO - log.py:131 - API Call - GET /, Status: 200, User: 1, Response Time: 6.186485290527344ms
+2025-10-19 18:24:38 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-19 18:25:35 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 18:25:35 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 18:25:35 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 18:25:35 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 18:25:35 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 18:25:35 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 18:25:35 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 18:25:35 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 18:25:35 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 18:25:35 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 18:25:35 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 18:25:35 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 18:25:36 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 18:25:36 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 18:25:36 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 18:25:36 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 18:25:36 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 18:25:36 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 18:25:36 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 18:25:36 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 18:25:36 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 18:25:36 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 18:25:36 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 18:25:36 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 18:25:44 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-19 18:25:44 - AgentAI - INFO - log.py:131 - API Call - GET /, Status: 200, User: 1, Response Time: 4.978179931640625ms
+2025-10-19 18:25:45 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 18:28:00 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - 5个内部工具删除完成
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 18:28:00 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - 5个内部工具删除完成
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 6
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 18:28:00 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 18:29:51 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - 5个内部工具删除完成
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 18:29:51 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - 5个内部工具删除完成
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - 开始初始化默认Agent实例...
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 5
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - ReactAgent初始化完成，加载工具数量: 5
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - Agent实例初始化成功
+2025-10-19 18:29:51 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 19:01:45 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 19:01:45 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 19:01:45 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 19:01:45 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 19:01:45 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 19:01:45 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 19:01:45 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 19:01:45 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 19:01:45 - AgentAI - INFO - log.py:76 - LLM实例初始化成功
+2025-10-19 19:01:45 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 19:02:16 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 19:02:16 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 19:02:16 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 19:02:16 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 19:02:16 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 19:02:16 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 19:02:16 - AgentAI - INFO - log.py:76 - 5个test1内部工具测试完成
+2025-10-19 19:02:16 - AgentAI - INFO - log.py:76 - 5个test1内部工具测试完成
+2025-10-19 19:02:16 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 19:02:16 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 19:02:16 - AgentAI - INFO - log.py:76 - LLM实例初始化成功
+2025-10-19 19:02:16 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 19:06:02 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 19:06:02 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 19:06:02 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 19:06:02 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 19:06:02 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 19:06:02 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 19:06:02 - AgentAI - INFO - log.py:76 - 5个test1内部工具测试完成
+2025-10-19 19:06:02 - AgentAI - INFO - log.py:76 - 5个test2内部工具测试完成
+2025-10-19 19:06:02 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 19:06:03 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 19:06:03 - AgentAI - INFO - log.py:76 - LLM实例初始化成功
+2025-10-19 19:06:03 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 19:12:11 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 19:12:11 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 19:12:11 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 19:12:11 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 19:12:11 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 19:12:11 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 19:12:11 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 19:12:11 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 19:12:11 - AgentAI - INFO - log.py:76 - LLM实例初始化成功
+2025-10-19 19:12:11 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 19:29:49 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 19:29:49 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 19:29:49 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 19:29:49 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 19:29:49 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 19:29:49 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 19:29:49 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 19:29:50 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 19:29:50 - AgentAI - INFO - log.py:76 - LLM实例初始化成功
+2025-10-19 19:29:50 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 19:39:24 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 19:39:24 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 19:39:24 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 19:39:24 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 19:39:24 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 19:39:24 - AgentAI - ERROR - log.py:84 - 工具实例初始化失败: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
+2025-10-19 19:39:24 - AgentAI - ERROR - log.py:92 - 工具初始化异常
+Traceback (most recent call last):
+  File "c:\Users\MM\Desktop\agentAI_new_v1\app.py", line 39, in initialize_tool
+    db.add_function_tool(user_id=session['user_id'], tool_name=name, description=tool_obj.description, parameters=str(tool_obj.parameters), tool_flag=0, label='通用') # 添加内部所有工具到数据库
+                                 ~~~~~~~^^^^^^^^^^^
+  File "D:\package\veighn\Lib\site-packages\werkzeug\local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "D:\package\veighn\Lib\site-packages\werkzeug\local.py", line 519, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
+2025-10-19 19:39:24 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 19:39:24 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 19:39:24 - AgentAI - INFO - log.py:76 - LLM实例初始化成功
+2025-10-19 19:39:24 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 19:39:51 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 19:39:51 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 19:39:51 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 19:39:51 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 19:39:51 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 19:39:51 - AgentAI - ERROR - log.py:84 - 工具实例初始化失败: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
+2025-10-19 19:39:51 - AgentAI - ERROR - log.py:92 - 工具初始化异常
+Traceback (most recent call last):
+  File "c:\Users\MM\Desktop\agentAI_new_v1\app.py", line 39, in initialize_tool
+    db.add_function_tool(user_id=session['user_id'], tool_name=name, description=tool_obj.description, parameters=str(tool_obj.parameters), tool_flag=0, label='通用') # 添加内部所有工具到数据库
+                                 ~~~~~~~^^^^^^^^^^^
+  File "D:\package\veighn\Lib\site-packages\werkzeug\local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "D:\package\veighn\Lib\site-packages\werkzeug\local.py", line 519, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
+2025-10-19 19:39:51 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 19:39:51 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 19:39:51 - AgentAI - INFO - log.py:76 - LLM实例初始化成功
+2025-10-19 19:39:51 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 19:39:52 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 19:39:52 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 19:39:52 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 19:39:52 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 19:39:52 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 19:39:52 - AgentAI - ERROR - log.py:84 - 工具实例初始化失败: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
+2025-10-19 19:39:52 - AgentAI - ERROR - log.py:92 - 工具初始化异常
+Traceback (most recent call last):
+  File "c:\Users\MM\Desktop\agentAI_new_v1\app.py", line 39, in initialize_tool
+    db.add_function_tool(user_id=session['user_id'], tool_name=name, description=tool_obj.description, parameters=str(tool_obj.parameters), tool_flag=0, label='通用') # 添加内部所有工具到数据库
+                                 ~~~~~~~^^^^^^^^^^^
+  File "D:\package\veighn\Lib\site-packages\werkzeug\local.py", line 318, in __get__
+    obj = instance._get_current_object()
+  File "D:\package\veighn\Lib\site-packages\werkzeug\local.py", line 519, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
+2025-10-19 19:39:52 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 19:39:52 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 19:39:52 - AgentAI - INFO - log.py:76 - LLM实例初始化成功
+2025-10-19 19:39:52 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 19:41:09 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 19:41:09 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 19:41:09 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 19:41:09 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 19:41:09 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 19:41:09 - AgentAI - INFO - log.py:76 - 函数工具添加成功 - 工具名称: add, 工具ID: 1, 用户ID: 0, 工具类型: 通用
+2025-10-19 19:41:09 - AgentAI - INFO - log.py:76 - 函数工具添加成功 - 工具名称: subtract, 工具ID: 2, 用户ID: 0, 工具类型: 通用
+2025-10-19 19:41:09 - AgentAI - INFO - log.py:76 - 函数工具添加成功 - 工具名称: multiply, 工具ID: 3, 用户ID: 0, 工具类型: 通用
+2025-10-19 19:41:09 - AgentAI - INFO - log.py:76 - 函数工具添加成功 - 工具名称: divide, 工具ID: 4, 用户ID: 0, 工具类型: 通用
+2025-10-19 19:41:09 - AgentAI - INFO - log.py:76 - 函数工具添加成功 - 工具名称: search, 工具ID: 5, 用户ID: 0, 工具类型: 通用
+2025-10-19 19:41:09 - AgentAI - INFO - log.py:76 - 函数工具添加成功 - 工具名称: hana, 工具ID: 6, 用户ID: 0, 工具类型: 通用
+2025-10-19 19:41:09 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 19:41:09 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 19:41:09 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 19:41:09 - AgentAI - INFO - log.py:76 - LLM实例初始化成功
+2025-10-19 19:41:09 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 19:45:06 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 19:45:06 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 19:45:06 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 19:45:06 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 19:45:06 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 19:45:06 - AgentAI - ERROR - log.py:84 - 工具实例初始化失败: name 'system_user_id' is not defined
+2025-10-19 19:45:06 - AgentAI - ERROR - log.py:92 - 工具初始化异常
+Traceback (most recent call last):
+  File "c:\Users\MM\Desktop\agentAI_new_v1\app.py", line 41, in initialize_tool
+    db.add_function_tool(user_id=system_user_id, tool_name=name, description=tool_obj.description, parameters=str(tool_obj.parameters), tool_flag=0, label='通用') # 添加内部所有工具到数据库
+                                 ^^^^^^^^^^^^^^
+NameError: name 'system_user_id' is not defined. Did you mean: 'sys_user_id'?
+2025-10-19 19:45:06 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 19:45:06 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 19:45:06 - AgentAI - INFO - log.py:76 - LLM实例初始化成功
+2025-10-19 19:45:06 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 20:01:21 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 20:01:21 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 20:01:21 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 20:01:21 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 20:01:50 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 20:01:50 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 20:01:50 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 20:01:50 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 20:01:50 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 20:01:50 - AgentAI - INFO - log.py:76 - 函数工具添加成功 - 工具名称: add, 工具ID: 1, 用户ID: 0, 工具类型: 通用
+2025-10-19 20:01:50 - AgentAI - INFO - log.py:76 - 函数工具添加成功 - 工具名称: subtract, 工具ID: 2, 用户ID: 0, 工具类型: 通用
+2025-10-19 20:01:50 - AgentAI - INFO - log.py:76 - 函数工具添加成功 - 工具名称: multiply, 工具ID: 3, 用户ID: 0, 工具类型: 通用
+2025-10-19 20:01:50 - AgentAI - INFO - log.py:76 - 函数工具添加成功 - 工具名称: divide, 工具ID: 4, 用户ID: 0, 工具类型: 通用
+2025-10-19 20:01:50 - AgentAI - INFO - log.py:76 - 函数工具添加成功 - 工具名称: search, 工具ID: 5, 用户ID: 0, 工具类型: 通用
+2025-10-19 20:01:50 - AgentAI - INFO - log.py:76 - 函数工具添加成功 - 工具名称: hana, 工具ID: 6, 用户ID: 0, 工具类型: 通用
+2025-10-19 20:01:50 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 20:01:50 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 20:01:51 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 20:01:51 - AgentAI - INFO - log.py:76 - LLM实例初始化成功
+2025-10-19 20:01:51 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 20:01:51 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 20:01:51 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 20:01:51 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 20:01:51 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 20:01:51 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 20:01:51 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 20:01:51 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 20:01:52 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 20:01:52 - AgentAI - INFO - log.py:76 - LLM实例初始化成功
+2025-10-19 20:01:52 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-19 20:15:11 - AgentAI - INFO - log.py:131 - API Call - GET /login, Status: 200
+2025-10-19 20:20:12 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-19 20:20:12 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-19 20:20:12 - AgentAI - INFO - log.py:76 - Flask应用初始化完成
+2025-10-19 20:20:12 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-19 20:20:12 - AgentAI - INFO - log.py:76 - 开始初始化默认工具实例...
+2025-10-19 20:20:12 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-19 20:20:12 - AgentAI - INFO - log.py:76 - 初始化LLM客户端，模型: qwen-flash, URL: https://dashscope.aliyuncs.com/compatible-mode/v1, 超时设置: 30秒
+2025-10-19 20:20:12 - AgentAI - INFO - log.py:76 - LLM客户端初始化成功
+2025-10-19 20:20:12 - AgentAI - INFO - log.py:76 - LLM实例初始化成功
+2025-10-19 20:20:12 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
