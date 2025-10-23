@@ -2,24 +2,24 @@
 
 ## 1. 项目概述
 
-React增强型智能Agent是一个基于LLM（大语言模型）的智能代理系统，采用React（思考-行动-观察-响应）模式实现，具备**记忆管理**、**执行规划**、**工具使用**等核心功能。该系统能够理解用户需求，制定执行计划，调用相应工具，并基于执行结果提供准确回答。
+React增强型智能Agent是一个基于LLM（大语言模型）的智能代理系统，采用React（思考-行动-观察-响应）模式，具备记忆管理、执行规划、工具使用、日志与安全审查等能力。当前版本以Web应用形式提供：后端使用Flask提供API与页面，前端使用模板与原生JS实现交互式体验。
 
 ### 核心特性：
-- 🧠 **记忆增强**：支持短期记忆和长期记忆管理，智能存储和检索重要信息
-- 📋 **执行规划**：能够为复杂任务制定多步骤执行计划
-- 🔧 **工具集成**：支持多种工具的注册和调用，如数学计算、搜索、翻译等
-- 🔄 **React模式**：采用思考→规划→行动→观察→响应的完整流程
-- 🛡️ **错误处理**：完善的异常处理机制，确保系统稳定性
+- 🧠 记忆增强：支持对话历史与工具执行历史的记录与清理
+- 📋 执行规划：为复杂任务生成多步骤计划并逐步执行
+- 🔧 工具集成：支持函数型工具的注册、执行与历史查询
+- 🔒 安全审查：对字符串代码型工具做安全审查（可拦截不安全代码）
+- 📜 日志记录：统一记录API调用与数据库操作，便于审计与排错
 
 ## 2. 系统架构
 
-系统采用模块化设计，各组件职责清晰，交互流畅。整体架构如下：
+系统采用模块化设计，核心组件如下：
 
 ```
 ┌─────────────────┐      ┌─────────────────┐      ┌─────────────────┐
 │                 │      │                 │      │                 │
-│   main.py       │──────▶   agent.py      │──────▶   prompt.py     │
-│  程序入口与交互  │      │  ReactAgent核心 │      │ 提示词生成模块   │
+│   app.py        │──────▶   agent.py      │──────▶   prompt.py     │
+│  Flask服务与路由 │      │ ReactAgent核心  │      │ 提示词生成模块   │
 │                 │      │                 │      │                 │
 └────────┬────────┘      └────────┬────────┘      └─────────────────┘
          │                        │
@@ -34,269 +34,146 @@ React增强型智能Agent是一个基于LLM（大语言模型）的智能代理�
          └───────────────────┬───────┘
                              │
                              ▼
-                     ┌─────────────────┐
-                     │                 │
-                     │  tool_add.py    │
-                     │ 具体工具实现     │
-                     │                 │
-                     └─────────────────┘
+                     ┌─────────────────┐      ┌──────────────────────┐
+                     │                 │      │                      │
+                     │ tool_process.py │◀─────┤ internal_tools.py    │
+                     │ 动态注册工具     │      │ 内置函数工具清单      │
+                     │（DB→内存加载）   │      │（add/multiply等）     │
+                     └─────────────────┘      └──────────────────────┘
+
+前端：
+- `templates/`：`index.html`、`login.html` 页面模板
+- `static/js/`：`main.js`（聊天与展示）、`tool-management.js`（工具管理）、`model-management.js`（模型管理）
+- `static/css/`：`style.css` 与 Tailwind CSS
 ```
 
-### 数据流：
-1. **用户输入** → main.py接收并传递给agent.py
-2. **处理流程**：
-   - ReactAgent解析用户输入
-   - 生成执行计划
-   - 按步骤执行（调用工具或直接回答）
-   - 更新记忆
-   - 返回结果
-3. **工具调用**：通过tools.py定义的接口调用tool_add.py中实现的具体工具
-4. **提示词生成**：通过prompt.py生成各类任务所需的提示词模板
+### 数据流（Web）：
+1. 用户在页面输入请求 → 提交到 `/api/chat`
+2. `app.py` 根据会话与模型选择创建 `ReactAgent`
+3. `tool_process.Toolregister` 从数据库加载用户可用工具到内存（`Tool`对象）
+4. `ReactAgent` 按React模式规划→执行工具→汇总结果
+5. 返回计划与最终回复；前端渲染显示，并提供执行历史与记忆查看
 
 ## 3. 文件功能介绍
 
-### 3.1 main.py
+### 3.1 app.py
 
-**功能**：程序主入口，负责初始化环境、注册工具、创建Agent实例，并处理用户交互。
-
-**主要职责**：
-- 初始化LLM客户端连接（Ollama）
-- 注册各类工具（数学运算、搜索等）
-- 创建ReactAgent实例
-- 处理用户交互（特殊命令支持）
-  - `status`：查看Agent状态
-  - `memory`：查看问题记忆摘要
-  - `history`：查看工具执行历史记录
-  - `clear`：清除记忆
-
-**关键代码结构**：
+- 功能：Flask应用入口与路由。负责会话与CSRF、初始化LLM、初始化内置工具（写入DB）、工具与模型的CRUD、聊天请求处理与日志记录。
+- 关键职责：
+  - 页面：`/`（首页）、`/login`、`/register`、`/logout`
+  - 聊天：`POST /api/chat`（计划与回复）
+  - 工具：`GET/POST /api/tools`、`DELETE /api/tools/<id>`
+  - 历史：`GET /api/execution_history`、`GET /api/chat_history`、`GET /api/sessions`
+  - 模型：`GET/POST/PUT/DELETE /api/models`、`GET /api/models/<id>`
+  - 用户：`GET /api/user_profile`、`POST /api/change_password`、`POST /api/clear_memory`
+- 启动示例：
 ```python
-# 初始化LLM客户端
-llm = OllamaLLM(...)
-
-# 创建工具注册器并注册工具
-tool = ToolRegister()
-tool.register_tool("add", "执行加法运算：a + b", add)
-# ...其他工具注册
-
-# 创建ReactAgent实例
-agent = ReactAgent(llm, tool.get_tools())
-
-# 交互模式处理
-while True:
-    user_input = input("请输入您的请求: ")
-    # 处理特殊命令和用户查询
+if __name__ == '__main__':
+    initialize_add_tool_and_admin()  # 注册admin与内置工具到DB
+    initialize_llm()                 # 创建默认LLMClient
+    app.run(debug=True, host='0.0.0.0', port=5000)
 ```
 
 ### 3.2 agent.py
 
-**功能**：ReactAgent的核心实现，包含所有核心功能模块。
-
-**主要组件**：
-- **记忆管理**：短期记忆和长期记忆的存储与检索
-- **规划系统**：为用户请求生成多步骤执行计划
-- **工具调用**：解析用户输入，选择并执行合适的工具
-- **响应生成**：根据执行结果生成最终回答
-
-**关键方法**：
-- `process_query()`：处理用户查询的主方法，实现React模式
-- `create_plan()`：生成执行计划
-- `parse_user_input()`：解析用户输入，提取工具和参数
-- `execute_tool()`：执行指定工具
-- `update_memory()`：更新Agent记忆
-- `get_memory_summary()`：获取记忆摘要
-- `get_execution_history()`：获取执行历史
-
-**多步骤执行流程**：
-```python
-def process_query(self, user_input: str) -> str:
-    # 1. 创建执行计划
-    plan = self.create_plan(user_input)
-    
-    # 2. 按步骤执行
-    for step in plan:
-        # 根据步骤类型执行操作
-        if action == "使用工具":
-            # 执行工具并存储结果
-        elif action == "直接回答":
-            # 生成总结回答
-    
-    # 3. 更新记忆
-    self.update_memory(user_input, final_response)
-    
-    return final_response
-```
+- 功能：`ReactAgent` 核心实现，包含记忆、规划、工具调用与响应生成。
+- 方法要点：`process_query(user_id, user_input)` 内部生成计划、执行工具、更新记忆并返回（本项目会返回“计划文本 + 最终回复”用于前端展示）。
 
 ### 3.3 prompt.py
 
-**功能**：提供各类任务的提示词模板生成功能。
-
-**主要函数**：
-- `create_prompt()`：生成工具选择和参数提取的提示词
-- `create_planning_prompt()`：生成执行计划提示词
-- `create_memory_prompt()`：生成记忆处理提示词
-
-**提示词结构**：
-- 任务说明
-- 工具信息描述
-- 历史对话上下文
-- 输出格式要求
+- 功能：生成工具选择与参数抽取、执行规划、记忆摘要等提示词模板。
 
 ### 3.4 tools.py
 
-**功能**：定义工具的基类和接口规范。
+- 功能：`Tool` 基类，封装工具的名称、描述、参数与执行函数；`execute(**kwargs)` 调用真实函数。
 
-**核心类**：
-- `Tool`：工具基类，定义了工具的基本结构和执行逻辑
-  - `__init__()`：初始化工具
-  - `get_schema()`：获取工具的JSON schema描述
-  - `execute()`：执行工具功能
-  - `get_parameter_info()`：从函数签名提取参数信息
+### 3.5 tool_process.py（工具动态注册）
 
-**工具定义规范**：
-- 工具名称
-- 功能描述
-- 参数定义（名称、类型、是否必需）
-- 执行函数
+- 功能：`Toolregister` 负责把数据库中的函数工具加载为内存中的 `Tool` 对象；当工具以“代码字符串”存储时，使用 `_convert_string_to_function(code_content, tool_name)` 提取函数对象。
+- 关键逻辑：
+  - 优先按 `tool_name` 在 `exec` 命名空间中寻找可调用函数（不以内划线开头、非内建、`callable=True`）
+  - 未命中时回退到首个符合条件的函数
+  - 注册后存入 `self.tools` 字典（进程内存储，重启不持久化）
 
-### 3.5 tool_add.py
+### 3.6 internal_tools.py（内置工具清单）
 
-**功能**：实现各类具体工具的逻辑。
-
-**主要组件**：
-- `ToolRegister`：工具注册器类，负责管理和注册各种工具
-- 具体工具实现函数：
-  - 数学计算工具：add、subtract、multiply、divide、calculate_power
-  - 搜索工具：search（支持HANA数据库搜索）
-  - 翻译工具：translate
-  - 天气查询工具：weather
-
-**工具注册流程**：
-```python
-def register_tool(self, name, description, function):
-    # 创建Tool实例并添加到工具字典
-    self.tools[name] = Tool(name, description, function)
-```
+- 功能：提供 `in_tools` 数组（add/subtract/multiply/divide/search/search_hana等），在应用启动时自动写入数据库，供所有用户使用或作为示例。
 
 ## 4. 核心功能详解
 
 ### 4.1 React模式实现
+- 思考 → 规划 → 行动（工具） → 观察（结果） → 响应（总结）。
 
-系统严格遵循React（思考-行动-观察-响应）模式：
-1. **思考**：解析用户输入，理解需求
-2. **规划**：生成多步骤执行计划
-3. **行动**：按计划执行工具调用
-4. **观察**：收集工具执行结果
-5. **响应**：基于结果生成最终回答
+### 4.2 记忆管理
+- 对话记忆：`GET /api/chat_history` 展示最近N条记录；`POST /api/clear_memory` 清理（短期/执行历史/全部）。
+- 执行历史：`GET /api/execution_history` 返回最近工具执行的摘要列表。
 
-### 4.2 记忆管理系统
-
-**短期记忆**：
-- 存储最近的对话历史
-- 限制长度，自动移除最旧的对话
-- 用于上下文理解和连续对话
-
-**长期记忆**：
-- 基于重要性筛选和存储关键信息
-- 按重要性排序，保留最重要的记忆
-- 支持重要性计算（基于长度、关键词等）
-
-### 4.3 执行规划功能
-
-**计划生成**：
-- 使用LLM为复杂任务制定步骤化计划
-- 每个计划包含：步骤号、动作类型、理由、工具名称
-
-**计划执行**：
-- 按顺序执行每个步骤
-- 支持工具调用、直接回答、追问用户等动作类型
-- 收集所有工具执行结果，用于最终总结
+### 4.3 执行规划
+- 由LLM生成步骤化计划，包含动作类型、理由、工具名称与置信度；前端展示计划文本与最终回复。
 
 ### 4.4 工具使用机制
-
-**工具解析**：
-- 分析用户输入，确定需要使用的工具
-- 自动提取工具所需参数
-- 评估置信度，确保准确性
-
-**工具执行**：
-- 动态调用注册的工具函数
-- 捕获和处理执行异常
-- 格式化和展示执行结果
+- 后端从DB加载工具定义（名称/描述/参数/代码）；执行时由 `Tool.execute(**kwargs)` 调用真实函数，并记录到执行历史。
 
 ## 5. 使用方法
 
-### 5.1 启动程序
-
+### 5.1 启动与访问
 ```bash
-python main.py
+pip install -r requirements.txt
+set FLASK_SECRET_KEY=your-secret  # Windows示例（PowerShell可用 $env:FLASK_SECRET_KEY）
+set API_KEY=your-api-key          # 可选，LLMClient也支持通过代码传参
+python app.py
 ```
+- 打开浏览器访问 `http://127.0.0.1:5000/`
+- 默认会自动注册 `admin/123456` 管理员账户（见 `initialize_add_tool_and_admin`）
 
-### 5.2 基本交互
+### 5.2 基本使用（Web）
+- 登录后在输入框提交请求，后台返回“计划+最终回复”；底部状态栏展示“短期记忆”与“可用工具”数量。
+- 查看历史：在界面中点击“工具执行历史”，或前端触发请求到 `GET /api/execution_history`。
+- 清理记忆：通过“清除记忆”按钮或 `POST /api/clear_memory`（支持 short/execution/all）。
 
-程序启动后进入交互模式，可以输入各类查询请求：
+### 5.3 添加与管理工具
+- 通过页面“添加工具”弹窗或 `POST /api/tools` 提交：
+  - `tool_name`、`description`、`parameters`（JSON数组）、`code_or_url`（函数型工具以代码字符串提交）
+- 安全审查：字符串代码会经过 `security_review.review_tool_code`，不安全将被拒绝。
+- 执行参数：严格使用标准JSON（双引号、`true/false/null`），否则会解析失败。
 
-```
-请输入您的请求: 计算9乘8和6+9的值
-```
+## 6. API 路由速览
+- `/` 首页（登录后可访问）
+- `/login`（GET/POST）、`/register`（GET/POST）、`/logout`
+- `POST /api/chat` 聊天与执行规划
+- `GET/POST /api/tools`，`DELETE /api/tools/<id>` 工具管理
+- `GET /api/execution_history` 工具执行历史
+- `GET /api/chat_history` 对话历史摘要
+- `GET /api/sessions` 会话列表
+- `GET /api/models`、`POST /api/models`、`PUT /api/models/<id>`、`DELETE /api/models/<id>` 模型管理
+- `GET /api/user_profile` 用户信息；`POST /api/change_password` 修改密码
+- `POST /api/clear_memory` 清除记忆
 
-系统会生成执行计划并执行：
-```
-计划: [{"step": 1, "action": "使用工具", "reason": "需要计算9乘8的值，使用multiply工具", "tool_name": "multiply"}, {"step": 2, "action": "使用工具", "reason": "需要计算6加9的值，使用add工具", "tool_name": "add"}, {"step": 3, "action": "直接回答", "reason": "已经获取了两个运算的结果，可以总结并回答用户的问题"}]
+## 7. 技术栈
+- 后端：Python 3.10+、Flask、SQLite（见 `db/` 与 `database.py`）
+- LLM：`LLMClient`（OpenAI兼容接口；示例使用 DashScope `qwen-flash`）
+- 前端：原生JS、Tailwind CSS、Jinja2模板
+- 日志：统一API与DB日志（`log.py`），生成 `logs/agent_ai_*.log`
 
-执行步骤 1: 使用工具 - 需要计算9乘8的值，使用multiply工具
-...
-执行步骤 2: 使用工具 - 需要计算6加9的值，使用add工具
-...
-执行步骤 3: 直接回答 - 已经获取了两个运算的结果，可以总结并回答用户的问题
-```
+## 8. 扩展与定制
 
-### 5.3 特殊命令
-
-系统支持以下特殊命令：
-- `status`：查看Agent当前状态（记忆数量、工具数量等）
-- `memory`：查看问题记忆摘要
-- `history`：查看工具执行历史记录
-- `clear`：清除所有记忆
-- `退出`：结束程序
-
-## 6. 技术栈
-
-- **编程语言**：Python 3.10+
-- **LLM集成**：Ollama API（支持DeepSeek-R1-32B等模型）
-- **核心库**：
-  - langchain_ollama：与Ollama LLM交互
-  - json、re：数据处理和正则表达式
-  - datetime：时间处理
-
-## 7. 扩展与定制
-
-### 7.1 添加新工具
-
-可以通过以下步骤添加新工具：
-1. 在tool_add.py中定义工具函数
-2. 使用`tool.register_tool()`注册工具
-
-示例：
+### 8.1 添加新函数工具（字符串代码形式）
 ```python
-def new_tool(param1, param2):
-    # 工具实现逻辑
-    return result
+code_str = """
+import math
 
-tool.register_tool("new_tool", "新工具的功能描述", new_tool)
+def circle_area(radius: float) -> float:
+    return math.pi * radius * radius
+"""
+# 通过API或前端提交：tool_name 与函数名一致可优先匹配
+# 后端将执行 `_convert_string_to_function(code_str, tool_name)` 并注册为可执行工具
 ```
+- 命名规范：函数名不以下划线开头；建议与 `tool_name` 一致以确保优先匹配。
+- 安全建议：确保代码来源可信；若被审查拒绝，请根据返回的 issues 调整代码。
 
-### 7.2 调整LLM配置
+### 8.2 调整LLM配置
+- 方法一：设置环境变量 `API_KEY`，在 `llmclient.py` 默认读取。
+- 方法二：修改 `app.py` 的 `initialize_llm()`，传入自定义 `url/model/api_key/timeout`。
 
-在main.py中可以修改LLM的连接配置：
-```python
-llm = OllamaLLM(
-    base_url="http://your-ollama-server:port",
-    model="your-model-name",
-    temperature=0.7
-)
-```
-
-## 8. 总结
-
-React增强型智能Agent项目实现了一个完整的智能代理系统，通过整合LLM、记忆管理、执行规划和工具使用等功能，提供了强大的任务处理能力。系统采用模块化设计，易于扩展和维护，能够适应各种复杂场景的需求。
+## 9. 总结
+本项目提供一个可扩展的Web版React智能Agent：支持工具动态注册与执行、计划与记忆可视化、API与前端联动。通过安全审查与日志审计，兼顾易用性与稳定性；适用于学习、演示与二次开发。
