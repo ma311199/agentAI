@@ -97,6 +97,7 @@ class DatabaseConnection:
                 CREATE TABLE IF NOT EXISTS chat_history (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     user_id INTEGER,
+                    model_name TEXT NOT NULL,
                     plan TEXT NOT NULL,
                     user_message TEXT NOT NULL,
                     bot_response TEXT NOT NULL,

@@ -6,6 +6,7 @@ import time
 import functools
 import agent
 from llmclient import LLMClient
+from openai import OpenAI
 from tool_process import Toolregister
 from agent import ReactAgent
 from tools import Tool
@@ -15,8 +16,6 @@ from internal_tools import in_tools
 from security_review import review_tool_code
 import secrets
 
-# 全局变量
-llm = None
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'dev-secret-change-mm')  # 用于会话管理的密钥，为 Flask 的 session 、 flash 等生成签名，防止被篡改。更换秘钥会使所有现有会话失效（用户会被退出登录），生产环境谨慎操作。
@@ -64,7 +63,7 @@ def  initialize_add_tool_and_admin():
     """初始化管理员和内部工具实例"""
     info("开始自动注册admin")
     try:
-        db.register_user(username="admin", password="123456", role_id=1) # 注册admin管理员用户
+        db.register_user(username="admin", password="123456", role_id=1) # 注册admin管理员用户，进入系统修改账号密码
         info("admin用户注册成功")
     except Exception as e:
         error(f"admin用户注册失败: {str(e)}")
@@ -80,18 +79,6 @@ def  initialize_add_tool_and_admin():
         exception("工具初始化异常")
 
 
-def initialize_llm():
-    """初始化LLM实例"""
-    global llm
-    
-    # 创建增强版Agent，内部默认模型和工具加载如下：
-    try:
-        llm = LLMClient(url="https://dashscope.aliyuncs.com/compatible-mode/v1", model="qwen-flash", api_key="sk-ccc7b93ae7d54149a4d50e2588b7d082", timeout=30)
-        info("LLM实例初始化成功")
-        
-    except Exception as e:
-        error(f"LLM实例初始化失败: {str(e)}")
-        exception("LLM初始化异常")
         
 
 @app.route('/')
@@ -253,38 +240,26 @@ def chat():
     try:
         # 根据model_id选择模型
         if model_id:
-            # 特殊处理'default'模型ID，使用默认Agent
-            if model_id == 'default':
-                debug("使用默认模型: qwen-flash")
-                agent = ReactAgent(llm=llm, tools=tool.tools)
-                plan_text,response_text = agent.process_query(user_id,user_input)
+            # 获取指定模型信息（移除对 'default' 的特殊处理）
+            model_info = db.get_model_by_id(model_id)
+            if model_info and model_info['is_active']:
+                debug(f"使用指定模型: {model_info['model_name']} (ID: {model_id})")
+                llm_client = LLMClient(
+                    url=model_info['model_url'],
+                    model=model_info['model_name'],
+                    api_key=model_info['api_key'] or "",
+                    timeout=30
+                )
+                t_agent = ReactAgent(llm=llm_client, tools=tool.tools)
+                plan_text, response_text = t_agent.process_query(user_id, user_input, model_info['model_name'])
             else:
-                # 获取指定模型信息
-                model_info = db.get_model_by_id(model_id)
-                if model_info and model_info['is_active']:
-                    debug(f"使用指定模型: {model_info['model_name']} (ID: {model_id})")
-                    # 动态创建LLMClient实例
-                    llm_client = LLMClient(
-                        url=model_info['model_url'],
-                        model=model_info['model_name'],
-                        api_key=model_info['api_key'] or "",
-                        timeout=30
-                    )
-                    # 创建临时Agent实例，但复制全局agent的记忆和历史
-                    t_agent = ReactAgent(llm=llm_client, tools=tool.tools)
-                    
-                    # 处理用户查询
-                    plan_text,response_text = t_agent.process_query(user_id, user_input)
-                    
-                    # 将临时agent的记忆和历史合并到全局agent
-                else:
-                    error(f"模型不存在或未启用: {model_id}")
-                    response_text = "所选模型不存在或未启用，请选择其他模型。"
+                error(f"模型不存在或未启用: {model_id}")
+                plan_text = "模型选择无效"
+                response_text = "所选模型不存在或未启用，请选择其他模型。"
         else:
-            # 使用默认Agent
-            debug("使用默认模型: qwen-flash")
-            agent = ReactAgent(llm=llm, tools=tool.tools)
-            plan_text,response_text = agent.process_query(user_id, user_input)
+            # 未选择模型，直接返回错误
+            log_api_call('/api/chat', 'POST', 400, user_id, (time.time() - start_time) * 1000)
+            return jsonify({'error': '未选择模型，请在左侧启用并选择模型后再发送'}), 400
 
         
         log_db_operation('insert', 'chat_records', 'success', f'用户ID: {user_id}, 会话ID: {session_id}')
@@ -424,7 +399,7 @@ def get_chat_history():
             response += "**没有找到对话历史记录。**"
         else:
             for i, record in enumerate(history, 1):
-                response += f"记忆 ({i})->【用户问题：“{record['user_message']}”；AGENT回答：“{record['bot_response']}”】\n"; 
+                response += f"记忆 ({i})->模型：{record['model_name']} 【用户问题：“{record['user_message']}”；AGENT回答：“{record['bot_response']}”】\n"; 
         return jsonify({'response': response})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -448,6 +423,8 @@ def get_sessions():
         return jsonify({'error': str(e)}), 500
 
 # 模型管理相关API
+
+# moved: /api/models/available defined earlier near the model API header
 @app.route('/api/models', methods=['GET'])
 @login_required
 def get_models():
@@ -621,6 +598,8 @@ def add_tool():
         tool_type = data.get('tool_type', 'function')
         parameters = data.get('parameters')
         code_or_url = data.get('code_or_url', '')
+        tool_flag = data.get('tool_flag')
+        label = data.get('label')
         
         if not tool_name:
             return jsonify({'error': '工具名称为必填项'}), 400
@@ -631,9 +610,27 @@ def add_tool():
             log_api_call('/api/tools', 'POST', 400, user_id, (time.time() - start_time) * 1000)
             return jsonify({'error': '工具名称已存在'}), 400
         
-        
         # 将参数定义转换为字符串
         parameters_json = str(parameters)
+
+        # 校验tool_flag（0共享，1私有），可选
+        if tool_flag is not None:
+            try:
+                tool_flag = int(tool_flag)
+            except Exception:
+                log_api_call('/api/tools', 'POST', 400, user_id, (time.time() - start_time) * 1000)
+                return jsonify({'error': 'tool_flag必须为数字0或1'}), 400
+            if tool_flag not in (0, 1):
+                log_api_call('/api/tools', 'POST', 400, user_id, (time.time() - start_time) * 1000)
+                return jsonify({'error': 'tool_flag必须为0（共享）或1（私有）'}), 400
+        else:
+            tool_flag = 0  # 默认共享
+
+        # 规范化label，可选
+        if label is not None:
+            label = str(label).strip() or '通用'
+        else:
+            label = '通用'
 
         # 安全性代码审查（仅针对函数型工具且提交了代码字符串）
         if tool_type == 'function' and isinstance(code_or_url, str) and code_or_url.strip():
@@ -643,8 +640,17 @@ def add_tool():
                 warning(f"工具安全审查未通过 - 用户ID: {user_id}, 工具名: {tool_name}, 问题: {review.get('issues')}")
                 return jsonify({'error': '安全审查未通过', 'issues': review.get('issues'), 'summary': review.get('summary')}), 400
         
-        # 添加工具到数据库
-        success, result = db.add_function_tool(user_id, tool_name, description, parameters_json, True, code_content=code_or_url)
+        # 添加工具到数据库（支持tool_flag与label）
+        success, result = db.add_function_tool(
+            user_id,
+            tool_name,
+            description,
+            parameters_json,
+            True,
+            tool_flag=tool_flag,
+            label=label,
+            code_content=code_or_url
+        )
         
         if success:
             log_api_call('/api/tools', 'POST', 201, user_id, (time.time() - start_time) * 1000)
@@ -659,6 +665,89 @@ def add_tool():
         exception("添加工具异常")
         return jsonify({'error': '添加工具失败'}), 500
 
+# 新增：获取指定工具详情
+@app.route('/api/tools/<int:tool_id>', methods=['GET'])
+@login_required
+def get_tool_by_id(tool_id):
+    start_time = time.time()
+    user_id = session.get('user_id')
+    try:
+        tool_info = db.get_function_tool_by_id(user_id, tool_id)
+        if not tool_info:
+            log_api_call(f'/api/tools/{tool_id}', 'GET', 404, user_id, (time.time() - start_time) * 1000)
+            return jsonify({'error': '工具不存在'}), 404
+        # 解析参数为列表
+        params_val = tool_info.get('parameters')
+        try:
+            parsed_params = eval(params_val) if isinstance(params_val, str) else params_val
+        except Exception:
+            parsed_params = None
+        tool_info['parameters'] = parsed_params
+        log_api_call(f'/api/tools/{tool_id}', 'GET', 200, user_id, (time.time() - start_time) * 1000)
+        return jsonify(tool_info)
+    except Exception as e:
+        log_api_call(f'/api/tools/{tool_id}', 'GET', 500, user_id, (time.time() - start_time) * 1000)
+        error(f"获取工具异常 - 用户ID: {user_id}, 工具ID: {tool_id}, 错误: {str(e)}")
+        exception("获取工具异常")
+        return jsonify({'error': '获取工具失败，无权限'}), 500
+
+# 新增：更新指定工具
+@app.route('/api/tools/<int:tool_id>', methods=['PUT'])
+@login_required
+def update_tool(tool_id):
+    start_time = time.time()
+    user_id = session.get('user_id')
+    try:
+        data = request.get_json()
+        tool_name = data.get('tool_name')
+        description = data.get('description')
+        parameters = data.get('parameters')
+        is_active = data.get('is_active')
+        code_or_url = data.get('code_or_url')
+        tool_flag = data.get('tool_flag')
+        label = data.get('label')
+
+        # 把参数转字符串保存
+        parameters_json = str(parameters) if parameters is not None else None
+
+        # 校验tool_flag（0共享，1私有），可选
+        if tool_flag is not None:
+            try:
+                tool_flag = int(tool_flag)
+            except Exception:
+                log_api_call(f'/api/tools/{tool_id}', 'PUT', 400, user_id, (time.time() - start_time) * 1000)
+                return jsonify({'error': 'tool_flag必须为数字0或1'}), 400
+            if tool_flag not in (0, 1):
+                log_api_call(f'/api/tools/{tool_id}', 'PUT', 400, user_id, (time.time() - start_time) * 1000)
+                return jsonify({'error': 'tool_flag必须为0（共享）或1（私有）'}), 400
+
+        # 规范化label，可选
+        if label is not None:
+            label = str(label).strip()
+
+        success = db.update_function_tool(
+            user_id,
+            tool_id,
+            tool_name=tool_name,
+            description=description,
+            parameters=parameters_json,
+            is_active=is_active,
+            tool_flag=tool_flag,
+            label=label,
+            code_content=code_or_url
+        )
+        if success:
+            log_api_call(f'/api/tools/{tool_id}', 'PUT', 200, user_id, (time.time() - start_time) * 1000)
+            return jsonify({'message': '工具更新成功'})
+        else:
+            log_api_call(f'/api/tools/{tool_id}', 'PUT', 400, user_id, (time.time() - start_time) * 1000)
+            return jsonify({'error': '更新失败或名称重复'}), 400
+    except Exception as e:
+        log_api_call(f'/api/tools/{tool_id}', 'PUT', 500, user_id, (time.time() - start_time) * 1000)
+        error(f"更新工具异常 - 用户ID: {user_id}, 工具ID: {tool_id}, 错误: {str(e)}")
+        exception("更新工具异常")
+        return jsonify({'error': '更新工具失败'}), 500
+
 @app.route('/api/tools/<int:tool_id>', methods=['DELETE'])
 @login_required
 def delete_tool(tool_id):
@@ -671,7 +760,7 @@ def delete_tool(tool_id):
         tool_info = db.get_function_tool_by_id(user_id,tool_id)
         if not tool_info:
             log_api_call(f'/api/tools/{tool_id}', 'DELETE', 404, user_id, (time.time() - start_time) * 1000)
-            return jsonify({'error': '工具不存在'}), 404
+            return jsonify({'error': '工具删除失败，创建者可删除'}), 404
         
         # 从数据库中删除工具
         success, result = db.delete_function_tool(user_id,tool_id)
@@ -689,9 +778,46 @@ def delete_tool(tool_id):
         exception("删除工具异常")
         return jsonify({'error': str(e)}), 500
 
+@app.route('/api/models/available', methods=['POST'])
+@login_required
+def get_available_models():
+    try:
+        data = request.get_json() or {}
+        model_url = data.get('model_url')
+        api_key = data.get('api_key')
+        if not model_url or not api_key:
+            return jsonify({'error': '模型地址和API Key为必填项'}), 400
+        try:
+            client = OpenAI(base_url=model_url, api_key=api_key)
+            resp = client.models.list()
+        except Exception as e:
+            app.logger.error(f"调用模型列表失败: {str(e)}")
+            return jsonify({'error': f'调用模型列表失败: {str(e)}'}), 400
+        names = []
+        try:
+            for m in getattr(resp, 'data', []):
+                mid = getattr(m, 'id', None)
+                if mid:
+                    names.append(mid)
+        except Exception:
+            pass
+        if not names:
+            try:
+                data_list = resp.get('data', []) if isinstance(resp, dict) else []
+                for m in data_list:
+                    mid = m.get('id') or m.get('model')
+                    if mid:
+                        names.append(mid)
+            except Exception:
+                pass
+        return jsonify({'models': names})
+    except Exception as e:
+        app.logger.error(f"获取可用模型失败: {str(e)}")
+        return jsonify({'error': '获取可用模型失败'}), 500
+
 if __name__ == '__main__':
     info("启动Flask应用服务...")
     initialize_add_tool_and_admin()
-    initialize_llm()
     info("Flask应用服务启动完成，监听地址: 0.0.0.0:5000")
     app.run(debug=True, host='0.0.0.0', port=5000)
+

@@ -44,11 +44,11 @@ class ChatDatabase(DatabaseConnection):
         manager.cursor = self.cursor
         return manager.login_user(username, password)
         
-    def add_chat_record(self, user_message, plan, bot_response, user_id=None):
+    def add_chat_record(self, user_message, plan, bot_response, user_id, model_name):
         manager = ChatManager(self.db_path)
         manager.conn = self.conn
         manager.cursor = self.cursor
-        return manager.add_chat_record(user_message, plan, bot_response, user_id)
+        return manager.add_chat_record(user_message, plan, bot_response, user_id, model_name)
         
     def get_chat_history(self, user_id=None, limit=None):
         manager = ChatManager(self.db_path)
@@ -158,11 +158,11 @@ class ChatDatabase(DatabaseConnection):
         manager.cursor = self.cursor
         return manager.get_function_tool_by_name(user_id, tool_name)
         
-    def update_function_tool(self, user_id, tool_id, tool_name=None, description=None, parameters=None, is_active=None, tool_flag=None, label=None):
+    def update_function_tool(self, user_id, tool_id, tool_name=None, description=None, parameters=None, is_active=None, tool_flag=None, label=None, code_content=None):
         manager = FunctionToolManager(self.db_path)
         manager.conn = self.conn
         manager.cursor = self.cursor
-        return manager.update_function_tool(user_id, tool_id, tool_name, description, parameters, is_active, tool_flag, label)
+        return manager.update_function_tool(user_id, tool_id, tool_name, description, parameters, is_active, tool_flag, label, code_content)
         
     def delete_function_tool(self, user_id, tool_id):
         manager = FunctionToolManager(self.db_path)

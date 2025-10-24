@@ -252,7 +252,7 @@ class ReactAgent:
             exception("工具执行异常")
             raise
     
-    def process_query(self, user_id :int, user_input: str) -> str:
+    def process_query(self, user_id :int, user_input: str, model_name: str) -> str:
         """处理用户查询，使用React模式：思考、行动、观察、响应"""
         info(f"开始处理用户查询: {user_input[:50]}..." if len(user_input) > 50 else f"开始处理用户查询: {user_input}")
         # 第一步：创建执行计划
@@ -411,7 +411,8 @@ class ReactAgent:
             user_message=user_input,
             plan=plan_text,
             bot_response=self._parsed_repose(final_response),
-            user_id=user_id
+            user_id=user_id,
+            model_name=model_name
         )
 
         info("用户查询处理完成")

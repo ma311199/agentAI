@@ -127,6 +127,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const message = userInput.value.trim();
         
         if (message) {
+            // 发送前校验是否选择了模型
+            const modelSelect = document.getElementById('modelSelect');
+            const selectedModelId = modelSelect ? modelSelect.value : '';
+            if (!selectedModelId) {
+                addBotMessage('未选择模型，请在左侧添加启用并选择模型后再发送');
+                return;
+            }
+            
             // 添加用户消息到聊天历史
             addUserMessage(message);
             
@@ -527,6 +535,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // 获取选中的模型ID
         const modelSelect = document.getElementById('modelSelect');
         const selectedModelId = modelSelect ? modelSelect.value : null;
+        
+        // 二次拦截：未选择模型不发送请求
+        if (!selectedModelId) {
+            hideLoading();
+            showError('未选择模型：请先在上方下拉框选择模型');
+            return;
+        }
         
         fetch('/api/chat', {
             method: 'POST',

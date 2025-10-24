@@ -67,7 +67,7 @@
                 <!-- 可用工具部分 - 可折叠子面板 -->
                 <div class="mb-4">
                     <div id="toolsSubHeader" class="flex items-center justify-between p-2 bg-gray-50 rounded-t-lg border border-gray-200 cursor-pointer">
-                        <h3 class="text-md font-medium text-gray-700">可用工具</h3>
+                        <h3 class="text-md font-medium text-gray-700">工具管理</h3>
                         <div class="flex items-center">
                             <button 
                                 id="addToolBtn" 
@@ -81,10 +81,16 @@
                     <div id="toolsSubContent" class="p-3 bg-white border-x border-b border-gray-200 rounded-b-lg">
                         <div id="toolsContainer" class="max-h-64 overflow-y-auto">
                             {% for tool in tools %}
-                            <div class="tool-item mb-4 p-3 bg-blue-50 rounded border-l-4 border-blue-500" data-tool-id="{{ tool.id if tool.id is defined else tool.tool_id }}">
-                                <div class="font-medium text-blue-700">
-                                    <span class="mr-1">📦</span>
-                                    {{ tool.tool_name }}
+                            <div class="tool-item mb-4 p-3 bg-blue-50 rounded border-l-4 border-blue-500" data-tool-id="{{ tool.tool_id }}">
+                                <div class="font-medium text-blue-700 flex items-center justify-between">
+                                    <div>
+                                        <span class="mr-1">📦</span>
+                                        {{ tool.tool_name }}
+                                    </div>
+                                    <div class="text-sm font-medium">
+                                        <button onclick="editTool('{{ tool.tool_id }}')" class="text-blue-600 hover:text-blue-900 mr-2">编辑</button>
+                                        <button onclick="deleteTool('{{ tool.tool_id }}', '{{ tool.tool_name }}')" class="delete-tool-btn text-red-600 hover:text-red-900">删除</button>
+                                    </div>
                                 </div>
                                 <div class="text-sm text-gray-600 mt-1">
                                     {{ tool.description }}
@@ -214,7 +220,7 @@
                     <div class="relative flex-grow">
                         <select 
                             id="modelSelect" 
-                            placeholder="请选择模型(内部默认qwen-flash)"
+                            placeholder="请选择模型"
                             class="absolute left-0 top-0 bottom-0 w-44 px-3 py-2 rounded-l-lg border border-gray-300 bg-gray-50 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         >
                             <option value="">加载中...</option>
@@ -257,11 +263,13 @@
                                 });
                             }
                             
-                            // 如果没有可用模型，显示默认模型
+                            // 如果没有可用模型，显示提示占位项（不再添加“默认”模型）
                             if (!hasActiveModels) {
                                 const option = document.createElement('option');
-                                option.value = 'default';
-                                option.textContent = 'qwen-flash (默认)';
+                                option.value = '';
+                                option.textContent = '请选择模型';
+                                option.disabled = true;
+                                option.selected = true;
                                 modelSelect.appendChild(option);
                             }
                         })
@@ -269,10 +277,12 @@
                             console.error('加载模型失败:', error);
                             const modelSelect = document.getElementById('modelSelect');
                             modelSelect.innerHTML = '';
-                            // 错误时也显示默认模型
+                            // 错误时也仅显示提示占位项（不再添加“默认”模型）
                             const option = document.createElement('option');
-                            option.value = 'default';
-                            option.textContent = 'qwen-flash (默认)';
+                            option.value = '';
+                            option.textContent = '请选择模型';
+                            option.disabled = true;
+                            option.selected = true;
                             modelSelect.appendChild(option);
                         });
                 }

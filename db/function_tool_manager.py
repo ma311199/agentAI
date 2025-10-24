@@ -62,7 +62,7 @@ class FunctionToolManager(DatabaseConnection):
 
             debug("获取所有函数工具")
             self.cursor.execute(
-                "SELECT tool_id, tool_name, description, parameters, is_active, create_time, update_time, tool_flag, label, code_content FROM function_tools WHERE user_id = ? ORDER BY tool_id",
+                "SELECT distinct tool_id, tool_name, description, parameters, is_active, create_time, update_time, tool_flag, label, code_content FROM function_tools WHERE user_id = ? or tool_flag = 0 ORDER BY tool_id",
                 (user_id,)
             )
             

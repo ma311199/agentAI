@@ -6,7 +6,7 @@ from datetime import datetime
 class ChatManager(DatabaseConnection):
     """对话管理模块，处理对话历史相关的所有操作"""
     
-    def add_chat_record(self, user_message, plan, bot_response, user_id=None):
+    def add_chat_record(self, user_message, plan, bot_response, user_id, model_name):
         """
         添加对话记录
         
@@ -27,14 +27,14 @@ class ChatManager(DatabaseConnection):
             
             # 插入对话记录
             self.cursor.execute(
-                "INSERT INTO chat_history (user_id, user_message, plan, bot_response, timestamp) "
-                "VALUES (?, ?, ?, ?, ?)",
-                (user_id, user_message, plan, bot_response, current_time)
+                "INSERT INTO chat_history (user_id, model_name, user_message, plan, bot_response, timestamp) "
+                "VALUES (?, ?, ?, ?, ?, ?)",
+                (user_id, model_name, user_message, plan, bot_response, current_time)
             )
             self.conn.commit()
             record_id = self.cursor.lastrowid
             
-            debug(f"添加对话记录成功 - 记录ID: {record_id}, 用户ID: {user_id}")
+            debug(f"添加对话记录成功 - 记录ID: {record_id}, 模型：{model_name}, 用户ID: {user_id}")
             return record_id
         except Exception as e:
             exception(f"添加对话记录时出错: {e}")
@@ -54,7 +54,7 @@ class ChatManager(DatabaseConnection):
         try:
             self._ensure_connection()
             
-            query = "SELECT id, user_id, plan, user_message, bot_response, timestamp FROM chat_history"
+            query = "SELECT id, user_id, plan, user_message, bot_response, timestamp, model_name FROM chat_history"
             params = []
             
             # 如果指定了用户ID，添加WHERE条件
@@ -80,7 +80,8 @@ class ChatManager(DatabaseConnection):
                     'plan':record[2],
                     'user_message': record[3],
                     'bot_response': record[4],
-                    'timestamp': record[5]
+                    'timestamp': record[5],
+                    'model_name': record[6]
                 })
             
             # 反转列表，使最新的记录在最后
