@@ -38,6 +38,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         <label class="block text-sm font-medium text-gray-700">描述</label>
                         <input type="text" id="newModelDesc" class="w-full px-3 py-2 rounded-md border border-gray-300" placeholder="可选描述">
                     </div>
+                    <div class="pt-1">
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" id="newModelShared" class="form-checkbox h-4 w-4 text-blue-600">
+                            <span class="ml-2 text-sm text-gray-700">共享模型（勾选则其他用户可见）</span>
+                        </label>
+                    </div>
                     <div class="flex justify-end space-x-3 pt-2">
                         <button id="cancelAddModel" class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">取消</button>
                         <button id="confirmAddModel" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">添加</button>
@@ -65,13 +71,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         'Content-Type': 'application/json',
                         'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.content || ''
                     },
-                    body: JSON.stringify({ model_url: modelUrl, api_key: apiKey, model_name: modelName, temperature, max_tokens: maxTokens, desc })
+                    body: JSON.stringify({ model_url: modelUrl, api_key: apiKey, model_name: modelName, temperature, max_tokens: maxTokens, desc, model_flag: (document.getElementById('newModelShared')?.checked ? 0 : 1) })
                 });
         
                 if (response.ok) {
                     alert('模型添加成功');
                     document.body.removeChild(modal);
-                    loadModels();
+                    // 局部刷新模型管理表 + 同步聊天下拉
+                    refreshModelList();
+                    if (window.loadModels) window.loadModels();
                 } else {
                     const errorData = await response.json();
                     alert('添加模型失败: ' + (errorData.error || '未知错误'));
@@ -125,12 +133,62 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    // 局部刷新模型管理表（侧边面板的表格）
+    async function refreshModelList() {
+        try {
+            const resp = await fetch('/api/models');
+            if (!resp.ok) {
+                throw new Error('获取模型列表失败');
+            }
+            const data = await resp.json();
+            renderModelRows(Array.isArray(data.models) ? data.models : []);
+        } catch (e) {
+            console.error('刷新模型列表失败:', e);
+        }
+    }
+
+    function renderModelRows(models) {
+        const tbody = document.querySelector('#modelsSubContent table tbody');
+        if (!tbody) return;
+        if (!models || models.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="9" class="px-3 py-4 text-center text-sm text-gray-500">暂无模型信息</td></tr>`;
+            return;
+        }
+        const rows = models.map(model => `
+            <tr>
+                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-900">${model.model_id}</td>
+                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-900">${model.model_name}</td>
+                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-500">${model.temperature ?? 0.7}</td>
+                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-500">${model.max_tokens ?? 4096}</td>
+                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-500">${model.add_time || ''}</td>
+                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-500">
+                    <label class="inline-flex items-center cursor-pointer">
+                        <input 
+                            type="checkbox" 
+                            class="form-checkbox h-5 w-5 text-blue-600" 
+                            data-model-id="${model.model_id}" 
+                            ${model.is_active ? 'checked' : ''} 
+                            onchange="toggleModelActive(this)"
+                        >
+                        <span class="ml-2">${model.is_active ? '已启用' : '已禁用'}</span>
+                    </label>
+                </td>
+                <td class="px-3 py-2 whitespace-nowrap text-sm text-gray-900">${model.desc ?? ''}</td>
+                <td class="px-3 py-2 whitespace-nowrap text-sm font-medium">
+                    <button onclick="editModel('${model.model_id}')" class="text-blue-600 hover:text-blue-900 mr-2">编辑</button>
+                    <button onclick="deleteModel('${model.model_id}')" class="text-red-600 hover:text-red-900">删除</button>
+                </td>
+            </tr>
+        `).join('');
+        tbody.innerHTML = rows;
+    }
+
     // 编辑模型
     async function editModel(modelId) {
         try {
             const modelResponse = await fetch(`/api/models/${modelId}`);
             if (!modelResponse.ok) {
-                alert('获取模型信息失败');
+                alert('获取模型信息失败，无权限处理');
                 return;
             }
             
@@ -166,6 +224,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             <label class="block text-sm font-medium text-gray-700 mb-1">描述</label>
                             <input type="text" id="editModelDesc" value="${model.desc}" class="w-full px-3 py-2 rounded-md border border-gray-300">
                         </div>
+                        <div class="pt-1">
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="editModelShared" class="form-checkbox h-4 w-4 text-blue-600" ${model.model_flag === 0 ? 'checked' : ''}>
+                                <span class="ml-2 text-sm text-gray-700">共享模型（勾选则其他用户可见）</span>
+                            </label>
+                        </div>
                         <div class="flex justify-end space-x-3 pt-2">
                             <button id="cancelEditModel" class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">取消</button>
                             <button id="confirmEditModel" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">确认更新</button>
@@ -194,7 +258,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     const response = await fetch(`/api/models/${modelId}`, {
                         method: 'PUT',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.content || ''
                         },
                         body: JSON.stringify({
                             model_name: modelName,
@@ -202,13 +267,17 @@ document.addEventListener('DOMContentLoaded', function() {
                             api_key: apiKey,
                             temperature: parseFloat(temperature),
                             max_tokens: parseInt(maxTokens),
-                            desc: modelDesc
+                            desc: modelDesc,
+                            model_flag: (document.getElementById('editModelShared')?.checked ? 0 : 1)
                         })
                     });
                     
                     if (response.ok) {
                         alert('模型更新成功');
-                        location.reload();
+                        // 局部刷新模型管理表 + 同步聊天下拉
+                        document.body.removeChild(modal);
+                        refreshModelList();
+                        if (window.loadModels) window.loadModels();
                     } else {
                         alert('更新失败: ' + await response.text());
                     }
@@ -221,26 +290,62 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
+    // 简易确认弹窗（替换原生confirm，避免浏览器兼容问题）
+    function showConfirmDialog(message) {
+        return new Promise(resolve => {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white rounded-lg p-6 max-w-sm w-full">
+                    <h3 class="text-lg font-semibold mb-3">确认操作</h3>
+                    <p class="text-sm text-gray-700 mb-4">${message}</p>
+                    <div class="flex justify-end space-x-3">
+                        <button id="confirmCancel" class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">取消</button>
+                        <button id="confirmOk" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">确定</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            const cleanup = () => { try { document.body.removeChild(modal); } catch(_){} };
+            modal.querySelector('#confirmCancel').onclick = () => { cleanup(); resolve(false); };
+            modal.querySelector('#confirmOk').onclick = () => { cleanup(); resolve(true); };
+        });
+    }
+
     // 删除模型
-    function deleteModel(modelId) {
-        if (confirm('确定要删除这个模型吗？')) {
-            fetch(`/api/models/${modelId}`, {
-                method: 'DELETE'
-            })
-            .then(response => {
-                if (response.ok) {
-                    alert('模型删除成功');
-                    location.reload();
-                } else {
-                    return response.text().then(text => {
-                        alert('删除失败: ' + text);
+    async function deleteModel(modelId) {
+        const ok = await showConfirmDialog('确定要删除这个模型吗？');
+        if (!ok) return;
+        
+        fetch(`/api/models/${modelId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.content || ''
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('模型删除成功');
+                // 局部刷新模型管理表 + 同步聊天下拉
+                refreshModelList();
+                if (window.loadModels) window.loadModels();
+            } else {
+                // 优先解析JSON错误，回退到纯文本
+                return response.json()
+                    .then(data => {
+                        alert('删除失败: ' + (data.error || JSON.stringify(data)));
+                    })
+                    .catch(() => {
+                        return response.text().then(text => {
+                            alert('删除失败: ' + text);
+                        });
                     });
-                }
-            })
-            .catch(error => {
-                alert('错误: ' + error.message);
-            });
-        }
+            }
+        })
+        .catch(error => {
+            alert('错误: ' + error.message);
+        });
     }
     
     // 添加模型按钮事件
@@ -273,4 +378,5 @@ document.addEventListener('DOMContentLoaded', function() {
     window.editModel = editModel;
     window.deleteModel = deleteModel;
     window.showAddModelModal = showAddModelModal;
+    window.refreshModelList = refreshModelList;
 });

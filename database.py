@@ -56,11 +56,11 @@ class ChatDatabase(DatabaseConnection):
         manager.cursor = self.cursor
         return manager.get_chat_history(user_id, limit)
         
-    def add_model(self, user_id, model_name, model_url, api_key=None, temperature=0.7, max_tokens=2048, desc=None):
+    def add_model(self, user_id, model_name, model_url, api_key=None, temperature=0.7, max_tokens=2048, desc=None, model_flag=1):
         manager = ModelManager(self.db_path)
         manager.conn = self.conn
         manager.cursor = self.cursor
-        return manager.add_model(user_id, model_name, model_url, api_key, temperature, max_tokens, desc)
+        return manager.add_model(user_id, model_name, model_url, api_key, temperature, max_tokens, desc, model_flag)
         
     def get_all_models(self):
         manager = ModelManager(self.db_path)
@@ -68,11 +68,11 @@ class ChatDatabase(DatabaseConnection):
         manager.cursor = self.cursor
         return manager.get_all_models()
         
-    def delete_model(self, model_id):
+    def delete_model(self, user_id, model_id):
         manager = ModelManager(self.db_path)
         manager.conn = self.conn
         manager.cursor = self.cursor
-        return manager.delete_model(model_id)
+        return manager.delete_model(user_id, model_id)
         
     def get_all_function_tools(self, user_id):
         manager = FunctionToolManager(self.db_path)
@@ -128,11 +128,11 @@ class ChatDatabase(DatabaseConnection):
         manager.cursor = self.cursor
         return manager.delete_chat_history(user_id)
         
-    def get_model_by_id(self, model_id):
+    def get_model_by_id(self, user_id, model_id):
         manager = ModelManager(self.db_path)
         manager.conn = self.conn
         manager.cursor = self.cursor
-        return manager.get_model_by_id(model_id)
+        return manager.get_model_by_id(user_id, model_id)
 
     def get_user_model_by_id(self, user_id):
         manager = ModelManager(self.db_path)
@@ -140,11 +140,11 @@ class ChatDatabase(DatabaseConnection):
         manager.cursor = self.cursor
         return manager.get_user_model_by_id(user_id)
         
-    def update_model(self, user_id, model_id, model_name=None, model_url=None, api_key=None, temperature=None, max_tokens=None, is_active=None, desc=None):
+    def update_model(self, user_id, model_id, model_name=None, model_url=None, api_key=None, temperature=None, max_tokens=None, is_active=None, desc=None, model_flag=None):
         manager = ModelManager(self.db_path)
         manager.conn = self.conn
         manager.cursor = self.cursor
-        return manager.update_model(user_id, model_id, model_name, model_url, api_key, temperature, max_tokens, is_active, desc)
+        return manager.update_model(user_id, model_id, model_name, model_url, api_key, temperature, max_tokens, is_active, desc, model_flag)
         
     def get_function_tool_by_id(self, user_id, tool_id):
         manager = FunctionToolManager(self.db_path)

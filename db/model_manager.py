@@ -1,12 +1,13 @@
 from .db_connection import DatabaseConnection
 from log import logger, debug, info, warning, error, critical, exception
 import datetime
+import sqlite3
 
 
 class ModelManager(DatabaseConnection):
     """模型管理模块，处理模型相关的所有操作"""
     
-    def add_model(self, user_id, model_name, model_url, api_key=None, temperature=0.7, max_tokens=2048, desc=None):
+    def add_model(self, user_id, model_name, model_url, api_key=None, temperature=0.7, max_tokens=2048, desc=None, model_flag=1):
         """添加新模型
         
         Args:
@@ -17,6 +18,7 @@ class ModelManager(DatabaseConnection):
             temperature: 温度参数，默认为0.7
             max_tokens: 最大生成 tokens 数，默认为2048
             desc : 模型描述
+            model_flag: 模型共享标识，0共享，1私有，默认1
             
         Returns:
             tuple: (success, model_id/error_message)
@@ -25,25 +27,42 @@ class ModelManager(DatabaseConnection):
             # 确保连接有效
             self._ensure_connection()
             
-            # 检查模型名称是否已存在
-            self.cursor.execute("SELECT model_id FROM model_info WHERE model_name = ? and user_id= ? ", (model_name,user_id))
+            # 规范化标识
+            try:
+                model_flag = int(model_flag)
+            except Exception:
+                model_flag = 1
+            model_flag = 0 if model_flag == 0 else 1
+            
+            # 检查模型名称是否已存在（全局唯一）
+            self.cursor.execute("SELECT model_id FROM model_info WHERE model_name = ?", (model_name,))
             if self.cursor.fetchone():
-                debug(f"模型添加失败 - 用户{user_id}已添加过模型{model_name}")
+                debug(f"模型添加失败 - 名称已存在（全局唯一）: {model_name}")
                 return False, "模型名称已存在"
             
             # 获取当前时间作为添加时间
             add_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             
-            # 插入新模型
+            # 插入新模型（包含共享标识）
             self.cursor.execute(
-                "INSERT INTO model_info (user_id, model_name, model_url, api_key, temperature, max_tokens, add_time,desc) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                (user_id, model_name, model_url, api_key, temperature, max_tokens, add_time, desc)
+                "INSERT INTO model_info (user_id, model_name, model_url, api_key, temperature, max_tokens, add_time, desc, model_flag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (user_id, model_name, model_url, api_key, temperature, max_tokens, add_time, desc, model_flag)
             )
             self.conn.commit()
             model_id = self.cursor.lastrowid
             
-            info(f"模型添加成功 - 模型名称: {model_name}, 模型ID: {model_id}")
+            info(f"模型添加成功 - 模型名称: {model_name}, 模型ID: {model_id}, 共享: {'是' if model_flag == 0 else '否'}")
             return True, model_id
+        except Exception as e:
+            exception(f"添加模型 {model_name} 时出错: {e}")
+            return False, str(e)
+        except sqlite3.IntegrityError as e:
+            # 统一拦截唯一约束错误，返回友好文案
+            if 'model_info.model_name' in str(e):
+                debug(f"模型添加失败 - 名称已存在（全局唯一）: {model_name}")
+                return False, "模型名称已存在"
+            exception(f"添加模型 {model_name} 时数据库约束错误: {e}")
+            return False, "数据库约束错误"
         except Exception as e:
             exception(f"添加模型 {model_name} 时出错: {e}")
             return False, str(e)
@@ -59,7 +78,7 @@ class ModelManager(DatabaseConnection):
             self._ensure_connection()
             
             debug("获取所有模型信息")
-            self.cursor.execute("SELECT model_id, model_name, model_url, api_key, temperature, max_tokens, add_time, is_active, user_id, desc FROM model_info ORDER BY model_id")
+            self.cursor.execute("SELECT model_id, model_name, model_url, api_key, temperature, max_tokens, add_time, is_active, user_id, desc, model_flag FROM model_info ORDER BY model_id")
             
             models = []
             for model in self.cursor.fetchall():
@@ -73,7 +92,8 @@ class ModelManager(DatabaseConnection):
                     'add_time': model[6],
                     'is_active': bool(model[7]),
                     'user_id': model[8],
-                    'desc': model[9]
+                    'desc': model[9],
+                    'model_flag': int(model[10])
                 })
             
             info(f"成功获取模型列表 - 模型数: {len(models)}")
@@ -82,10 +102,11 @@ class ModelManager(DatabaseConnection):
             exception(f"获取模型列表时出错: {e}")
             return []
     
-    def get_model_by_id(self, model_id):
+    def get_model_by_id(self, user_id, model_id):
         """根据模型ID获取模型信息
         
         Args:
+            user_id: 用户id
             model_id: 模型ID
             
         Returns:
@@ -97,8 +118,8 @@ class ModelManager(DatabaseConnection):
             
             debug(f"获取模型信息 - 模型ID: {model_id}")
             self.cursor.execute(
-                "SELECT model_id, model_name, model_url, api_key, temperature, max_tokens, add_time, is_active, user_id, desc FROM model_info WHERE model_id = ?",
-                (model_id,)
+                "SELECT model_id, model_name, model_url, api_key, temperature, max_tokens, add_time, is_active, user_id, desc, model_flag FROM model_info WHERE model_id = ? and user_id = ?",
+                (model_id,user_id,)
             )
             model = self.cursor.fetchone()
             
@@ -115,7 +136,8 @@ class ModelManager(DatabaseConnection):
                 'add_time': model[6],
                 'is_active': bool(model[7]),
                 'user_id': model[8],
-                'desc': model[9]
+                'desc': model[9],
+                'model_flag': int(model[10])
             }
             
             return model_info
@@ -139,7 +161,7 @@ class ModelManager(DatabaseConnection):
             
             debug(f"获取模型信息 - 用户ID: {user_id}")
             self.cursor.execute(
-                "SELECT model_id, model_name, model_url, api_key, temperature, max_tokens, add_time, is_active, desc FROM model_info WHERE user_id = ?",
+                "SELECT distinct model_id, model_name, model_url, api_key, temperature, max_tokens, add_time, is_active, desc, model_flag FROM model_info WHERE user_id = ? or model_flag = 0",
                 (user_id,)
             )
             models = self.cursor.fetchall()
@@ -158,7 +180,8 @@ class ModelManager(DatabaseConnection):
                     'max_tokens': model[5],
                     'add_time': model[6],
                     'is_active': bool(model[7]),
-                    'desc': model[8]
+                    'desc': model[8],
+                    'model_flag': int(model[9])
                 }
                 model_list.append(model_info)
             
@@ -167,7 +190,7 @@ class ModelManager(DatabaseConnection):
             exception(f"获取模型信息时出错 (user_id={user_id}): {e}")
             return []
     
-    def update_model(self, user_id, model_id, model_name=None, model_url=None, api_key=None, temperature=None, max_tokens=None, is_active=None, desc=None):
+    def update_model(self, user_id, model_id, model_name=None, model_url=None, api_key=None, temperature=None, max_tokens=None, is_active=None, desc=None, model_flag=None):
         """更新模型信息
         
         Args:
@@ -180,6 +203,7 @@ class ModelManager(DatabaseConnection):
             max_tokens: 最大生成 tokens 数（可选）
             is_active: 是否启用（可选）
             desc: 模型描述
+            model_flag: 共享标识（0共享，1私有）
             
         Returns:
             bool: 操作是否成功
@@ -189,7 +213,7 @@ class ModelManager(DatabaseConnection):
             self._ensure_connection()
             
             # 检查模型是否存在
-            if not self.get_model_by_id(model_id):
+            if not self.get_model_by_id(user_id, model_id):
                 warning(f"未找到模型 - 模型ID: {model_id}")
                 return False
             
@@ -229,14 +253,24 @@ class ModelManager(DatabaseConnection):
             if desc is not None:
                 update_fields.append("desc = ?")
                 update_values.append(desc)
+
+            if model_flag is not None:
+                try:
+                    model_flag = int(model_flag)
+                except Exception:
+                    model_flag = 1
+                model_flag = 0 if model_flag == 0 else 1
+                update_fields.append("model_flag = ?")
+                update_values.append(model_flag)
             
             if not update_fields:
                 debug("未提供更新字段")
                 return True
             
             # 执行更新
-            update_sql = f"UPDATE model_info SET {', '.join(update_fields)} WHERE model_id = ?"
+            update_sql = f"UPDATE model_info SET {', '.join(update_fields)} WHERE model_id = ? AND user_id = ?"
             update_values.append(model_id)
+            update_values.append(user_id)
             
             self.cursor.execute(update_sql, update_values)
             
@@ -248,13 +282,14 @@ class ModelManager(DatabaseConnection):
                 warning(f"模型更新失败 - 模型ID: {model_id}")
                 return False
         except Exception as e:
-            exception(f"更新模型时出错 (模型ID: {model_id}): {e}")
+            exception(f"更新模型信息时出错 (model_id={model_id}): {e}")
             return False
     
-    def delete_model(self, model_id):
-        """删除模型
+    def delete_model(self, user_id, model_id):
+        """删除模型（仅限模型所有者）
         
         Args:
+            user_id: 用户ID
             model_id: 模型ID
             
         Returns:
@@ -264,17 +299,18 @@ class ModelManager(DatabaseConnection):
             # 确保连接有效
             self._ensure_connection()
             
-            debug(f"删除模型 - 模型ID: {model_id}")
+            debug(f"删除模型 - 用户ID: {user_id}, 模型ID: {model_id}")
             
-            self.cursor.execute("DELETE FROM model_info WHERE model_id = ?", (model_id,))
+            # 仅删除该用户自己的模型
+            self.cursor.execute("DELETE FROM model_info WHERE model_id = ? AND user_id = ?", (model_id, user_id))
             
             if self.cursor.rowcount > 0:
                 self.conn.commit()
-                info(f"模型删除成功 - 模型ID: {model_id}")
+                info(f"模型删除成功 - 用户ID: {user_id}, 模型ID: {model_id}")
                 return True
             else:
-                warning(f"未找到模型 - 模型ID: {model_id}")
+                warning(f"未找到模型或无权限删除 - 用户ID: {user_id}, 模型ID: {model_id}")
                 return False
         except Exception as e:
-            exception(f"删除模型时出错 (模型ID: {model_id}): {e}")
+            exception(f"删除模型时出错 (用户ID: {user_id}, 模型ID: {model_id}): {e}")
             return False

@@ -88,6 +88,7 @@ class DatabaseConnection:
                     add_time TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
                     is_active INTEGER NOT NULL DEFAULT 1,
                     desc TEXT,
+                    model_flag INTEGER NOT NULL DEFAULT 1,
                     FOREIGN KEY (user_id) REFERENCES users (user_id)
                 )
             ''')
