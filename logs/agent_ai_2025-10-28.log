@@ -1,0 +1,894 @@
+2025-10-28 13:59:33 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-28 13:59:33 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-28 13:59:35 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-28 13:59:35 - AgentAI - INFO - log.py:76 - 开始自动注册admin
+2025-10-28 13:59:35 - AgentAI - WARNING - log.py:80 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 13:59:35 - AgentAI - INFO - log.py:76 - admin用户注册成功
+2025-10-28 13:59:35 - AgentAI - INFO - log.py:76 - 开始自动注册内部工具
+2025-10-28 13:59:35 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-28 13:59:35 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 13:59:36 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-28 13:59:36 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-28 13:59:41 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-28 13:59:41 - AgentAI - INFO - log.py:76 - 开始自动注册admin
+2025-10-28 13:59:41 - AgentAI - WARNING - log.py:80 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 13:59:41 - AgentAI - INFO - log.py:76 - admin用户注册成功
+2025-10-28 13:59:41 - AgentAI - INFO - log.py:76 - 开始自动注册内部工具
+2025-10-28 13:59:41 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-28 13:59:41 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 13:59:42 - AgentAI - INFO - log.py:131 - API Call - GET /login, Status: 200
+2025-10-28 13:59:55 - AgentAI - INFO - log.py:76 - 用户登录尝试 - 用户名: admin
+2025-10-28 13:59:55 - AgentAI - INFO - log.py:76 - 用户登录成功 - 用户名: admin, 用户ID: 1
+2025-10-28 13:59:55 - AgentAI - INFO - log.py:106 - User Action - User: admin, Action: login, Details: 登录成功
+2025-10-28 13:59:55 - AgentAI - INFO - log.py:131 - API Call - POST /login, Status: 302, User: admin
+2025-10-28 13:59:55 - AgentAI - INFO - log.py:76 - 用户登录成功 - 用户ID: 1, 用户名: admin
+2025-10-28 13:59:55 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 13:59:55 - AgentAI - INFO - log.py:131 - API Call - GET /, Status: 200, User: 1, Response Time: 11.853218078613281ms
+2025-10-28 13:59:56 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:00:08 - AgentAI - INFO - log.py:131 - API Call - GET /login, Status: 200
+2025-10-28 14:00:25 - AgentAI - INFO - log.py:76 - 用户登录尝试 - 用户名: user
+2025-10-28 14:00:25 - AgentAI - INFO - log.py:76 - 用户登录成功 - 用户名: user, 用户ID: 2
+2025-10-28 14:00:25 - AgentAI - INFO - log.py:106 - User Action - User: user, Action: login, Details: 登录成功
+2025-10-28 14:00:25 - AgentAI - INFO - log.py:131 - API Call - POST /login, Status: 302, User: user
+2025-10-28 14:00:25 - AgentAI - INFO - log.py:76 - 用户登录成功 - 用户ID: 2, 用户名: user
+2025-10-28 14:00:26 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:00:26 - AgentAI - INFO - log.py:131 - API Call - GET /, Status: 200, User: 2, Response Time: 19.472122192382812ms
+2025-10-28 14:00:27 - AgentAI - ERROR - log.py:92 - 获取函数工具列表时出错: Recursive use of cursors not allowed.
+Traceback (most recent call last):
+  File "C:\Users\MM\Desktop\agent\git\agentAI\db\function_tool_manager.py", line 64, in get_all_function_tools
+    self.cursor.execute(
+sqlite3.ProgrammingError: Recursive use of cursors not allowed.
+2025-10-28 14:00:55 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:00:55 - AgentAI - INFO - log.py:131 - API Call - GET /, Status: 200, User: 2, Response Time: 12.11690902709961ms
+2025-10-28 14:00:56 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:02:00 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-28 14:02:00 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-28 14:02:02 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-28 14:02:02 - AgentAI - INFO - log.py:76 - 开始自动注册admin
+2025-10-28 14:02:02 - AgentAI - WARNING - log.py:80 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 14:02:02 - AgentAI - INFO - log.py:76 - admin用户注册成功
+2025-10-28 14:02:02 - AgentAI - INFO - log.py:76 - 开始自动注册内部工具
+2025-10-28 14:02:02 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-28 14:02:02 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 14:02:48 - AgentAI - INFO - log.py:106 - User Action - User: user, Action: logout, Details: 用户登出
+2025-10-28 14:02:48 - AgentAI - INFO - log.py:76 - 用户登出 - 用户ID: 2, 用户名: user
+2025-10-28 14:02:49 - AgentAI - INFO - log.py:131 - API Call - GET /login, Status: 200
+2025-10-28 14:03:00 - AgentAI - INFO - log.py:76 - 用户登录尝试 - 用户名: admin
+2025-10-28 14:03:00 - AgentAI - INFO - log.py:76 - 用户登录成功 - 用户名: admin, 用户ID: 1
+2025-10-28 14:03:00 - AgentAI - INFO - log.py:106 - User Action - User: admin, Action: login, Details: 登录成功
+2025-10-28 14:03:00 - AgentAI - INFO - log.py:131 - API Call - POST /login, Status: 302, User: admin
+2025-10-28 14:03:00 - AgentAI - INFO - log.py:76 - 用户登录成功 - 用户ID: 1, 用户名: admin
+2025-10-28 14:03:01 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:03:01 - AgentAI - INFO - log.py:131 - API Call - GET /, Status: 200, User: 1, Response Time: 20.36571502685547ms
+2025-10-28 14:03:02 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:04:04 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:04:04 - AgentAI - INFO - log.py:131 - API Call - GET /, Status: 200, User: 1, Response Time: 17.006397247314453ms
+2025-10-28 14:04:07 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:09:03 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:09:03 - AgentAI - INFO - log.py:131 - API Call - GET /, Status: 200, User: 1, Response Time: 24.428844451904297ms
+2025-10-28 14:09:04 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:12:00 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:12:00 - AgentAI - INFO - log.py:131 - API Call - GET /, Status: 200, User: 1, Response Time: 16.892433166503906ms
+2025-10-28 14:12:01 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:12:05 - AgentAI - INFO - log.py:106 - User Action - User: admin, Action: logout, Details: 用户登出
+2025-10-28 14:12:05 - AgentAI - INFO - log.py:76 - 用户登出 - 用户ID: 1, 用户名: admin
+2025-10-28 14:12:06 - AgentAI - INFO - log.py:131 - API Call - GET /login, Status: 200
+2025-10-28 14:12:16 - AgentAI - INFO - log.py:76 - 用户登录尝试 - 用户名: user
+2025-10-28 14:12:16 - AgentAI - INFO - log.py:76 - 用户登录成功 - 用户名: user, 用户ID: 2
+2025-10-28 14:12:16 - AgentAI - INFO - log.py:106 - User Action - User: user, Action: login, Details: 登录成功
+2025-10-28 14:12:16 - AgentAI - INFO - log.py:131 - API Call - POST /login, Status: 302, User: user
+2025-10-28 14:12:16 - AgentAI - INFO - log.py:76 - 用户登录成功 - 用户ID: 2, 用户名: user
+2025-10-28 14:12:16 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:12:16 - AgentAI - INFO - log.py:131 - API Call - GET /, Status: 200, User: 2, Response Time: 17.093896865844727ms
+2025-10-28 14:12:17 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:12:49 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-28 14:12:49 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-28 14:13:01 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-28 14:13:01 - AgentAI - INFO - log.py:76 - 开始自动注册admin
+2025-10-28 14:13:02 - AgentAI - WARNING - log.py:80 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 14:13:02 - AgentAI - INFO - log.py:76 - admin用户注册成功
+2025-10-28 14:13:02 - AgentAI - INFO - log.py:76 - 开始自动注册内部工具
+2025-10-28 14:13:02 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-28 14:13:02 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 14:13:02 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:13:02 - AgentAI - INFO - log.py:131 - API Call - GET /, Status: 200, User: 2, Response Time: 22.367000579833984ms
+2025-10-28 14:13:04 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:23:17 - AgentAI - INFO - log.py:131 - API Call - GET /login, Status: 200
+2025-10-28 14:24:07 - AgentAI - INFO - log.py:131 - API Call - GET /login, Status: 200
+2025-10-28 14:24:07 - AgentAI - INFO - log.py:131 - API Call - GET /login, Status: 200
+2025-10-28 14:25:31 - AgentAI - INFO - log.py:106 - User Action - User: 未知用户, Action: logout, Details: 用户登出
+2025-10-28 14:25:31 - AgentAI - INFO - log.py:76 - 用户登出 - 用户ID: 未知ID, 用户名: 未知用户
+2025-10-28 14:25:31 - AgentAI - INFO - log.py:131 - API Call - GET /login, Status: 200
+2025-10-28 14:25:52 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-28 14:25:52 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-28 14:25:56 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-28 14:25:56 - AgentAI - INFO - log.py:76 - 开始自动注册admin
+2025-10-28 14:25:56 - AgentAI - WARNING - log.py:80 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 14:25:56 - AgentAI - INFO - log.py:76 - admin用户注册成功
+2025-10-28 14:25:56 - AgentAI - INFO - log.py:76 - 开始自动注册内部工具
+2025-10-28 14:25:56 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-28 14:25:56 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 14:28:10 - AgentAI - INFO - log.py:131 - API Call - GET /login, Status: 200
+2025-10-28 14:28:23 - AgentAI - INFO - log.py:76 - 用户登录尝试 - 用户名: admin
+2025-10-28 14:28:23 - AgentAI - INFO - log.py:76 - 用户登录成功 - 用户名: admin, 用户ID: 1
+2025-10-28 14:28:23 - AgentAI - INFO - log.py:106 - User Action - User: admin, Action: login, Details: 登录成功
+2025-10-28 14:28:23 - AgentAI - INFO - log.py:131 - API Call - POST /login, Status: 302, User: admin
+2025-10-28 14:28:23 - AgentAI - INFO - log.py:76 - 用户登录成功 - 用户ID: 1, 用户名: admin
+2025-10-28 14:28:24 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:28:24 - AgentAI - INFO - log.py:131 - API Call - GET /, Status: 200, User: 1, Response Time: 19.26398277282715ms
+2025-10-28 14:28:25 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:33:28 - AgentAI - INFO - log.py:131 - API Call - GET /login, Status: 200
+2025-10-28 14:33:43 - AgentAI - INFO - log.py:76 - 用户登录尝试 - 用户名: user
+2025-10-28 14:33:43 - AgentAI - INFO - log.py:76 - 用户登录成功 - 用户名: user, 用户ID: 2
+2025-10-28 14:33:43 - AgentAI - INFO - log.py:106 - User Action - User: user, Action: login, Details: 登录成功
+2025-10-28 14:33:43 - AgentAI - INFO - log.py:131 - API Call - POST /login, Status: 302, User: user
+2025-10-28 14:33:43 - AgentAI - INFO - log.py:76 - 用户登录成功 - 用户ID: 2, 用户名: user
+2025-10-28 14:33:43 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:33:43 - AgentAI - INFO - log.py:131 - API Call - GET /, Status: 200, User: 2, Response Time: 21.453142166137695ms
+2025-10-28 14:33:44 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:33:54 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:33:54 - AgentAI - INFO - log.py:131 - API Call - GET /, Status: 200, User: 2, Response Time: 14.614105224609375ms
+2025-10-28 14:33:55 - AgentAI - INFO - log.py:76 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:36:22 - AgentAI - INFO - log.py:131 - API Call - GET /login, Status: 200
+2025-10-28 14:37:15 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-28 14:37:15 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-28 14:37:22 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-28 14:37:22 - AgentAI - INFO - log.py:76 - 开始自动注册admin
+2025-10-28 14:37:22 - AgentAI - WARNING - log.py:80 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 14:37:22 - AgentAI - INFO - log.py:76 - admin用户注册成功
+2025-10-28 14:37:22 - AgentAI - INFO - log.py:76 - 开始自动注册内部工具
+2025-10-28 14:37:22 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-28 14:37:22 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 14:39:38 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-28 14:39:38 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-28 14:39:39 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-28 14:39:39 - AgentAI - INFO - log.py:76 - 开始自动注册admin
+2025-10-28 14:39:39 - AgentAI - WARNING - log.py:80 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 14:39:39 - AgentAI - INFO - log.py:76 - admin用户注册成功
+2025-10-28 14:39:39 - AgentAI - INFO - log.py:76 - 开始自动注册内部工具
+2025-10-28 14:39:39 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-28 14:39:39 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 14:45:24 - AgentAI - INFO - log.py:156 - Logger initialized successfully
+2025-10-28 14:45:24 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-28 14:45:26 - AgentAI - INFO - log.py:76 - 启动Flask应用服务...
+2025-10-28 14:45:26 - AgentAI - INFO - log.py:76 - 开始自动注册admin
+2025-10-28 14:45:26 - AgentAI - WARNING - log.py:80 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 14:45:26 - AgentAI - INFO - log.py:76 - admin用户注册成功
+2025-10-28 14:45:26 - AgentAI - INFO - log.py:76 - 开始自动注册内部工具
+2025-10-28 14:45:26 - AgentAI - INFO - log.py:76 - 6个内部工具添加完成
+2025-10-28 14:45:26 - AgentAI - INFO - log.py:76 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 14:45:39 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 14:45:39 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-28 14:45:40 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 14:45:40 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 14:45:40 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 14:45:40 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 14:45:40 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 14:45:40 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 14:45:40 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 14:45:55 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 14:45:55 - AgentAI - INFO - database.py:31 - Database initialized successfully
+2025-10-28 14:45:57 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 14:45:57 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 14:45:57 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 14:45:57 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 14:45:57 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 14:45:57 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 14:45:57 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 14:46:14 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 14:46:14 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 14:46:16 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 14:46:16 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 14:46:16 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 14:46:16 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 14:46:16 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 14:46:16 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 14:46:16 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 14:46:25 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 14:46:25 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 14:46:26 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 14:46:26 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 14:46:26 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 14:46:26 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 14:46:26 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 14:46:26 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 14:46:26 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 14:46:34 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 14:46:34 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 14:46:37 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 14:46:37 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 14:46:37 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 14:46:37 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 14:46:37 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 14:46:37 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 14:46:37 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 14:50:36 - AgentAI - INFO - log.py:125 - API Call - GET /login, Status: 200
+2025-10-28 14:50:47 - AgentAI - INFO - log.py:71 - 用户登录尝试 - 用户名: admin
+2025-10-28 14:50:47 - AgentAI - INFO - log.py:71 - 用户登录成功 - 用户名: admin, 用户ID: 1
+2025-10-28 14:50:47 - AgentAI - INFO - log.py:101 - User Action - User: admin, Action: login, Details: 登录成功
+2025-10-28 14:50:47 - AgentAI - INFO - log.py:125 - API Call - POST /login, Status: 302, User: admin
+2025-10-28 14:50:47 - AgentAI - INFO - log.py:71 - 用户登录成功 - 用户ID: 1, 用户名: admin
+2025-10-28 14:50:47 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:50:47 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 11.05499267578125ms
+2025-10-28 14:50:48 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:54:55 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 14:54:55 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 14:54:57 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 14:54:57 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 14:54:57 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 14:54:57 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 14:54:57 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 14:54:57 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 14:54:57 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 14:55:09 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 14:55:09 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 14:55:11 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 14:55:11 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 14:55:11 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 14:55:11 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 14:55:11 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 14:55:11 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 14:55:11 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 14:55:17 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 14:55:17 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 14:55:19 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 14:55:19 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 14:55:19 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 14:55:19 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 14:55:19 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 14:55:19 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 14:55:19 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 14:55:24 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 14:55:24 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 14:55:26 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 14:55:27 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 14:55:27 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 14:55:27 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 14:55:27 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 14:55:27 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 14:55:27 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 14:57:57 - AgentAI - INFO - log.py:71 - 用户登录尝试 - 用户名: admin
+2025-10-28 14:57:57 - AgentAI - INFO - log.py:71 - 用户登录成功 - 用户名: admin, 用户ID: 1
+2025-10-28 14:57:57 - AgentAI - INFO - log.py:101 - User Action - User: admin, Action: login, Details: 登录成功
+2025-10-28 14:57:57 - AgentAI - INFO - log.py:125 - API Call - POST /login, Status: 302, User: admin
+2025-10-28 14:57:57 - AgentAI - INFO - log.py:71 - 用户登录成功 - 用户ID: 1, 用户名: admin
+2025-10-28 14:57:57 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:57:57 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 19.376754760742188ms
+2025-10-28 14:57:58 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:58:00 - AgentAI - INFO - log.py:125 - API Call - GET /login, Status: 200
+2025-10-28 14:58:25 - AgentAI - INFO - log.py:71 - 用户登录尝试 - 用户名: admin
+2025-10-28 14:58:25 - AgentAI - INFO - log.py:71 - 用户登录成功 - 用户名: admin, 用户ID: 1
+2025-10-28 14:58:25 - AgentAI - INFO - log.py:101 - User Action - User: admin, Action: login, Details: 登录成功
+2025-10-28 14:58:25 - AgentAI - INFO - log.py:125 - API Call - POST /login, Status: 302, User: admin
+2025-10-28 14:58:25 - AgentAI - INFO - log.py:71 - 用户登录成功 - 用户ID: 1, 用户名: admin
+2025-10-28 14:58:25 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:58:25 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 7.939577102661133ms
+2025-10-28 14:58:26 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:58:28 - AgentAI - INFO - log.py:125 - API Call - GET /login, Status: 200
+2025-10-28 14:59:09 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 14:59:09 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 14:59:14 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 14:59:14 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 14:59:14 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 14:59:14 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 14:59:14 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 14:59:14 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 14:59:14 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 14:59:24 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:59:24 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 13.443946838378906ms
+2025-10-28 14:59:29 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 14:59:50 - AgentAI - INFO - log.py:125 - API Call - GET /login, Status: 200
+2025-10-28 15:01:02 - AgentAI - INFO - log.py:125 - API Call - GET /login, Status: 200
+2025-10-28 15:01:14 - AgentAI - INFO - log.py:71 - 用户登录尝试 - 用户名: admin
+2025-10-28 15:01:14 - AgentAI - INFO - log.py:71 - 用户登录成功 - 用户名: admin, 用户ID: 1
+2025-10-28 15:01:14 - AgentAI - INFO - log.py:101 - User Action - User: admin, Action: login, Details: 登录成功
+2025-10-28 15:01:14 - AgentAI - INFO - log.py:125 - API Call - POST /login, Status: 302, User: admin
+2025-10-28 15:01:14 - AgentAI - INFO - log.py:71 - 用户登录成功 - 用户ID: 1, 用户名: admin
+2025-10-28 15:01:14 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 15:01:14 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 17.364025115966797ms
+2025-10-28 15:01:15 - AgentAI - ERROR - log.py:87 - 获取模型信息时出错 (user_id=1): Recursive use of cursors not allowed.
+Traceback (most recent call last):
+  File "C:\Users\MM\Desktop\agent\git\agentAI\db\model_manager.py", line 163, in get_user_model_by_id
+    self.cursor.execute(
+sqlite3.ProgrammingError: Recursive use of cursors not allowed.
+2025-10-28 15:01:15 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 15:01:17 - AgentAI - INFO - log.py:125 - API Call - GET /api/tools/1, Status: 200, User: 1, Response Time: 4.001617431640625ms
+2025-10-28 15:01:23 - AgentAI - INFO - log.py:71 - 函数工具删除成功 - 工具ID: 1, 用户ID: 1
+2025-10-28 15:01:23 - AgentAI - INFO - log.py:125 - API Call - DELETE /api/tools/1, Status: 200, User: 1, Response Time: 16.975879669189453ms
+2025-10-28 15:01:24 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 5
+2025-10-28 15:01:34 - AgentAI - INFO - log.py:71 - 模型删除成功 - 用户ID: 1, 模型ID: 2
+2025-10-28 15:01:52 - AgentAI - INFO - log.py:71 - 删除对话历史成功 - 删除记录数: 0, 用户ID: 1
+2025-10-28 15:01:58 - AgentAI - INFO - log.py:71 - 用户1没有函数工具执行记录需要删除
+2025-10-28 15:02:06 - AgentAI - INFO - log.py:71 - 删除对话历史成功 - 删除记录数: 0, 用户ID: 1
+2025-10-28 15:02:06 - AgentAI - INFO - log.py:71 - 用户1没有函数工具执行记录需要删除
+2025-10-28 15:02:19 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 15:02:19 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 15:02:27 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 15:02:27 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 15:02:27 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 15:02:27 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 15:02:27 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 15:02:27 - AgentAI - INFO - log.py:71 - 函数工具添加成功 - 工具名称: add, 工具ID: 7, 用户ID: 1, 工具类型: 通用
+2025-10-28 15:02:27 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 15:02:27 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 15:05:05 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 15:05:05 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 15:05:12 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 15:05:12 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 15:05:12 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 15:05:12 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 15:05:12 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 15:05:12 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 15:05:12 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 15:06:46 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 15:06:46 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 17.16136932373047ms
+2025-10-28 15:06:49 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 15:06:51 - AgentAI - INFO - log.py:71 - 成功获取用户函数工具执行历史 - 用户ID: 1, 记录数: 0
+2025-10-28 15:31:52 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 15:31:52 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 15:31:53 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 15:31:53 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 15:31:53 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 15:31:53 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 15:31:53 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 15:31:53 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 15:31:53 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 15:32:21 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 15:32:21 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 15:32:22 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 15:32:22 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 15:32:22 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 15:32:22 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 15:32:22 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 15:32:22 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 15:32:22 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 15:34:56 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 15:34:56 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 15:34:57 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 15:34:57 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 15:34:57 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 15:34:57 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 15:34:57 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 15:34:57 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 15:34:57 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 15:35:02 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 15:35:02 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 13.46445083618164ms
+2025-10-28 15:40:21 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 15:40:21 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 16.040563583374023ms
+2025-10-28 15:40:22 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 15:40:22 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 14.12200927734375ms
+2025-10-28 15:40:25 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 15:41:56 - AgentAI - INFO - log.py:71 - 函数工具删除成功 - 工具ID: 7, 用户ID: 1
+2025-10-28 15:41:56 - AgentAI - INFO - log.py:125 - API Call - DELETE /api/tools/7, Status: 200, User: 1, Response Time: 17.90452003479004ms
+2025-10-28 15:41:56 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 5
+2025-10-28 15:42:52 - AgentAI - INFO - log.py:71 - 成功获取用户函数工具执行历史 - 用户ID: 1, 记录数: 0
+2025-10-28 15:45:57 - AgentAI - INFO - log.py:71 - 用户登录尝试 - 用户名: user
+2025-10-28 15:45:57 - AgentAI - INFO - log.py:71 - 用户登录成功 - 用户名: user, 用户ID: 2
+2025-10-28 15:45:57 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 5
+2025-10-28 15:45:57 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'subtract': <function subtract at 0x000001ACD8DDA320>}
+2025-10-28 15:45:57 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'multiply': <function multiply at 0x000001ACD8DDA5F0>}
+2025-10-28 15:45:57 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'divide': <function divide at 0x000001ACD8DD9360>}
+2025-10-28 15:45:57 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'search': <function search at 0x000001ACD8DDBF40>}
+2025-10-28 15:45:57 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'search_hana': <function search_hana at 0x000001ACD8DDBBE0>}
+2025-10-28 15:45:57 - AgentAI - INFO - log.py:71 - 为用户 2 构建工具注册完成，有效工具数: 5
+2025-10-28 15:45:57 - AgentAI - INFO - log.py:101 - User Action - User: user, Action: login, Details: 登录成功
+2025-10-28 15:45:57 - AgentAI - INFO - log.py:125 - API Call - POST /login, Status: 302, User: user
+2025-10-28 15:45:57 - AgentAI - INFO - log.py:71 - 用户登录成功 - 用户ID: 2, 用户名: user
+2025-10-28 15:45:57 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 5
+2025-10-28 15:45:57 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 2, Response Time: 24.576187133789062ms
+2025-10-28 15:45:58 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 5
+2025-10-28 15:46:12 - AgentAI - INFO - log.py:71 - 函数工具删除成功 - 工具ID: 2, 用户ID: 1
+2025-10-28 15:46:12 - AgentAI - INFO - log.py:125 - API Call - DELETE /api/tools/2, Status: 200, User: 1, Response Time: 23.76270294189453ms
+2025-10-28 15:46:13 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 4
+2025-10-28 15:46:21 - AgentAI - WARNING - log.py:123 - API Call - GET /api/tools/2, Status: 404, User: 2, Response Time: 3.9930343627929688ms
+2025-10-28 15:46:29 - AgentAI - WARNING - log.py:123 - API Call - DELETE /api/tools/2, Status: 404, User: 2, Response Time: 6.985664367675781ms
+2025-10-28 15:46:32 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 4
+2025-10-28 15:46:32 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 2, Response Time: 21.655559539794922ms
+2025-10-28 15:46:33 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 4
+2025-10-28 15:47:44 - AgentAI - WARNING - log.py:123 - API Call - GET /api/tools/6, Status: 404, User: 2
+2025-10-28 15:55:46 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 15:55:46 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 15:55:54 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 15:55:54 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 15:55:54 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 15:55:54 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 15:55:54 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 15:55:54 - AgentAI - INFO - log.py:71 - 函数工具添加成功 - 工具名称: add, 工具ID: 8, 用户ID: 1, 工具类型: 通用
+2025-10-28 15:55:54 - AgentAI - INFO - log.py:71 - 函数工具添加成功 - 工具名称: subtract, 工具ID: 9, 用户ID: 1, 工具类型: 通用
+2025-10-28 15:55:54 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 15:55:54 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 15:56:07 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 15:56:07 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 16:01:14 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 16:01:14 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 16:03:35 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 16:03:35 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 16:03:40 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 16:03:40 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 16:03:40 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 16:03:40 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 16:03:40 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 16:03:40 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 16:03:40 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 16:03:46 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 16:03:46 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 16:03:52 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 16:03:52 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 16:03:52 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 16:03:52 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 16:03:52 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 16:03:52 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 16:03:52 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 16:03:55 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:03:55 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 28.796911239624023ms
+2025-10-28 16:03:58 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:04:32 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:04:32 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 2, Response Time: 11.860370635986328ms
+2025-10-28 16:04:33 - AgentAI - ERROR - log.py:87 - 获取模型信息时出错 (user_id=2): Recursive use of cursors not allowed.
+Traceback (most recent call last):
+  File "C:\Users\MM\Desktop\agent\git\agentAI\db\model_manager.py", line 163, in get_user_model_by_id
+    self.cursor.execute(
+sqlite3.ProgrammingError: Recursive use of cursors not allowed.
+2025-10-28 16:04:33 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:04:42 - AgentAI - INFO - log.py:71 - 模型更新成功 - 模型ID: 3
+2025-10-28 16:04:52 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:04:52 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 12.825727462768555ms
+2025-10-28 16:04:53 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:05:04 - AgentAI - INFO - log.py:125 - API Call - GET /api/tools/3, Status: 200, User: 1, Response Time: 4.012584686279297ms
+2025-10-28 16:05:09 - AgentAI - INFO - log.py:71 - 函数工具更新成功 - 工具ID: 3, 用户ID: 1
+2025-10-28 16:05:09 - AgentAI - INFO - log.py:125 - API Call - PUT /api/tools/3, Status: 200, User: 1, Response Time: 15.181779861450195ms
+2025-10-28 16:05:09 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:05:17 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 5
+2025-10-28 16:05:17 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 2, Response Time: 13.689994812011719ms
+2025-10-28 16:05:18 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 5
+2025-10-28 16:06:32 - AgentAI - INFO - log.py:71 - 模型添加成功 - 模型名称: deepseek-r1-distill-llama-70b, 模型ID: 4, 共享: 是
+2025-10-28 16:06:42 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:06:42 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 16.1283016204834ms
+2025-10-28 16:06:43 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:09:33 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 16:09:33 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 16:09:39 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 16:09:39 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 16:09:39 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 16:09:39 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 16:09:39 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 16:09:39 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 16:09:39 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 16:10:24 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 16:10:24 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 16:10:31 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 16:10:31 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 16:10:31 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 16:10:31 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 16:10:31 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 16:10:31 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 16:10:31 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 16:10:41 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 16:10:41 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 16:10:48 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 16:10:48 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 16:10:48 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 16:10:48 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 16:10:48 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 16:10:48 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 16:10:48 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 16:11:03 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 16:11:03 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 16:11:09 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 16:11:09 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 16:11:09 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 16:11:09 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 16:11:09 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 16:11:09 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 16:11:09 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 16:11:13 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 16:11:13 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 16:11:18 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 16:11:18 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 16:11:18 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 16:11:18 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 16:11:18 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 16:11:18 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 16:11:18 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 16:14:05 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 16:14:05 - AgentAI - ERROR - log.py:87 - 数据库连接错误: unable to open database file
+Traceback (most recent call last):
+  File "C:\Users\MM\Desktop\agent\git\agentAI\db\db_connection.py", line 31, in _ensure_connection
+    self.conn = sqlite3.connect(self.db_path, check_same_thread=Config.DB_CHECK_SAME_THREAD)
+sqlite3.OperationalError: unable to open database file
+2025-10-28 16:14:34 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 16:14:34 - AgentAI - ERROR - log.py:87 - 数据库连接错误: unable to open database file
+Traceback (most recent call last):
+  File "C:\Users\MM\Desktop\agent\git\agentAI\db\db_connection.py", line 31, in _ensure_connection
+    self.conn = sqlite3.connect(self.db_path, check_same_thread=Config.DB_CHECK_SAME_THREAD)
+sqlite3.OperationalError: unable to open database file
+2025-10-28 16:14:58 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 16:14:58 - AgentAI - ERROR - log.py:87 - 数据库连接错误: unable to open database file
+Traceback (most recent call last):
+  File "C:\Users\MM\Desktop\agent\git\agentAI\db\db_connection.py", line 31, in _ensure_connection
+    self.conn = sqlite3.connect(self.db_path, check_same_thread=Config.DB_CHECK_SAME_THREAD)
+sqlite3.OperationalError: unable to open database file
+2025-10-28 16:15:34 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 16:15:34 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 16:15:36 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 16:15:36 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 16:15:36 - AgentAI - INFO - log.py:71 - 用户注册成功 - 用户名: admin, 用户ID: 1
+2025-10-28 16:15:36 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 16:15:36 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 16:15:36 - AgentAI - INFO - log.py:71 - 函数工具添加成功 - 工具名称: add, 工具ID: 1, 用户ID: 1, 工具类型: 通用
+2025-10-28 16:15:36 - AgentAI - INFO - log.py:71 - 函数工具添加成功 - 工具名称: subtract, 工具ID: 2, 用户ID: 1, 工具类型: 通用
+2025-10-28 16:15:36 - AgentAI - INFO - log.py:71 - 函数工具添加成功 - 工具名称: multiply, 工具ID: 3, 用户ID: 1, 工具类型: 通用
+2025-10-28 16:15:36 - AgentAI - INFO - log.py:71 - 函数工具添加成功 - 工具名称: divide, 工具ID: 4, 用户ID: 1, 工具类型: 通用
+2025-10-28 16:15:36 - AgentAI - INFO - log.py:71 - 函数工具添加成功 - 工具名称: search, 工具ID: 5, 用户ID: 1, 工具类型: 通用
+2025-10-28 16:15:36 - AgentAI - INFO - log.py:71 - 函数工具添加成功 - 工具名称: search_hana, 工具ID: 6, 用户ID: 1, 工具类型: 通用
+2025-10-28 16:15:36 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 16:15:36 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 16:15:37 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 16:15:37 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 16:15:41 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 16:15:41 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 16:15:41 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 16:15:41 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 16:15:41 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 16:15:41 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 16:15:41 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 16:16:38 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:16:38 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 10.713577270507812ms
+2025-10-28 16:16:41 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:16:57 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:16:57 - AgentAI - WARNING - log.py:75 - 未找到用户信息 - 用户ID: 2
+2025-10-28 16:16:57 - AgentAI - ERROR - log.py:79 - 无法获取用户信息，用户ID: 2
+2025-10-28 16:17:47 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:17:47 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 11.243820190429688ms
+2025-10-28 16:17:48 - AgentAI - ERROR - log.py:87 - 获取模型信息时出错 (user_id=1): Recursive use of cursors not allowed.
+Traceback (most recent call last):
+  File "C:\Users\MM\Desktop\agent\git\agentAI\db\model_manager.py", line 163, in get_user_model_by_id
+    self.cursor.execute(
+sqlite3.ProgrammingError: Recursive use of cursors not allowed.
+2025-10-28 16:17:48 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:21:27 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 16:21:27 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 16:21:29 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 16:21:29 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 16:21:29 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 16:21:29 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 16:21:29 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 16:21:29 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 16:21:29 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 16:25:23 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 16:25:23 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 16:25:32 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 16:25:32 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 16:25:32 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 16:25:32 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 16:25:32 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 16:25:32 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 16:25:32 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 16:25:34 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 16:25:34 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 16:25:36 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 16:25:36 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 16:25:36 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 16:25:36 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 16:25:36 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 16:25:36 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 16:25:36 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 16:25:37 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:25:37 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 15.212297439575195ms
+2025-10-28 16:25:39 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:25:50 - AgentAI - WARNING - log.py:75 - 用户登录失败 - 用户 user 不存在
+2025-10-28 16:25:50 - AgentAI - ERROR - log.py:87 - 获取函数工具列表时出错: Error binding parameter 0 - probably unsupported type.
+Traceback (most recent call last):
+  File "C:\Users\MM\Desktop\agent\git\agentAI\db\function_tool_manager.py", line 64, in get_all_function_tools
+    self.cursor.execute(
+sqlite3.InterfaceError: Error binding parameter 0 - probably unsupported type.
+2025-10-28 16:25:50 - AgentAI - INFO - log.py:71 - 为用户 (False, '用户名或密码错误') 构建工具注册完成，有效工具数: 0
+2025-10-28 16:25:50 - AgentAI - ERROR - log.py:87 - 获取模型信息时出错 (user_id=(False, '用户名或密码错误')): Error binding parameter 0 - probably unsupported type.
+Traceback (most recent call last):
+  File "C:\Users\MM\Desktop\agent\git\agentAI\db\model_manager.py", line 163, in get_user_model_by_id
+    self.cursor.execute(
+sqlite3.InterfaceError: Error binding parameter 0 - probably unsupported type.
+2025-10-28 16:25:50 - AgentAI - ERROR - log.py:87 - 获取函数工具列表时出错: Error binding parameter 0 - probably unsupported type.
+Traceback (most recent call last):
+  File "C:\Users\MM\Desktop\agent\git\agentAI\db\function_tool_manager.py", line 64, in get_all_function_tools
+    self.cursor.execute(
+sqlite3.InterfaceError: Error binding parameter 0 - probably unsupported type.
+2025-10-28 16:25:50 - AgentAI - ERROR - log.py:87 - 获取用户信息时出错 (user_id=(False, '用户名或密码错误')): Error binding parameter 0 - probably unsupported type.
+Traceback (most recent call last):
+  File "C:\Users\MM\Desktop\agent\git\agentAI\db\user_manager.py", line 104, in get_user_info
+    self.cursor.execute(
+sqlite3.InterfaceError: Error binding parameter 0 - probably unsupported type.
+2025-10-28 16:25:50 - AgentAI - ERROR - log.py:79 - 无法获取用户信息，用户ID: (False, '用户名或密码错误')
+2025-10-28 16:26:00 - AgentAI - WARNING - log.py:75 - 用户登录失败 - 用户 user 不存在
+2025-10-28 16:26:00 - AgentAI - ERROR - log.py:87 - 获取函数工具列表时出错: Error binding parameter 0 - probably unsupported type.
+Traceback (most recent call last):
+  File "C:\Users\MM\Desktop\agent\git\agentAI\db\function_tool_manager.py", line 64, in get_all_function_tools
+    self.cursor.execute(
+sqlite3.InterfaceError: Error binding parameter 0 - probably unsupported type.
+2025-10-28 16:26:00 - AgentAI - ERROR - log.py:87 - 获取用户信息时出错 (user_id=(False, '用户名或密码错误')): Error binding parameter 0 - probably unsupported type.
+Traceback (most recent call last):
+  File "C:\Users\MM\Desktop\agent\git\agentAI\db\user_manager.py", line 104, in get_user_info
+    self.cursor.execute(
+sqlite3.InterfaceError: Error binding parameter 0 - probably unsupported type.
+2025-10-28 16:26:00 - AgentAI - ERROR - log.py:79 - 无法获取用户信息，用户ID: (False, '用户名或密码错误')
+2025-10-28 16:28:33 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 16:28:33 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 16:28:35 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 16:28:35 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 16:28:35 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 16:28:35 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 16:28:35 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 16:28:35 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 16:28:35 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 16:29:04 - AgentAI - WARNING - log.py:75 - 用户登录失败 - 用户 user 不存在
+2025-10-28 16:29:30 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 16:29:30 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 16:29:32 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 16:29:32 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 16:29:32 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 16:29:32 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 16:29:32 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 16:29:32 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 16:29:32 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 16:29:34 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 16:29:34 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 16:29:37 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 16:29:37 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 16:29:37 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 16:29:37 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 16:29:37 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 16:29:37 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 16:29:37 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 16:29:41 - AgentAI - WARNING - log.py:75 - 用户登录失败 - 用户 user 不存在
+2025-10-28 16:31:13 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:31:13 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 12.558460235595703ms
+2025-10-28 16:31:17 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:32:37 - AgentAI - INFO - log.py:71 - 用户注册成功 - 用户名: user, 用户ID: 2
+2025-10-28 16:32:37 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:32:37 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'add': <function add at 0x0000023D72F4E290>}
+2025-10-28 16:32:37 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'subtract': <function subtract at 0x0000023D72F4CCA0>}
+2025-10-28 16:32:37 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'multiply': <function multiply at 0x0000023D72F4D5A0>}
+2025-10-28 16:32:37 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'divide': <function divide at 0x0000023D72F4ECB0>}
+2025-10-28 16:32:37 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'search': <function search at 0x0000023D72F4C3A0>}
+2025-10-28 16:32:37 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'search_hana': <function search_hana at 0x0000023D72F4D750>}
+2025-10-28 16:32:37 - AgentAI - INFO - log.py:71 - 为用户 2 构建工具注册完成，有效工具数: 6
+2025-10-28 16:32:37 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:32:37 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 2, Response Time: 28.840303421020508ms
+2025-10-28 16:32:38 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:33:06 - AgentAI - INFO - log.py:71 - 模型添加成功 - 模型名称: deepseek-r1, 模型ID: 1, 共享: 是
+2025-10-28 16:33:12 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:33:12 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 10.26153564453125ms
+2025-10-28 16:33:13 - AgentAI - ERROR - log.py:87 - 获取模型信息时出错 (user_id=1): Recursive use of cursors not allowed.
+Traceback (most recent call last):
+  File "C:\Users\MM\Desktop\agent\git\agentAI\db\model_manager.py", line 163, in get_user_model_by_id
+    self.cursor.execute(
+sqlite3.ProgrammingError: Recursive use of cursors not allowed.
+2025-10-28 16:33:13 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:33:25 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:33:25 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 11.994123458862305ms
+2025-10-28 16:33:26 - AgentAI - ERROR - log.py:87 - 获取模型信息时出错 (user_id=1): Recursive use of cursors not allowed.
+Traceback (most recent call last):
+  File "C:\Users\MM\Desktop\agent\git\agentAI\db\model_manager.py", line 163, in get_user_model_by_id
+    self.cursor.execute(
+sqlite3.ProgrammingError: Recursive use of cursors not allowed.
+2025-10-28 16:33:26 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:35:17 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:35:17 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 2, Response Time: 22.471189498901367ms
+2025-10-28 16:35:18 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:47:41 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:47:41 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 27.606725692749023ms
+2025-10-28 16:47:48 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:48:01 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:48:01 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 2, Response Time: 14.515876770019531ms
+2025-10-28 16:48:02 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:48:17 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 16:48:17 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 13.782501220703125ms
+2025-10-28 16:48:18 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:14:30 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 17:14:30 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 17:14:33 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 17:14:33 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 17:14:33 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 17:14:33 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 17:14:33 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 17:14:33 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 17:14:33 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 17:23:49 - AgentAI - INFO - log.py:71 - 模型添加成功 - 模型名称: deepseek-v3, 模型ID: 2, 共享: 否
+2025-10-28 17:23:59 - AgentAI - INFO - log.py:71 - 模型更新成功 - 模型ID: 2
+2025-10-28 17:24:48 - AgentAI - INFO - log.py:71 - 用户登录成功 - 用户名: admin, 用户ID: 1
+2025-10-28 17:24:48 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:24:48 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'add': <function add at 0x000001DDC977E050>}
+2025-10-28 17:24:48 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'subtract': <function subtract at 0x000001DDC97865F0>}
+2025-10-28 17:24:48 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'multiply': <function multiply at 0x000001DDC9786560>}
+2025-10-28 17:24:48 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'divide': <function divide at 0x000001DDC9787400>}
+2025-10-28 17:24:48 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'search': <function search at 0x000001DDC9787490>}
+2025-10-28 17:24:48 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'search_hana': <function search_hana at 0x000001DDC9787370>}
+2025-10-28 17:24:48 - AgentAI - INFO - log.py:71 - 为用户 1 构建工具注册完成，有效工具数: 6
+2025-10-28 17:24:48 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:24:48 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 12.652397155761719ms
+2025-10-28 17:24:49 - AgentAI - ERROR - log.py:87 - 获取模型信息时出错 (user_id=1): Recursive use of cursors not allowed.
+Traceback (most recent call last):
+  File "C:\Users\MM\Desktop\agent\git\agentAI\db\model_manager.py", line 163, in get_user_model_by_id
+    self.cursor.execute(
+sqlite3.ProgrammingError: Recursive use of cursors not allowed.
+2025-10-28 17:24:49 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:25:06 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 17:25:06 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 17:25:07 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 17:25:07 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 17:25:07 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 17:25:07 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 17:25:07 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 17:25:07 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 17:25:07 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 17:25:17 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:25:17 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 11.279106140136719ms
+2025-10-28 17:25:18 - AgentAI - ERROR - log.py:87 - 获取模型信息时出错 (user_id=1): Recursive use of cursors not allowed.
+Traceback (most recent call last):
+  File "C:\Users\MM\Desktop\agent\git\agentAI\db\model_manager.py", line 163, in get_user_model_by_id
+    self.cursor.execute(
+sqlite3.ProgrammingError: Recursive use of cursors not allowed.
+2025-10-28 17:25:18 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:26:58 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 17:26:58 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 17:27:05 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 17:27:05 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 17:27:05 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 17:27:05 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 17:27:05 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 17:27:05 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 17:27:05 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 17:27:05 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:27:05 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 2, Response Time: 13.831377029418945ms
+2025-10-28 17:27:06 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:27:13 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:27:13 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 11.997461318969727ms
+2025-10-28 17:28:16 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 17:28:16 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 17:28:18 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 17:28:18 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 17:28:18 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 17:28:18 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 17:28:18 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 17:28:18 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 17:28:18 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 17:28:19 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 17:28:19 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 17:28:22 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 17:28:22 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 17:28:22 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 17:28:22 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 17:28:22 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 17:28:22 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 17:28:22 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 17:28:25 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:28:25 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 2, Response Time: 13.186931610107422ms
+2025-10-28 17:28:26 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:28:27 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:28:27 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 1.3844966888427734ms
+2025-10-28 17:28:28 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:28:31 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:28:31 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 15.648841857910156ms
+2025-10-28 17:28:32 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:28:55 - AgentAI - INFO - log.py:71 - 模型添加成功 - 模型名称: deepseek-v3.1, 模型ID: 3, 共享: 是
+2025-10-28 17:29:02 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:29:02 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 15.377998352050781ms
+2025-10-28 17:29:03 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:30:53 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 17:30:53 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 17:30:54 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 17:30:54 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 17:30:54 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 17:30:54 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 17:30:54 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 17:30:54 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 17:30:54 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 17:31:31 - AgentAI - INFO - log.py:71 - 用户登录成功 - 用户名: admin, 用户ID: 1
+2025-10-28 17:31:31 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:31:31 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'add': <function add at 0x00000241A5E8EE60>}
+2025-10-28 17:31:31 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'subtract': <function subtract at 0x00000241A5FD0E50>}
+2025-10-28 17:31:31 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'multiply': <function multiply at 0x00000241A5FD1870>}
+2025-10-28 17:31:31 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'divide': <function divide at 0x00000241A5FD1120>}
+2025-10-28 17:31:31 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'search': <function search at 0x00000241A5FD0D30>}
+2025-10-28 17:31:31 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'search_hana': <function search_hana at 0x00000241A5FD1240>}
+2025-10-28 17:31:31 - AgentAI - INFO - log.py:71 - 为用户 1 构建工具注册完成，有效工具数: 6
+2025-10-28 17:31:31 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:31:31 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 21.79098129272461ms
+2025-10-28 17:31:32 - AgentAI - ERROR - log.py:87 - 获取函数工具列表时出错: Recursive use of cursors not allowed.
+Traceback (most recent call last):
+  File "C:\Users\MM\Desktop\agent\git\agentAI\db\function_tool_manager.py", line 64, in get_all_function_tools
+    self.cursor.execute(
+sqlite3.ProgrammingError: Recursive use of cursors not allowed.
+2025-10-28 17:32:08 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:32:08 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 2, Response Time: 13.831138610839844ms
+2025-10-28 17:32:09 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:32:22 - AgentAI - INFO - log.py:71 - 用户登录成功 - 用户名: user, 用户ID: 2
+2025-10-28 17:32:22 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:32:22 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'add': <function add at 0x00000241A5EC6050>}
+2025-10-28 17:32:22 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'subtract': <function subtract at 0x00000241A5E976D0>}
+2025-10-28 17:32:22 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'multiply': <function multiply at 0x00000241A5E96830>}
+2025-10-28 17:32:22 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'divide': <function divide at 0x00000241A5E97F40>}
+2025-10-28 17:32:22 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'search': <function search at 0x00000241A5E95630>}
+2025-10-28 17:32:22 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'search_hana': <function search_hana at 0x00000241A5E97400>}
+2025-10-28 17:32:22 - AgentAI - INFO - log.py:71 - 为用户 2 构建工具注册完成，有效工具数: 6
+2025-10-28 17:32:22 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:32:22 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 2, Response Time: 12.833118438720703ms
+2025-10-28 17:32:23 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:32:54 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:32:54 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 14.811992645263672ms
+2025-10-28 17:32:54 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:34:43 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 17:34:43 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 17:34:47 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 17:34:47 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 17:34:47 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 17:34:47 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 17:34:47 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 17:34:47 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 17:34:47 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 17:35:17 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 17:35:17 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 17:35:24 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 17:35:24 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 17:35:24 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 17:35:24 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 17:35:24 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 17:35:24 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 17:35:24 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 17:40:14 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 17:40:14 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 17:40:21 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 17:40:21 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 17:40:21 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 17:40:21 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 17:40:21 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 17:40:21 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 17:40:21 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 17:40:26 - AgentAI - INFO - log.py:150 - Logger initialized successfully
+2025-10-28 17:40:26 - AgentAI - INFO - database.py:30 - Database initialized successfully
+2025-10-28 17:40:30 - AgentAI - INFO - log.py:71 - 启动Flask应用服务...
+2025-10-28 17:40:31 - AgentAI - INFO - log.py:71 - 开始自动注册admin
+2025-10-28 17:40:31 - AgentAI - WARNING - log.py:75 - 用户注册失败 - 用户名 admin 已存在
+2025-10-28 17:40:31 - AgentAI - INFO - log.py:71 - admin用户注册成功
+2025-10-28 17:40:31 - AgentAI - INFO - log.py:71 - 开始自动注册内部工具
+2025-10-28 17:40:31 - AgentAI - INFO - log.py:71 - 6个内部工具添加完成
+2025-10-28 17:40:31 - AgentAI - INFO - log.py:71 - Flask应用服务启动完成，监听地址: 0.0.0.0:5000
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 用户注册成功 - 用户名: user2, 用户ID: 3
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'add': <function add at 0x0000020712595870>}
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'subtract': <function subtract at 0x0000020712595900>}
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'multiply': <function multiply at 0x0000020712542D40>}
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'divide': <function divide at 0x0000020712543760>}
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'search': <function search at 0x0000020712543D90>}
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'search_hana': <function search_hana at 0x0000020712543C70>}
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 为用户 3 构建工具注册完成，有效工具数: 6
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 用户登录成功 - 用户名: admin, 用户ID: 1
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'add': <function add at 0x00000207125AB910>}
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'subtract': <function subtract at 0x00000207125AA710>}
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'multiply': <function multiply at 0x00000207125AA8C0>}
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'divide': <function divide at 0x00000207125AAB00>}
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'search': <function search at 0x00000207125ABE20>}
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 注册的函数空间：{'search_hana': <function search_hana at 0x00000207125AB880>}
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 为用户 1 构建工具注册完成，有效工具数: 6
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 用户登录成功 - 用户名: user2, 用户ID: 3
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:40:45 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:42:27 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:42:27 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 18.66912841796875ms
+2025-10-28 17:42:29 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:42:34 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:42:34 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 6.994962692260742ms
+2025-10-28 17:42:35 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:42:40 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:42:40 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 2, Response Time: 7.928371429443359ms
+2025-10-28 17:42:41 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:42:50 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:42:50 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 2, Response Time: 8.67319107055664ms
+2025-10-28 17:42:51 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:43:15 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:43:15 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 1, Response Time: 10.015010833740234ms
+2025-10-28 17:43:16 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:43:21 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6
+2025-10-28 17:43:21 - AgentAI - INFO - log.py:125 - API Call - GET /, Status: 200, User: 2, Response Time: 10.615348815917969ms
+2025-10-28 17:43:21 - AgentAI - INFO - log.py:71 - 成功获取函数工具列表 - 工具数: 6

@@ -1,5 +1,7 @@
 from flask import Flask
 import os
+from datetime import timedelta
+from config import Config
 
 # 蓝图模块
 from routes.common import init_csrf
@@ -16,10 +18,8 @@ from log import info
 
 def create_app():
     app = Flask(__name__)
-    app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'dev-secret-change-mm')
-    app.config['SESSION_COOKIE_SECURE'] = False
-    app.config['SESSION_COOKIE_HTTPONLY'] = True
-    app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+    # 从集中配置文件加载配置
+    app.config.from_object(Config)
 
     # 注册CSRF保护
     init_csrf(app)

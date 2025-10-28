@@ -3,68 +3,63 @@ import os
 import glob
 from logging.handlers import RotatingFileHandler
 from datetime import datetime, timedelta
+from config import Config
 
-# 确保logs目录存在
-LOG_DIR = os.path.join(os.path.dirname(__file__), 'logs')
+# 确保logs目录存在（从配置读取）
+LOG_DIR = Config.LOG_DIR
 os.makedirs(LOG_DIR, exist_ok=True)
 
-# 清理超过指定天数的日志文件
-def clean_old_logs(days_to_keep=3):
+# 清理超过指定天数的日志文件（从配置读取）
+def clean_old_logs(days_to_keep=Config.LOG_RETENTION_DAYS):
     """清理超过指定天数的旧日志文件
     
     Args:
         days_to_keep: 保留日志的天数
     """
     try:
-        # 计算截止日期
         cutoff_date = datetime.now() - timedelta(days=days_to_keep)
-        
-        # 获取所有日志文件
-        log_files = glob.glob(os.path.join(LOG_DIR, 'agent_ai_*.log*'))
-        
+        log_files = glob.glob(os.path.join(LOG_DIR, f"{Config.LOG_FILE_PREFIX}*.log*"))
         for log_file in log_files:
-            # 获取文件修改时间
             file_mod_time = datetime.fromtimestamp(os.path.getmtime(log_file))
-            
-            # 如果文件超过保留期限，则删除
             if file_mod_time < cutoff_date:
                 os.remove(log_file)
                 print(f"Deleted old log file: {log_file}")
     except Exception as e:
         print(f"Error cleaning old logs: {e}")
 
-# 获取当前日期作为日志文件名的一部分
+# 当前日期作为日志文件名的一部分（从配置读取前缀）
 current_date = datetime.now().strftime('%Y-%m-%d')
-LOG_FILE = os.path.join(LOG_DIR, f'agent_ai_{current_date}.log')
+LOG_FILE = os.path.join(LOG_DIR, f"{Config.LOG_FILE_PREFIX}{current_date}.log")
 
-# 创建logger实例
-logger = logging.getLogger('AgentAI')
-logger.setLevel(logging.DEBUG)  # 设置为最低级别，以便捕获所有级别的日志
+# 创建logger实例（名称从配置读取）
+logger = logging.getLogger(Config.LOGGER_NAME)
+logger.setLevel(logging.DEBUG)  # 保留最低级别，便于捕获所有日志
 
-# 创建日志格式化器
+# 创建日志格式化器（格式与时间格式从配置读取）
 formatter = logging.Formatter(
-    '%(asctime)s - %(name)s - %(levelname)s - %(filename)s:%(lineno)d - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
+    Config.LOG_FORMAT,
+    datefmt=Config.LOG_DATEFMT
 )
 
-# 创建文件处理器 - 使用RotatingFileHandler实现日志轮转
+# 创建文件处理器 - 使用RotatingFileHandler实现日志轮转（参数从配置读取）
 file_handler = RotatingFileHandler(
     LOG_FILE,
-    maxBytes=10 * 1024 * 1024,  # 10MB
-    backupCount=5,  # 保留5个备份文件
+    maxBytes=Config.LOG_MAX_BYTES,
+    backupCount=Config.LOG_BACKUP_COUNT,
     encoding='utf-8'
 )
-file_handler.setLevel(logging.INFO)  # 文件记录INFO及以上级别的日志
+file_handler.setLevel(getattr(logging, Config.LOG_LEVEL_FILE, logging.INFO))
 file_handler.setFormatter(formatter)
 
-# 创建控制台处理器
+# 创建控制台处理器（级别从配置读取）
 console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.DEBUG)  # 控制台显示所有级别的日志
+console_handler.setLevel(getattr(logging, Config.LOG_LEVEL_CONSOLE, logging.DEBUG))
 console_handler.setFormatter(formatter)
 
-# 将处理器添加到logger
-logger.addHandler(file_handler)
-logger.addHandler(console_handler)
+# 将处理器添加到logger（避免重复添加）
+if not logger.handlers:
+    logger.addHandler(file_handler)
+    logger.addHandler(console_handler)
 
 # 日志功能封装函数
 def debug(message):
@@ -122,7 +117,6 @@ def log_api_call(endpoint, method, status_code, user_id=None, response_time=None
     if response_time:
         log_message += f", Response Time: {response_time}ms"
     
-    # 根据状态码决定日志级别
     if status_code >= 500:
         logger.error(log_message)
     elif status_code >= 400:
@@ -149,8 +143,8 @@ def log_db_operation(operation, table, status="success", details=None):
     else:
         logger.info(log_message)
 
-# 清理旧日志
-clean_old_logs()
+# 清理旧日志（保留天数从配置读取）
+clean_old_logs(Config.LOG_RETENTION_DAYS)
 
 # 初始化时记录日志
 logger.info("Logger initialized successfully")

@@ -85,29 +85,6 @@ def create_planning_prompt(user_input: str, tools_schema: list, conversation_sum
     return template
 
 
-def create_memory_prompt(user_input: str, conversation_history: list) -> str:
-    """创建记忆处理提示词，用于分析和处理长期重要记忆"""
-    template = f"""请分析以下对话内容，提取重要信息用于记忆存储：
-
-    用户最新问题："{user_input}"
-
-    对话历史：
-    {json.dumps(conversation_history, ensure_ascii=False, indent=2)}
-
-    请分析：
-    1. 对话中是否包含需要长期记忆的重要信息
-    2. 如果有，这些信息的关键要点是什么
-    3. 这些信息的重要程度如何（1-5分）
-
-    返回格式：
-    {{
-      "important": true/false,
-      "key_points": ["要点1", "要点2", ...],
-      "importance_score": 1-5
-    }}
-
-    请直接返回JSON，不要有其他内容。"""
-    return template
 
 
 

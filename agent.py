@@ -2,10 +2,10 @@ from llmclient import LLMClient
 from tools import Tool
 from typing import Dict, Any, List, Optional
 import json,re
-from prompt import create_prompt, create_planning_prompt, create_memory_prompt
+from prompt import create_prompt, create_planning_prompt
 from log import logger, debug, info, warning, error, critical, exception
 from database import db
-import time
+
 import datetime
 
 class ReactAgent:
@@ -149,29 +149,7 @@ class ReactAgent:
 
 
     
-    def _calculate_importance(self, user_input: str, response: str) -> float:
-        """计算记忆的重要性"""
-        debug(f"计算记忆重要性，用户输入长度: {len(user_input)}, 响应长度: {len(response)}")
-        importance = 0.0
-        
-        # 长度权重
-        input_weight = min(len(user_input) / 100, 0.3)  # 最长30%权重
-        response_weight = min(len(response) / 200, 0.3)    # 最长30%权重
-        importance += input_weight
-        importance += response_weight
-        
-        # 关键词权重
-        important_keywords = ["重要", "关键", "核心", "必须", "记住"]
-        keyword_matches = 0
-        for keyword in important_keywords:
-            if keyword in user_input:
-                importance += 0.1
-                keyword_matches += 1
-        
-        final_importance = min(importance, 1.0)  # 限制最大为1.0
-        debug(f"记忆重要性计算完成: {final_importance:.2f}, 关键词匹配数: {keyword_matches}")
-        return final_importance
-    
+
     # 提取LLM返回的工具信息
     def _extract_json_from_response(self, response_text: str) -> Optional[Dict]:
         """从响应中提取JSON"""
@@ -387,7 +365,7 @@ class ReactAgent:
             
             else:
                 # 未知动作类型，默认直接回答
-                final_response = self._generate_direct_answer(user_input)
+                final_response = self._generate_direct_answer(user_input, user_id)
                 # print(final_response)
                 break
         

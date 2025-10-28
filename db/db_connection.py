@@ -3,13 +3,14 @@ import os
 import logging
 from datetime import datetime
 from log import logger, debug, info, warning, error, critical, exception
+from config import Config
 
 
 
 class DatabaseConnection:
     """数据库连接基类，处理数据库连接和基础操作"""
     
-    def __init__(self, db_path='db.sqlite3'):
+    def __init__(self, db_path=Config.DB_PATH):
         """
         初始化数据库连接
         
@@ -27,17 +28,24 @@ class DatabaseConnection:
         try:
             if self.conn is None:
                 debug(f"建立数据库连接: {self.db_path}")
-                self.conn = sqlite3.connect(self.db_path, check_same_thread=False)
+                self.conn = sqlite3.connect(self.db_path, check_same_thread=Config.DB_CHECK_SAME_THREAD)
+                try:
+                    self.conn.execute("PRAGMA journal_mode=WAL")
+                    self.conn.execute("PRAGMA busy_timeout=3000")
+                except Exception:
+                    pass
                 self.cursor = self.conn.cursor()
             else:
-                # 使用conn.execute而不是cursor.execute来避免递归游标问题
-                # 尝试执行简单查询以检查连接是否有效
-                with self.conn:  # 使用上下文管理器确保正确处理
+                with self.conn:
                     self.conn.execute("SELECT 1")
         except sqlite3.Error as e:
             exception(f"数据库连接错误: {e}")
-            # 重新连接
-            self.conn = sqlite3.connect(self.db_path, check_same_thread=False)
+            self.conn = sqlite3.connect(self.db_path, check_same_thread=Config.DB_CHECK_SAME_THREAD)
+            try:
+                self.conn.execute("PRAGMA journal_mode=WAL")
+                self.conn.execute("PRAGMA busy_timeout=3000")
+            except Exception:
+                pass
             self.cursor = self.conn.cursor()
     
     def _init_tables(self):
@@ -108,11 +116,6 @@ class DatabaseConnection:
             ''')
             
             # 创建函数工具表
-            # 需要再添加3个字段user_id、tool_flag、label：用户id、工具标识、标签（用户工具属于那一类的标签，比如数据库、文件、网络、计算等）
-            # is_active：是否激活，默认1为激活，0为未激活
-            # tool_flag：工具标识，0为共享工具，1为私有工具
-            # label：标签，默认为通用
-            # code_content：代码内容，用于保存用户自定义函数工具的代码内容
             self.cursor.execute('''
                 CREATE TABLE IF NOT EXISTS function_tools (
                     user_id INTEGER NOT NULL,
@@ -168,10 +171,7 @@ class DatabaseConnection:
     def delete_database(self):
         """删除数据库文件（谨慎使用）"""
         try:
-            # 先关闭连接
             self.close()
-            
-            # 删除数据库文件
             if os.path.exists(self.db_path):
                 os.remove(self.db_path)
                 info(f"数据库文件已删除: {self.db_path}")

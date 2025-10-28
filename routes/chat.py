@@ -1,11 +1,11 @@
 from flask import Blueprint, request, jsonify, session
 import time
-import json
-from database import db
-from log import debug, info, warning, error, exception, log_api_call, log_db_operation
-from llmclient import LLMClient
+from log import logger, debug, error, exception
 from agent import ReactAgent
-from tool_process import Toolregister
+from llmclient import LLMClient
+from log import log_db_operation, log_api_call
+from tools_cache import get_tools_for_user
+from models_cache import get_model_for_user
 
 chat_bp = Blueprint('chat', __name__)
 
@@ -24,29 +24,12 @@ def chat():
     if not user_input:
         log_api_call('/api/chat', 'POST', 400, user_id, (time.time() - start_time) * 1000)
         return jsonify({'error': '消息不能为空'}), 400
-    tool = Toolregister()
-    tools = db.get_all_function_tools(user_id)
-    def _parse_params(val):
-        try:
-            if isinstance(val, str):
-                return json.loads(val)
-            return val
-        except Exception:
-            try:
-                import ast
-                return ast.literal_eval(val) if isinstance(val, str) else val
-            except Exception:
-                return None
-    for tool_info in tools:
-        tool.register_tool(
-            tool_info['tool_name'],
-            tool_info['description'],
-            tool_info['code_content'],
-            _parse_params(tool_info.get('parameters'))
-        )
+    # 使用缓存的工具注册，避免并发下重复构建
+    tools_dict = get_tools_for_user(user_id)
     try:
         if model_id:
-            model_info = db.get_model_by_id(model_id)
+            # 使用模型缓存获取（支持共享模型 + 私有模型，且只缓存启用）
+            model_info = get_model_for_user(user_id, model_id)
             if model_info and model_info['is_active']:
                 debug(f"使用指定模型: {model_info['model_name']} (ID: {model_id})")
                 llm_client = LLMClient(
@@ -55,8 +38,9 @@ def chat():
                     api_key=model_info['api_key'] or "",
                     timeout=30
                 )
-                t_agent = ReactAgent(llm=llm_client, tools=tool.tools)
+                t_agent = ReactAgent(llm=llm_client, tools=tools_dict)
                 plan_text, response_text = t_agent.process_query(user_id, user_input, model_info['model_name'])
+
             else:
                 error(f"模型不存在或未启用: {model_id}")
                 plan_text = "模型选择无效"
@@ -133,5 +117,32 @@ def get_sessions():
     try:
         sessions = db.get_all_sessions(user_id=session['user_id'])
         return jsonify({'sessions': sessions})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# 新增：工具执行历史接口，供前端 main.js 调用
+@chat_bp.route('/api/execution_history', methods=['GET'])
+def get_execution_history():
+    if 'user_id' not in session:
+        return jsonify({'error': '未登录'}), 401
+    try:
+        limit = request.args.get('limit', 10, type=int)
+        tool_history = db.get_user_tool_executions(user_id=session['user_id'], limit=limit)
+        if not tool_history:
+            return jsonify({'response': []})
+        result_list = []
+        for i, record in enumerate(tool_history, 1):
+            execution_result = str(record.get('execution_result', ''))
+            truncated_result = execution_result[:100] + ('...' if len(execution_result) > 100 else '')
+            result_list.append({
+                'index': i,
+                'question': record.get('question'),
+                'tool_name': record.get('tool_name'),
+                'params': record.get('execution_params'),
+                'start_time': record.get('start_time'),
+                'end_time': record.get('end_time'),
+                'result': truncated_result
+            })
+        return jsonify({'response': result_list})
     except Exception as e:
         return jsonify({'error': str(e)}), 500

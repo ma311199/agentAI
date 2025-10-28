@@ -1,14 +1,15 @@
-from flask import request, jsonify, session, url_for
+from flask import request, jsonify, session, url_for, current_app
 import functools
 import secrets
 
 # CSRF token utilities
 
 def get_csrf_token():
-    token = session.get('csrf_token')
+    session_key = current_app.config.get('CSRF_SESSION_KEY', 'csrf_token')  # 会话中CSRF键名
+    token = session.get(session_key)
     if not token:
         token = secrets.token_hex(32)
-        session['csrf_token'] = token
+        session[session_key] = token
     return token
 
 # Login required decorator
@@ -25,17 +26,30 @@ def login_required(f):
 # CSRF protection
 
 def csrf_protect():
+    if not current_app.config.get('CSRF_ENABLED', True):
+        return
+    # 端点豁免（从配置读取）
+    try:
+        exempt = set(current_app.config.get('CSRF_EXEMPT_ENDPOINTS', []))
+        if request.endpoint in exempt:
+            return
+    except Exception:
+        pass
     if request.method in ('POST', 'PUT', 'DELETE'):
         if request.path.startswith('/static/'):
             return
+        header_name = current_app.config.get('CSRF_HEADER_NAME', 'X-CSRF-Token')
+        json_field = current_app.config.get('CSRF_JSON_FIELD', 'csrf_token')
+        form_field = current_app.config.get('CSRF_FORM_FIELD', 'csrf_token')
+        session_key = current_app.config.get('CSRF_SESSION_KEY', 'csrf_token')
         token = None
         content_type = request.headers.get('Content-Type', '')
         if 'application/json' in content_type:
             json_data = request.get_json(silent=True) or {}
-            token = request.headers.get('X-CSRF-Token') or json_data.get('csrf_token')
+            token = request.headers.get(header_name) or json_data.get(json_field)
         else:
-            token = request.form.get('csrf_token')
-        if not token or token != session.get('csrf_token'):
+            token = request.form.get(form_field)
+        if not token or token != session.get(session_key):
             return jsonify({'error': 'CSRF 校验失败'}), 403
 
 

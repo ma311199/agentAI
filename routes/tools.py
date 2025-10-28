@@ -8,6 +8,7 @@ from security_review import review_tool_code
 import ast
 import re
 import importlib.util
+from tools_cache import invalidate_user_tools
 
 # 简易合规校验：语法、函数名、参数匹配、依赖模块存在
 def _extract_import_modules(tree: ast.AST):
@@ -155,6 +156,8 @@ def add_tool():
             code_content=code_or_url
         )
         if success:
+            # 失效用户工具缓存
+            invalidate_user_tools(user_id)
             log_api_call('/api/tools', 'POST', 201, user_id, (time.time() - start_time) * 1000)
             return jsonify({'success': True, 'tool_id': result})
         else:
@@ -249,6 +252,8 @@ def update_tool(tool_id):
             code_content=code_or_url
         )
         if success:
+            # 失效用户工具缓存
+            invalidate_user_tools(user_id)
             log_api_call(f'/api/tools/{tool_id}', 'PUT', 200, user_id, (time.time() - start_time) * 1000)
             return jsonify({'message': '工具更新成功'})
         else:
@@ -273,6 +278,8 @@ def delete_tool(tool_id):
             return jsonify({'error': '工具不存在或无权限删除'}), 404
         success = db.delete_function_tool(user_id, tool_id)
         if success:
+            # 失效用户工具缓存
+            invalidate_user_tools(user_id)
             log_api_call(f'/api/tools/{tool_id}', 'DELETE', 200, user_id, (time.time() - start_time) * 1000)
             return jsonify({'message': '工具删除成功'}), 200
         else:

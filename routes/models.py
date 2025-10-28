@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify, session
 from openai import OpenAI
 from database import db
 from log import logger, error
+from models_cache import invalidate_user_models
 
 models_bp = Blueprint('models', __name__)
 
@@ -53,6 +54,8 @@ def add_model():
             return jsonify({'error': '模型名称、地址和API Key为必填项'}), 400
         success, result = db.add_model(session['user_id'], model_name, model_url, api_key, temperature, max_tokens, desc, model_flag)
         if success:
+            # 模型添加成功后失效当前用户的模型缓存
+            invalidate_user_models(session['user_id'])
             return jsonify({'success': True, 'model_id': result})
         else:
             return jsonify({'error': result}), 400
@@ -88,6 +91,8 @@ def update_model(model_id):
                 return jsonify({'error': '模型名称、地址和API Key为必填项'}), 400
             success = db.update_model(user_id=session['user_id'], model_id=model_id, model_name=model_name, model_url=model_url, api_key=api_key, temperature=temperature, max_tokens=max_tokens, is_active=is_active, desc=desc, model_flag=model_flag)
         if success:
+            # 模型更新成功后失效当前用户的模型缓存
+            invalidate_user_models(session['user_id'])
             return jsonify({'success': True})
         else:
             return jsonify({'error': '模型不存在或更新失败'}), 404
@@ -107,6 +112,8 @@ def delete_model(model_id):
             return jsonify({'error': '模型不存在或无权限删除'}), 404
         success = db.delete_model(user_id, model_id)
         if success:
+            # 删除成功后失效当前用户的模型缓存
+            invalidate_user_models(user_id)
             return jsonify({'success': True})
         else:
             return jsonify({'error': '删除失败或无权限'}), 400

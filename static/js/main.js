@@ -913,3 +913,86 @@ document.addEventListener('DOMContentLoaded', function() {
                      '如有特殊需求，请联系管理员', true);
     };
 });
+
+// 全局fetch拦截：自动附加CSRF并在未登录/CSRF失败时跳转登录
+(function() {
+    const originalFetch = window.fetch;
+    function getCsrfToken() {
+        const meta = document.querySelector('meta[name="csrf-token"]');
+        return meta ? meta.getAttribute('content') : null;
+    }
+    function addHeader(headers, key, val) {
+        if (!headers) return;
+        try {
+            if (headers instanceof Headers) {
+                if (!headers.has(key)) headers.set(key, val);
+            } else if (typeof headers === 'object') {
+                if (!(key in headers)) headers[key] = val;
+            }
+        } catch (e) {
+            // ignore
+        }
+    }
+    window.fetch = function(input, init = {}) {
+        try {
+            const method = (init.method || 'GET').toUpperCase();
+            const ct = (init.headers && (init.headers['Content-Type'] || (init.headers.get && init.headers.get('Content-Type')))) || '';
+            const isMutating = method === 'POST' || method === 'PUT' || method === 'DELETE';
+            if (isMutating) {
+                const token = getCsrfToken();
+                if (token) {
+                    addHeader(init.headers, 'X-CSRF-Token', token);
+                    // 如为JSON请求，确保Content-Type
+                    if (ct === '' && (init.body && typeof init.body === 'string')) {
+                        addHeader(init.headers, 'Content-Type', 'application/json');
+                    }
+                }
+            }
+        } catch (e) {
+            // 忽略前置处理错误
+        }
+        return originalFetch(input, init).then(resp => {
+            const redirectToLogin = () => {
+                const nextUrl = encodeURIComponent(window.location.href);
+                window.location.href = '/login?next=' + nextUrl;
+            };
+            try {
+                const urlStr = typeof input === 'string' ? input : (input && input.url) || '';
+                const isApiCall = urlStr.startsWith('/api/');
+                const contentType = resp.headers.get('Content-Type') || '';
+                // 处理被重定向至登录页的情况（最终状态200，content-type为text/html）
+                if (resp.redirected && resp.url && resp.url.includes('/login')) {
+                    redirectToLogin();
+                    return Promise.reject(new Error('未登录，已跳转登录'));
+                }
+                // API请求返回HTML（通常是登录页或错误页），避免JSON解析错误
+                if (isApiCall && contentType.includes('text/html')) {
+                    redirectToLogin();
+                    return Promise.reject(new Error('未登录或会话失效，返回HTML'));
+                }
+            } catch (e) {
+                // 忽略检测错误
+            }
+            if (resp && (resp.status === 401 || resp.status === 403)) {
+                const contentType = resp.headers.get('Content-Type') || '';
+                if (contentType.includes('application/json')) {
+                    return resp.clone().json().then(data => {
+                        const msg = (data && data.error) || '';
+                        if ((msg || '').includes('未登录') || (msg || '').includes('CSRF')) {
+                            redirectToLogin();
+                            return Promise.reject(new Error(msg || '未登录/CSRF失败'));
+                        }
+                        return resp;
+                    }).catch(() => {
+                        redirectToLogin();
+                        return Promise.reject(new Error('未登录/CSRF失败'));
+                    });
+                } else {
+                    redirectToLogin();
+                    return Promise.reject(new Error('未登录/CSRF失败'));
+                }
+            }
+            return resp;
+        });
+    };
+})();

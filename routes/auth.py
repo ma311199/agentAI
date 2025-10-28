@@ -1,78 +1,101 @@
-from flask import Blueprint, request, render_template, jsonify, session, redirect, url_for
-import time
+from flask import Blueprint, request, jsonify, session, render_template, redirect, url_for
 from database import db
-from log import info, warning, error, exception, log_user_action, log_api_call
+from log import logger, error
+from tools_cache import get_tools_for_user
+from models_cache import get_models_for_user
 from .common import get_csrf_token
 
 auth_bp = Blueprint('auth', __name__)
 
-@auth_bp.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        start_time = time.time()
-        username = request.form['username']
-        password = request.form['password']
-        next_url = request.form.get('next', '/')
-        info(f"用户登录尝试 - 用户名: {username}")
-        try:
-            success, result = db.login_user(username, password)
-            if success:
-                session['user_id'] = result
-                session['username'] = username
-                log_user_action(username, 'login', '登录成功')
-                log_api_call('/login', 'POST', 302, username)
-                info(f"用户登录成功 - 用户ID: {result}, 用户名: {username}")
-                return redirect(next_url)
-            else:
-                log_user_action(username, 'login', f'登录失败: {result}')
-                log_api_call('/login', 'POST', 200, username, (time.time() - start_time) * 1000)
-                warning(f"用户登录失败 - 用户名: {username}, 原因: {result}")
-                return render_template('login.html', error=result, next=next_url)
-        except Exception as e:
-            error(f"登录处理异常 - 用户名: {username}, 错误: {str(e)}")
-            exception("登录异常")
-            return render_template('login.html', error='系统内部错误，请稍后重试', next=next_url)
+@auth_bp.route('/login', methods=['GET'])
+def login_page():
+    if 'user_id' in session:
+        return redirect(url_for('main.index'))
     next_url = request.args.get('next', '/')
-    log_api_call('/login', 'GET', 200)
     return render_template('login.html', next=next_url, csrf_token=get_csrf_token())
 
-@auth_bp.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        start_time = time.time()
-        username = request.form['username']
-        password = request.form['password']
-        confirm_password = request.form['confirm_password']
-        info(f"用户注册尝试 - 用户名: {username}")
-        try:
-            if password != confirm_password:
-                log_api_call('/register', 'POST', 200, None, (time.time() - start_time) * 1000)
-                warning(f"注册失败 - 用户名: {username}, 原因: 密码不一致")
-                return render_template('register.html', error='两次输入的密码不一致')
-            success, result = db.register_user(username, password)
-            if success:
-                session['user_id'] = result
-                session['username'] = username
-                log_user_action(username, 'register', '注册成功')
-                log_api_call('/register', 'POST', 302, username, (time.time() - start_time) * 1000)
-                info(f"用户注册成功 - 用户ID: {result}, 用户名: {username}")
-                return redirect(url_for('auth.login'))
-            else:
-                log_api_call('/register', 'POST', 200, None, (time.time() - start_time) * 1000)
-                warning(f"用户注册失败 - 用户名: {username}, 原因: {result}")
-                return render_template('register.html', error=result)
-        except Exception as e:
-            error(f"注册处理异常 - 用户名: {username}, 错误: {str(e)}")
-            exception("注册异常")
-            return render_template('register.html', error='系统内部错误，请稍后重试')
-    log_api_call('/register', 'GET', 200)
+@auth_bp.route('/login', methods=['POST'])
+def login():
+    try:
+        is_json = 'application/json' in (request.headers.get('Content-Type') or '')
+        data = request.get_json(silent=True) if is_json else request.form
+        username = data.get('username')
+        password = data.get('password')
+        success, payload = db.login_user(username, password)
+        if success:
+            user_id = payload
+            session['user_id'] = user_id
+            session['username'] = username
+            session.permanent = True
+            try:
+                # 预热工具与模型缓存，减少首次请求冷启动
+                get_tools_for_user(user_id)
+                get_models_for_user(user_id)
+            except Exception:
+                pass
+            if is_json:
+                return jsonify({'success': True})
+            # 表单提交走页面跳转
+            next_url = data.get('next') or url_for('main.index')
+            return redirect(next_url)
+        else:
+            error_msg = payload or '用户名或密码错误'
+            if is_json:
+                return jsonify({'error': error_msg}), 401
+            return render_template('login.html', error=error_msg, csrf_token=get_csrf_token(), next=data.get('next') or '/')
+    except Exception as e:
+        logger.error(f"登录失败: {str(e)}")
+        if 'application/json' in (request.headers.get('Content-Type') or ''):
+            return jsonify({'error': '登录失败'}), 500
+        return render_template('login.html', error='登录失败，请稍后重试', csrf_token=get_csrf_token(), next=request.form.get('next') or '/')
+
+@auth_bp.route('/register', methods=['GET'])
+def register_page():
+    if 'user_id' in session:
+        return redirect(url_for('main.index'))
     return render_template('register.html', csrf_token=get_csrf_token())
 
-@auth_bp.route('/logout')
+@auth_bp.route('/register', methods=['POST'])
+def register():
+    try:
+        is_json = 'application/json' in (request.headers.get('Content-Type') or '')
+        data = request.get_json(silent=True) if is_json else request.form
+        username = data.get('username')
+        password = data.get('password')
+        success, result = db.register_user(username, password)
+        if success:
+            session['user_id'] = result
+            session['username'] = username
+            session.permanent = True
+            try:
+                # 预热工具与模型缓存，减少首次请求冷启动
+                get_tools_for_user(result)
+                get_models_for_user(result)
+            except Exception:
+                pass
+            if is_json:
+                return jsonify({'success': True})
+            return redirect(url_for('main.index'))
+        else:
+            if is_json:
+                return jsonify({'error': result}), 400
+            return render_template('register.html', error=result, csrf_token=get_csrf_token())
+    except Exception as e:
+        logger.error(f"注册失败: {str(e)}")
+        if 'application/json' in (request.headers.get('Content-Type') or ''):
+            return jsonify({'error': '注册失败'}), 500
+        return render_template('register.html', error='注册失败，请稍后重试', csrf_token=get_csrf_token())
+
+@auth_bp.route('/logout', methods=['GET', 'POST'])
 def logout():
-    username = session.get('username', '未知用户')
-    user_id = session.get('user_id', '未知ID')
-    session.clear()
-    log_user_action(username, 'logout', '用户登出')
-    info(f"用户登出 - 用户ID: {user_id}, 用户名: {username}")
-    return redirect(url_for('auth.login'))
+    try:
+        session.clear()
+        # POST/AJAX 返回 JSON，GET 直接跳转登录页，方便菜单链接使用
+        if request.method == 'POST' or 'application/json' in (request.headers.get('Accept') or ''):
+            return jsonify({'success': True})
+        return redirect(url_for('auth.login_page'))
+    except Exception as e:
+        logger.error(f"登出失败: {str(e)}")
+        if request.method == 'POST' or 'application/json' in (request.headers.get('Accept') or ''):
+            return jsonify({'error': '登出失败'}), 500
+        return redirect(url_for('main.index'))
