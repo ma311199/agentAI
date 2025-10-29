@@ -22,6 +22,8 @@
 6) 默认内置工具：在internal_tools.py中添加，启动时自动注册，可根据自己添加、删除、编辑内置工具。
 
 ### 使用界面：
+<img width="1883" height="862" alt="image" src="https://github.com/user-attachments/assets/625c0422-4947-47e5-8c1e-df83ab7830b6" />
+
 <img width="1912" height="836" alt="image" src="https://github.com/user-attachments/assets/78665325-2293-4730-b467-a1b336a78bf4" />
 
 
