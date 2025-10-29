@@ -21,6 +21,10 @@
 5) 默认账户：`admin / 123456`（启动时自动注册，见 `startup.initialize_add_tool_and_admin`）。
 6) 默认内置工具：在internal_tools.py中添加，启动时自动注册，可根据自己添加、删除、编辑内置工具。
 
+### 使用界面：
+<img width="1912" height="836" alt="image" src="https://github.com/user-attachments/assets/78665325-2293-4730-b467-a1b336a78bf4" />
+
+
 ## 架构与数据流
 - 后端入口：`app.py`（创建 Flask 应用、注册蓝图、初始化内置工具与 CSRF）。
 - 路由蓝图：
