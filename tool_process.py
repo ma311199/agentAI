@@ -44,7 +44,7 @@ class Toolregister:
         
         # 执行代码字符串，将定义的函数加载到命名空间，列：{'multiply': <function multiply at 0x00000204FF705D80>}
         exec(code_content, globals(), local_namespace)
-        info(f"注册的函数空间：{local_namespace}")
+        # info(f"注册的函数空间：{local_namespace}")
         # 优先根据 tool_name 查找函数
         if tool_name:
             candidate = local_namespace.get(tool_name)

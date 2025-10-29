@@ -51,9 +51,8 @@ def _build_tools_for_user(user_id: int) -> Dict[str, Tool]:
             count += 1
         except Exception as e:
             warning(f"注册工具失败，已跳过 - 用户ID: {user_id}, 工具: {t.get('tool_name')}, 错误: {e}")
-    info(f"为用户 {user_id} 构建工具注册完成，有效工具数: {count}")
+    debug(f"构建工具缓存 - 用户ID: {user_id}, 有效工具数: {count}")
     return reg.tools
-
 
 def get_tools_for_user(user_id: int) -> Dict[str, Tool]:
     """获取用户的已注册工具（带缓存 + TTL）。"""

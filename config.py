@@ -41,8 +41,8 @@ class Config:
     CSRF_EXEMPT_ENDPOINTS = {'auth.login', 'auth.register'}  # CSRF豁免端点集合
 
     # 缓存TTL配置（秒）
-    TOOLS_CACHE_TTL_SECONDS = 60  # 工具缓存TTL默认5分钟
-    MODELS_CACHE_TTL_SECONDS = 60  # 模型缓存TTL默认5分钟
+    TOOLS_CACHE_TTL_SECONDS = 300  # 工具缓存TTL默认5分钟
+    MODELS_CACHE_TTL_SECONDS = 300  # 模型缓存TTL默认5分钟
 
     # 应用运行配置（按需使用）
     DEBUG = True  # Flask调试模式

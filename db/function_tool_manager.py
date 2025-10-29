@@ -129,6 +129,47 @@ class FunctionToolManager(DatabaseConnection):
             exception(f"获取函数工具时出错 (tool_id={tool_id}, user_id={user_id}): {e}")
             return None
 
+    def get_function_tool_name(self, tool_name):
+        """
+        根据工具名获取函数工具
+        
+        Args:            
+            tool_name: 工具名
+            
+        Returns:
+            dict: 函数工具信息，如果不存在则返回None
+        """
+        try:
+            self._ensure_connection()
+            
+            debug(f"获取函数工具 - 工具名: {tool_name}")
+            self.cursor.execute(
+                "SELECT tool_id, tool_name, description, parameters, is_active, create_time, update_time, tool_flag, label, code_content FROM function_tools WHERE tool_name = ?",
+                (tool_name,)
+            )
+            tool = self.cursor.fetchone()
+            
+            if not tool:
+                return None
+            
+            tool_info = {
+                'tool_id': tool[0],
+                'tool_name': tool[1],
+                'description': tool[2],
+                'parameters': tool[3],
+                'is_active': bool(tool[4]),
+                'create_time': tool[5],
+                'update_time': tool[6],
+                'tool_flag': tool[7],
+                'label': tool[8],
+                'code_content': tool[9]
+            }
+            
+            return tool_info
+        except Exception as e:
+            exception(f"获取函数工具时出错 (tool_name={tool_name}): {e}")
+            return None
+
     def get_function_tool_by_name(self, user_id, tool_name):
         """
         根据工具名获取函数工具

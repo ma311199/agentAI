@@ -6,6 +6,7 @@ from llmclient import LLMClient
 from log import log_db_operation, log_api_call
 from tools_cache import get_tools_for_user
 from models_cache import get_model_for_user
+from database import db
 
 chat_bp = Blueprint('chat', __name__)
 

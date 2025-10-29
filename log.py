@@ -64,27 +64,27 @@ if not logger.handlers:
 # 日志功能封装函数
 def debug(message):
     """记录调试级别日志"""
-    logger.debug(message)
+    logger.debug(message, stacklevel=2)
 
 def info(message):
     """记录信息级别日志"""
-    logger.info(message)
+    logger.info(message, stacklevel=2)
 
 def warning(message):
     """记录警告级别日志"""
-    logger.warning(message)
+    logger.warning(message, stacklevel=2)
 
 def error(message):
     """记录错误级别日志"""
-    logger.error(message)
+    logger.error(message, stacklevel=2)
 
 def critical(message):
     """记录严重错误级别日志"""
-    logger.critical(message)
+    logger.critical(message, stacklevel=2)
 
 def exception(message):
     """记录异常信息，自动包含堆栈跟踪"""
-    logger.exception(message)
+    logger.exception(message, stacklevel=2)
 
 # 用户操作日志函数
 def log_user_action(user_id, action, details=None):
@@ -118,11 +118,11 @@ def log_api_call(endpoint, method, status_code, user_id=None, response_time=None
         log_message += f", Response Time: {response_time}ms"
     
     if status_code >= 500:
-        logger.error(log_message)
+        logger.error(log_message, stacklevel=2)
     elif status_code >= 400:
-        logger.warning(log_message)
+        logger.warning(log_message, stacklevel=2)
     else:
-        logger.info(log_message)
+        logger.info(log_message, stacklevel=2)
 
 # 数据库操作日志函数
 def log_db_operation(operation, table, status="success", details=None):
@@ -139,9 +139,9 @@ def log_db_operation(operation, table, status="success", details=None):
         log_message += f", Details: {details}"
     
     if status == "failed":
-        logger.error(log_message)
+        logger.error(log_message, stacklevel=2)
     else:
-        logger.info(log_message)
+        logger.info(log_message, stacklevel=2)
 
 # 清理旧日志（保留天数从配置读取）
 clean_old_logs(Config.LOG_RETENTION_DAYS)

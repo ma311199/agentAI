@@ -113,6 +113,10 @@ class ChatDatabase(DatabaseConnection):
     def get_function_tool_by_name(self, user_id, tool_name):
         manager = FunctionToolManager(self.db_path)
         return manager.get_function_tool_by_name(user_id, tool_name)
+    
+    def get_function_tool_name(self, tool_name):
+        manager = FunctionToolManager(self.db_path)
+        return manager.get_function_tool_name(tool_name)
         
     def update_function_tool(self, user_id, tool_id, tool_name=None, description=None, parameters=None, is_active=None, tool_flag=None, label=None, code_content=None):
         manager = FunctionToolManager(self.db_path)

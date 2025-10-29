@@ -1,163 +1,137 @@
-# React增强型智能Agent项目介绍
+# React增强型智能Agent（Flask + 原生前端）
 
-## 1. 项目概述
+一个可扩展的 Web 版 React Agent，支持“思考 → 规划 → 行动（工具） → 观察 → 响应”全流程，内置工具动态注册、模型管理、记忆与执行历史可视化、CSRF 保护与日志审计，适合学习、演示与二次开发。
 
-React增强型智能Agent是一个基于LLM（大语言模型）的智能代理系统，采用React（思考-行动-观察-响应）模式，具备记忆管理、执行规划、工具使用、日志与安全审查等能力。当前版本以Web应用形式提供：后端使用Flask提供API与页面，前端使用模板与原生JS实现交互式体验。
+## 特性概览
+- React 推理模式：生成可视化的执行计划与最终回复。
+- 动态函数工具：工具以代码字符串存库，运行时安全审查与合规校验后注册为可执行函数。
+- 模型管理与缓存：OpenAI 兼容接口，支持私有/共享模型与 TTL 缓存。
+- 记忆管理：对话历史与工具执行历史查询、清理。
+- 安全与会话：CSRF 保护、登录/注册、会话滑动过期、Cookie 安全参数。
+- 日志体系：文件轮转、保留清理、统一 API/DB 操作日志。
 
-### 核心特性：
-- 🧠 记忆增强：支持对话历史与工具执行历史的记录与清理
-- 📋 执行规划：为复杂任务生成多步骤计划并逐步执行
-- 🔧 工具集成：支持函数型工具的注册、执行与历史查询
-- 🔒 安全审查：对字符串代码型工具做安全审查（可拦截不安全代码）
-- 📜 日志记录：统一记录API调用与数据库操作，便于审计与排错
+## 快速开始
+1) 环境要求：`Python 3.10+`
+2) 安装依赖：
+   - `pip install -r requirements.txt`
+3) 配置模型 API Key（可选但推荐）：
+   - Windows PowerShell：`$env:API_KEY = "your-api-key"`
+   - 或运行时在“模型管理”中填写 `model_url` 与 `api_key`
+4) 启动：`python app.py`，访问 `http://127.0.0.1:5000/`
+5) 默认账户：`admin / 123456`（启动时自动注册，见 `startup.initialize_add_tool_and_admin`）。
+6) 默认内置工具：在internal_tools.py中添加，启动时自动注册，可根据自己添加、删除、编辑内置工具。
 
-## 2. 系统架构
+## 架构与数据流
+- 后端入口：`app.py`（创建 Flask 应用、注册蓝图、初始化内置工具与 CSRF）。
+- 路由蓝图：
+  - 页面：`routes/main.py`（`/` 首页）
+  - 认证：`routes/auth.py`（`/login`、`/register`、`/logout`）
+  - 聊天：`routes/chat.py`（`POST /api/chat`、历史/执行记录等）
+  - 模型：`routes/models.py`（模型 CRUD 与可用模型查询）
+  - 工具：`routes/tools.py`（工具 CRUD 与代码合规/安全审查）
+- Agent 核心：`agent.py`（计划生成、工具执行、记忆/响应拼装）。
+- LLM 客户端：`llmclient.py`（OpenAI 兼容，读取 `API_KEY`，支持自定义 `url/model/timeout`）。
+- 工具注册：`tool_process.py`（DB→内存，字符串代码转函数）；`tools.py`（`Tool` 基类）。
+- 内置工具：`internal_tools.py`（add/subtract/multiply/divide/search/search_hana）。
+- 缓存：`tools_cache.py`、`models_cache.py`（按用户缓存，TTL 从 `Config` 读取）。
+- 前端：`templates/` + `static/js|css`（原生 JS + Tailwind + Jinja2）。
 
-系统采用模块化设计，核心组件如下：
+数据流（Web）：前端提交 → `/api/chat` → 加载用户工具与模型 → `ReactAgent` 规划并执行 → 返回“计划+最终回复”并记录历史。
 
+## Agent执行流程（详细）
+
+### 组件架构图（ASCII）
 ```
-┌─────────────────┐      ┌─────────────────┐      ┌─────────────────┐
-│                 │      │                 │      │                 │
-│   app.py        │──────▶   agent.py      │──────▶   prompt.py     │
-│  Flask服务与路由 │      │ ReactAgent核心  │      │ 提示词生成模块   │
-│                 │      │                 │      │                 │
-└────────┬────────┘      └────────┬────────┘      └─────────────────┘
-         │                        │
-         │                        ▼
-         │                  ┌─────────────────┐
-         │                  │                 │
-         │                  │   tools.py      │
-         │                  │ 工具基类定义     │
-         │                  │                 │
-         │                  └────────┬────────┘
-         │                           │
-         └───────────────────┬───────┘
-                             │
-                             ▼
-                     ┌─────────────────┐      ┌──────────────────────┐
-                     │                 │      │                      │
-                     │ tool_process.py │◀─────┤ internal_tools.py    │
-                     │ 动态注册工具     │      │ 内置函数工具清单      │
-                     │（DB→内存加载）   │      │（add/multiply等）     │
-                     └─────────────────┘      └──────────────────────┘
-
-前端：
-- `templates/`：`index.html`、`login.html` 页面模板
-- `static/js/`：`main.js`（聊天与展示）、`tool-management.js`（工具管理）、`model-management.js`（模型管理）
-- `static/css/`：`style.css` 与 Tailwind CSS
-```
-
-### 数据流（Web）：
-1. 用户在页面输入请求 → 提交到 `/api/chat`
-2. `app.py` 根据会话与模型选择创建 `ReactAgent`
-3. `tool_process.Toolregister` 从数据库加载用户可用工具到内存（`Tool`对象）
-4. `ReactAgent` 按React模式规划→执行工具→汇总结果
-5. 返回计划与最终回复；前端渲染显示，并提供执行历史与记忆查看
-
-## 3. 文件功能介绍
-
-### 3.1 app.py
-
-- 功能：Flask应用入口与路由。负责会话与CSRF、初始化LLM、初始化内置工具（写入DB）、工具与模型的CRUD、聊天请求处理与日志记录。
-- 关键职责：
-  - 页面：`/`（首页）、`/login`、`/register`、`/logout`
-  - 聊天：`POST /api/chat`（计划与回复）
-  - 工具：`GET/POST /api/tools`、`DELETE /api/tools/<id>`
-  - 历史：`GET /api/execution_history`、`GET /api/chat_history`、`GET /api/sessions`
-  - 模型：`GET/POST/PUT/DELETE /api/models`、`GET /api/models/<id>`
-  - 用户：`GET /api/user_profile`、`POST /api/change_password`、`POST /api/clear_memory`
-- 启动示例：
-```python
-if __name__ == '__main__':
-    initialize_add_tool_and_admin()  # 注册admin与内置工具到DB
-    initialize_llm()                 # 创建默认LLMClient
-    app.run(debug=True, host='0.0.0.0', port=5000)
+┌──────────────┐      ┌──────────────┐      ┌───────────────────┐      ┌───────────────┐
+│  前端页面    │──POST▶ /api/chat    │────▶│  缓存层（按用户）   │────▶│  LLMClient     │
+│ (index.html) │     │ (routes/chat) │     │ tools_cache/models │     │ (OpenAI兼容)   │
+└─────┬────────┘     └───────┬──────┘     └───────────┬───────┘      └───────┬───────┘
+      │                      │                          │                     │
+      │ GET 视图/列表        │ 调用 get_tools_for_user   │ 构建/命中模型缓存     │ chat()/stream_chat()
+      │ / /login /register   │ 调用 get_model_for_user   │ TTL 控制（Config）    │
+      ▼                      ▼                          ▼                     ▼
+┌──────────────┐      ┌──────────────────────┐      ┌──────────────────────┐      ┌─────────────────┐
+│ routes/main  │      │ ReactAgent           │      │ Toolregister          │      │ Tool.execute     │
+│ 页面渲染与CSRF│      │ 规划+执行+记忆摘要    │      │ DB→函数对象→内存注册   │      │ 执行函数工具     │
+└─────┬────────┘      └─────────┬────────────┘      └──────────┬───────────┘      └────────┬────────┘
+      │                           │                              │                           │
+      │                           │                              │                           │
+      ▼                           ▼                              ▼                           ▼
+┌──────────────┐      ┌──────────────────────┐      ┌──────────────────────┐      ┌────────────────────┐
+│ database/db  │◀────▶│  chat_history        │◀────▶│ tool_execution_history│◀────▶│ 日志 log.py/文件轮转 │
+│ SQLite/Managers│     │ 记录计划与回复       │      │ 记录工具执行摘要       │      │ API/DB操作日志       │
+└──────────────┘      └──────────────────────┘      └──────────────────────┘      └────────────────────┘
 ```
 
-### 3.2 agent.py
-
-- 功能：`ReactAgent` 核心实现，包含记忆、规划、工具调用与响应生成。
-- 方法要点：`process_query(user_id, user_input)` 内部生成计划、执行工具、更新记忆并返回（本项目会返回“计划文本 + 最终回复”用于前端展示）。
-
-### 3.3 prompt.py
-
-- 功能：生成工具选择与参数抽取、执行规划、记忆摘要等提示词模板。
-
-### 3.4 tools.py
-
-- 功能：`Tool` 基类，封装工具的名称、描述、参数与执行函数；`execute(**kwargs)` 调用真实函数。
-
-### 3.5 tool_process.py（工具动态注册）
-
-- 功能：`Toolregister` 负责把数据库中的函数工具加载为内存中的 `Tool` 对象；当工具以“代码字符串”存储时，使用 `_convert_string_to_function(code_content, tool_name)` 提取函数对象。
-- 关键逻辑：
-  - 优先按 `tool_name` 在 `exec` 命名空间中寻找可调用函数（不以内划线开头、非内建、`callable=True`）
-  - 未命中时回退到首个符合条件的函数
-  - 注册后存入 `self.tools` 字典（进程内存储，重启不持久化）
-
-### 3.6 internal_tools.py（内置工具清单）
-
-- 功能：提供 `in_tools` 数组（add/subtract/multiply/divide/search/search_hana等），在应用启动时自动写入数据库，供所有用户使用或作为示例。
-
-## 4. 核心功能详解
-
-### 4.1 React模式实现
-- 思考 → 规划 → 行动（工具） → 观察（结果） → 响应（总结）。
-
-### 4.2 记忆管理
-- 对话记忆：`GET /api/chat_history` 展示最近N条记录；`POST /api/clear_memory` 清理（短期/执行历史/全部）。
-- 执行历史：`GET /api/execution_history` 返回最近工具执行的摘要列表。
-
-### 4.3 执行规划
-- 由LLM生成步骤化计划，包含动作类型、理由、工具名称与置信度；前端展示计划文本与最终回复。
-
-### 4.4 工具使用机制
-- 后端从DB加载工具定义（名称/描述/参数/代码）；执行时由 `Tool.execute(**kwargs)` 调用真实函数，并记录到执行历史。
-
-## 5. 使用方法
-
-### 5.1 启动与访问
-```bash
-pip install -r requirements.txt
-set FLASK_SECRET_KEY=your-secret  # Windows示例（PowerShell可用 $env:FLASK_SECRET_KEY）
-set API_KEY=your-api-key          # 可选，LLMClient也支持通过代码传参
-python app.py
+### 时序图（步骤说明）
 ```
-- 打开浏览器访问 `http://127.0.0.1:5000/`
-- 默认会自动注册 `admin/123456` 管理员账户（见 `initialize_add_tool_and_admin`）
+1. 前端提交消息：
+   - 用户在首页输入问题，选择启用模型（左侧模型管理）。
+   - 发送到 `POST /api/chat`，附带 `message`、`model_id`、`session_id`。
 
-### 5.2 基本使用（Web）
-- 登录后在输入框提交请求，后台返回“计划+最终回复”；底部状态栏展示“短期记忆”与“可用工具”数量。
-- 查看历史：在界面中点击“工具执行历史”，或前端触发请求到 `GET /api/execution_history`。
-- 清理记忆：通过“清除记忆”按钮或 `POST /api/clear_memory`（支持 short/execution/all）。
+2. 路由处理：
+   - `routes/chat.py` 校验登录与参数；记录 API 调用耗时。
+   - 按用户加载工具缓存 `get_tools_for_user(user_id)`。
+   - 按用户与模型ID加载模型缓存 `get_model_for_user(user_id, model_id)`；仅缓存启用模型。
 
-### 5.3 添加与管理工具
-- 通过页面“添加工具”弹窗或 `POST /api/tools` 提交：
-  - `tool_name`、`description`、`parameters`（JSON数组）、`code_or_url`（函数型工具以代码字符串提交）
-- 安全审查：字符串代码会经过 `security_review.review_tool_code`，不安全将被拒绝。
-- 执行参数：严格使用标准JSON（双引号、`true/false/null`），否则会解析失败。
+3. 初始化 Agent 与 LLM：
+   - 构建 `LLMClient(url=model_url, model=model_name, api_key, timeout)`。
+   - 构建 `ReactAgent(llm=LLMClient, tools=tools_dict)`。
 
-## 6. API 路由速览
-- `/` 首页（登录后可访问）
-- `/login`（GET/POST）、`/register`（GET/POST）、`/logout`
-- `POST /api/chat` 聊天与执行规划
-- `GET/POST /api/tools`，`DELETE /api/tools/<id>` 工具管理
-- `GET /api/execution_history` 工具执行历史
-- `GET /api/chat_history` 对话历史摘要
-- `GET /api/sessions` 会话列表
-- `GET /api/models`、`POST /api/models`、`PUT /api/models/<id>`、`DELETE /api/models/<id>` 模型管理
-- `GET /api/user_profile` 用户信息；`POST /api/change_password` 修改密码
-- `POST /api/clear_memory` 清除记忆
+4. 创建执行计划：
+   - `ReactAgent.create_plan()`：
+     - 生成规划提示词 `create_planning_prompt(user_input, tools_schema, conversation_summary)`。
+     - LLM 生成计划（JSON 数组或回退“直接回答”）。
+     - 从响应中提取计划 `_extract_plan_from_response()`。
 
-## 7. 技术栈
-- 后端：Python 3.10+、Flask、SQLite（见 `db/` 与 `database.py`）
-- LLM：`LLMClient`（OpenAI兼容接口；示例使用 DashScope `qwen-flash`）
-- 前端：原生JS、Tailwind CSS、Jinja2模板
-- 日志：统一API与DB日志（`log.py`），生成 `logs/agent_ai_*.log`
+5. 逐步执行计划：
+   - 遍历计划步骤，若需要调用工具：
+     - 参数与工具校验 `_validate_parsed_result()`。
+     - 执行 `Tool.execute(**kwargs)`。
+     - 记录工具执行摘要到 DB（开始/结束时间、参数、结果截断）。
+   - 若“直接回答”，走 `_generate_direct_answer()`。
 
-## 8. 扩展与定制
+6. 整理结果与记忆：
+   - 拼装“计划文本 + 最终回复”。
+   - 写入 `chat_history`（模型名、计划、用户消息、最终回复、时间戳）。
 
-### 8.1 添加新函数工具（字符串代码形式）
+7. 返回响应：
+   - 将“计划+最终回复”返回给前端并呈现。
+   - 侧栏或弹窗可查询“工具执行历史”“对话记忆摘要”。
+
+8. 保护与审计：
+   - CSRF：`routes/common.py` 的 `init_csrf` 挂载 `before_request` 校验。
+   - 日志：`log_api_call`/`log_db_operation`、文件轮转与保留清理（`log.py`）。
+```
+
+### 关键模块职责
+- `agent.py`：对话摘要、规划提示词、计划解析与工具执行、最终回复拼装。
+- `llmclient.py`：与 OpenAI 兼容接口交互，支持 `timeout`、普通与流式输出。
+- `tools.py`：`Tool` 基类，封装元信息与执行入口。
+- `tool_process.py`：从 DB 的字符串代码提取函数对象并注册，维护进程内 `self.tools`。
+- `tools_cache.py`/`models_cache.py`：按用户维度缓存并 TTL 控制；支持失效与刷新。
+- `routes/*`：REST API 与页面模板渲染；登录、注册、模型/工具 CRUD、聊天与历史。
+- `security_review.py`：工具字符串代码的安全审查（提交/更新时执行）。
+- `log.py`：统一日志，轮转与保留清理；封装 API 与 DB 操作日志。
+
+## 使用说明
+- 登录后在首页输入问题；需先在左侧启用并选择模型，否则 `/api/chat` 会提示“未选择模型”。
+- 页面可查看“对话记忆”（`GET /api/chat_history`）与“工具执行历史”（`GET /api/execution_history`）。
+- 清理记忆：`POST /api/clear_memory`，`type` 支持 `short`、`execution`、`all`。
+
+## 模型管理
+- 路由：`GET/POST/PUT/DELETE /api/models`、`GET /api/models/<id>`。
+- 查询可用模型：`POST /api/models/available`，传入 `model_url` 与 `api_key`。
+- 缓存：仅缓存启用模型（`is_active=1`），按用户 TTL 过期，接口在 `models_cache.py`。
+
+## 工具管理
+- 路由：`GET/POST /api/tools`、`GET/PUT/DELETE /api/tools/<id>`。
+- 提交字段：`tool_name`、`description`、`parameters`（JSON 数组）、`code_or_url`（函数型工具传代码字符串）、`tool_flag`（0共享/1私有）、`label`。
+- 合规校验：`validate_python_tool` 检查语法/函数同名/参数匹配/依赖模块；未通过直接拒绝。
+- 安全审查：`security_review.review_tool_code`；不安全代码会返回 `issues` 与 `summary` 并拒绝入库。
+- 执行机制：DB 存储 → 运行时转换为函数对象 → 注册至内存字典 → `Tool.execute(**kwargs)` 执行。
+
+示例（字符串代码工具）：
 ```python
 code_str = """
 import math
@@ -165,15 +139,38 @@ import math
 def circle_area(radius: float) -> float:
     return math.pi * radius * radius
 """
-# 通过API或前端提交：tool_name 与函数名一致可优先匹配
-# 后端将执行 `_convert_string_to_function(code_str, tool_name)` 并注册为可执行工具
+# 前端或 API 提交：保证 tool_name 与函数名一致可优先匹配
 ```
-- 命名规范：函数名不以下划线开头；建议与 `tool_name` 一致以确保优先匹配。
-- 安全建议：确保代码来源可信；若被审查拒绝，请根据返回的 issues 调整代码。
 
-### 8.2 调整LLM配置
-- 方法一：设置环境变量 `API_KEY`，在 `llmclient.py` 默认读取。
-- 方法二：修改 `app.py` 的 `initialize_llm()`，传入自定义 `url/model/api_key/timeout`。
+## 安全与配置（`config.py`）
+- 会话安全：`SECRET_KEY`、`SESSION_COOKIE_HTTPONLY/SAMESITE/SECURE`、滑动过期 `PERMANENT_SESSION_LIFETIME`。
+- CSRF：开启 `CSRF_ENABLED`；JSON 请求需在请求头携带 `X-CSRF-Token` 或 body 字段；`login/register` 默认豁免。
+- 缓存 TTL：`TOOLS_CACHE_TTL_SECONDS`、`MODELS_CACHE_TTL_SECONDS`（默认 300s）。
+- 数据库：`DB_PATH=./db/db.sqlite3`，跨线程访问关闭同线程限制。
+- 日志：`logs/agent_ai_YYYY-MM-DD.log`，轮转、保留天数、级别与格式均可在 `Config` 中调整。
 
-## 9. 总结
-本项目提供一个可扩展的Web版React智能Agent：支持工具动态注册与执行、计划与记忆可视化、API与前端联动。通过安全审查与日志审计，兼顾易用性与稳定性；适用于学习、演示与二次开发。
+## API 速览
+- 页面：`/`、`/login`、`/register`、`/logout`
+- 聊天：`POST /api/chat`、`GET /api/chat_history`、`GET /api/execution_history`、`GET /api/sessions`、`POST /api/clear_memory`
+- 工具：`GET/POST /api/tools`、`GET/PUT/DELETE /api/tools/<id>`
+- 模型：`GET/POST/PUT/DELETE /api/models`、`GET /api/models/<id>`、`POST /api/models/available`
+
+## 目录结构（节选）
+```
+agent.py        # ReactAgent 核心
+app.py          # Flask 入口与蓝图注册
+routes/         # 页面/认证/聊天/模型/工具 路由
+tools.py        # Tool 基类
+tool_process.py # DB→内存工具注册，字符串代码转函数
+internal_tools.py# 内置工具清单
+models_cache.py # 模型缓存（按用户/TTL）
+tools_cache.py  # 工具缓存（按用户/TTL）
+config.py       # 安全、会话、日志、缓存 等配置
+log.py          # 日志轮转与清理
+templates/      # Jinja2 模板（index/login/register）
+static/js|css   # 前端交互与样式
+```
+
+## 备注
+- 生产环境请修改 `config.py` 的 `SECRET_KEY` 与 Cookie 安全参数，并根据需求调整 CSRF、日志与缓存策略。
+- 若提交工具代码失败，请根据返回的合规/安全提示修正后重试。

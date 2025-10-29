@@ -42,7 +42,9 @@ class DatabaseConnection:
             exception(f"数据库连接错误: {e}")
             self.conn = sqlite3.connect(self.db_path, check_same_thread=Config.DB_CHECK_SAME_THREAD)
             try:
+                # 启用写前日志（WAL）模式以提升并发读写性能
                 self.conn.execute("PRAGMA journal_mode=WAL")
+                # 设置数据库忙等待超时时间（毫秒），缓解短时锁竞争导致的操作失败
                 self.conn.execute("PRAGMA busy_timeout=3000")
             except Exception:
                 pass

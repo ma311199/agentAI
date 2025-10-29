@@ -268,16 +268,16 @@ class ReactAgent:
                 if not tool_name and "tool_name" in step:
                     tool_name = step["tool_name"]
                 debug(f"调用的工具：{tool_name}, 工具置信度：{confidence}")
-                if tool_name and confidence >= 0.3:
+                # 获取工具信息以获取tool_id
+                tool_info = db.get_function_tool_name(tool_name)
+                tool_id = tool_info['tool_id'] if tool_info else None
+                if tool_id and confidence >= 0.3:
                     try:
                         # 根据执行计划中的工具和参数，执行工具
                         execution_start_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") # 记录开始时间（年月日时分秒格式）
                         result = self.execute_tool(tool_name, parameters)
                         execution_end_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") # 记录结束时间
                         previous_step_result=result  #保存当前结果
-                        # 获取工具信息以获取tool_id
-                        tool_info = db.get_function_tool_by_name(user_id,tool_name)
-                        tool_id = tool_info['tool_id'] if tool_info else None
                         
                         # 记录工具执行信息
                         execution_params_str = json.dumps(parameters, ensure_ascii=False)
@@ -287,24 +287,19 @@ class ReactAgent:
                             'reasoning': reasoning,
                             'confidence': confidence
                         }, ensure_ascii=False)
-                        
-                        # 由于function_tool_executions表的tool_id有外键约束，需要确保tool_id存在
-                        if tool_id is None:
-                            error(f"工具 '{tool_name}' 不存在于数据库中，无法记录执行信息")
-                        else:
-                            # 正常情况，直接记录执行信息
-                            db.add_tool_execution(
-                                user_id=user_id,
-                                tool_id=tool_id,
-                                tool_name=tool_name,
-                                question=user_input,
-                                execution_steps=execution_steps,
-                                execution_params=execution_params_str,
-                                execution_result=execution_result_str,
-                                execution_status="success",
-                                start_time=execution_start_time,
-                                end_time=execution_end_time
-                            )
+                        # 记录工具执行信息
+                        db.add_tool_execution(
+                            user_id=user_id,
+                            tool_id=tool_id,
+                            tool_name=tool_name,
+                            question=user_input,
+                            execution_steps=execution_steps,
+                            execution_params=execution_params_str,
+                            execution_result=execution_result_str,
+                            execution_status="success",
+                            start_time=execution_start_time,
+                            end_time=execution_end_time
+                        )
                         
                         # 格式化存储工具执行结果
                         tool_response = self._format_response(tool_name, parameters, result, reasoning, confidence)
@@ -317,7 +312,7 @@ class ReactAgent:
                         exception("工具调用异常") 
                 else:
                     # 如果没有合适的工具，生成直接回答
-                    debug(f"没有合适的工具，生成直接回答")
+                    debug(f"没有合适的工具或数据库中无此工具信息{tool_name}，生成直接回答")
                     fallback_answer = self._generate_direct_answer(step_specific_input,user_id)
                     tool_results.append(fallback_answer)
                     debug(f"直接回答生成完成")
