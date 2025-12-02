@@ -67,7 +67,7 @@
                 <!-- 可用工具部分 - 可折叠子面板 -->
                 <div class="mb-4">
                     <div id="toolsSubHeader" class="flex items-center justify-between p-2 bg-gray-50 rounded-t-lg border border-gray-200 cursor-pointer">
-                        <h3 class="text-md font-medium text-gray-700">工具管理</h3>
+                        <h3 class="text-md font-medium text-gray-700">MCP管理</h3>
                         <div class="flex items-center">
                             <button 
                                 id="addToolBtn" 
@@ -97,20 +97,34 @@
                                 </div>
                                 {% if tool.parameters %}
                                 <div class="mt-2 text-xs text-gray-500">
+                                    {% if tool.tool_type == 'api' and tool.parameters.method %}
+                                    <strong>HTTP方法:</strong> {{ tool.parameters.method|upper }}<br>
                                     <strong>参数:</strong>
+                                    {% else %}
+                                    <strong>参数:</strong>
+                                    {% endif %}
                                     <ul class="list-disc list-inside">
-                                        {% for param in tool.parameters %}
-                                        <li>
-                                            {{ param.name }} {% if param.required %}<span class="text-red-500">*</span>{% endif %}
-                                            {% if param.description %}<span class="ml-1 text-gray-400">- {{ param.description }}</span>{% endif %}
-                                        </li>
-                                        {% endfor %}
+                                        {% if tool.tool_type == 'api' and tool.parameters.data and tool.parameters.data is iterable and tool.parameters.data is not string %}
+                                            {% for param in tool.parameters.data %}
+                                            <li>
+                                                {{ param.name }} {% if param.required %}<span class="text-red-500">*</span>{% endif %}
+                                                {% if param.description %}<span class="ml-1 text-gray-400">- {{ param.description }}</span>{% endif %}
+                                            </li>
+                                            {% endfor %}
+                                        {% else %}
+                                            {% for param in tool.parameters %}
+                                            <li>
+                                                {{ param.name }} {% if param.required %}<span class="text-red-500">*</span>{% endif %}
+                                                {% if param.description %}<span class="ml-1 text-gray-400">- {{ param.description }}</span>{% endif %}
+                                            </li>
+                                            {% endfor %}
+                                        {% endif %}
                                     </ul>
                                 </div>
                                 {% endif %}
                                 {% if tool.code_content %}
                                 <div class="mt-2 text-xs text-gray-500">
-                                    <strong>工具代码:</strong>
+                                    <strong>工具代码/URL:</strong>
                                     <pre class="bg-gray-100 p-2 rounded mt-1 text-xs overflow-x-auto">
                                         {{ tool.code_content }}
                                     </pre>

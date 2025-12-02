@@ -25,12 +25,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">参数描述 (JSON格式)</label>
-                        <textarea id="newToolParameters" rows="3" placeholder='示例: [{"name":"a","description":"加数1","type":"string","required":true},{"name":"b","description":"加数2","type":"string","required":true}]' class="w-full px-3 py-2 rounded-md border border-gray-300 text-sm"></textarea>
-                        <p class="text-xs text-gray-500 mt-1">请以JSON数组格式输入参数信息</p>
+                        <textarea id="newToolParameters" rows="3" placeholder='函数工具参数示例（key和value都需要使用双引号）: \n[{"name":"a","description":"加数1","type":"string","required":true},{"name":"b","description":"加数2","type":"string","required":true}] \n API工具示例：\n{
+ "method": "post",
+ "data":[{"description":"加数1","name":"a","required":true,"type":"int"},{"description":"加数2","name":"b","required":true,"type":"int"}]
+}' class="w-full px-3 py-2 rounded-md border border-gray-300 text-sm"></textarea>
+                        <p class="text-xs text-gray-500 mt-1">请以JSON格式输入参数信息</p>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">工具代码/URL *</label>
-                        <textarea id="newToolCode" rows="4" placeholder='函数代码（Python）,代码中函数工具名与上面的工具名称一致，或者函数工具名定义在代码中的第一个函数\n例如：\ndef add(a, b):\n    return a + b' class="w-full px-3 py-2 rounded-md border border-gray-300 text-sm" required></textarea>
+                        <textarea id="newToolCode" rows="4" placeholder='函数代码（Python）,代码中函数工具名与上面的工具名称一致，或者函数工具名定义在代码中的第一个函数（相关依赖import导入需要定义在函数内部）\n例如：\ndef add(a, b):\n    import re\n    return a + b' class="w-full px-3 py-2 rounded-md border border-gray-300 text-sm" required></textarea>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">工具标签</label>
@@ -84,10 +87,81 @@ document.addEventListener('DOMContentLoaded', function() {
             let parameters = null;
             if (toolParameters.trim()) {
                 try {
-                    parameters = JSON.parse(toolParameters);
-                    if (!Array.isArray(parameters)) {
-                        alert('参数描述必须是JSON数组格式');
-                        return;
+                    if (toolType === 'api') {
+                        // API工具的参数格式验证
+                        parameters = JSON.parse(toolParameters);
+                        // 确保是对象格式
+                        if (typeof parameters !== 'object' || parameters === null) {
+                            alert('API工具的参数描述必须是JSON对象格式');
+                            return;
+                        }
+                        // 验证method字段
+                        if (!parameters.method || typeof parameters.method !== 'string') {
+                            alert('API工具的参数描述必须包含method字段且为字符串');
+                            return;
+                        }
+                        // 验证method值
+                        const validMethods = ['get', 'post', 'put', 'delete', 'patch'];
+                        if (!validMethods.includes(parameters.method.toLowerCase())) {
+                            alert('API工具的method字段必须是有效的HTTP方法（get、post、put、delete、patch）');
+                            return;
+                        }
+                        // 验证data字段
+                        if (!parameters.data || !Array.isArray(parameters.data)) {
+                            alert('API工具的参数描述必须包含data字段且为数组');
+                            return;
+                        }
+                        // 验证data数组中的每个参数对象
+                        for (let i = 0; i < parameters.data.length; i++) {
+                            const param = parameters.data[i];
+                            if (typeof param !== 'object' || param === null) {
+                                alert(`API工具的data数组第${i+1}项必须是对象`);
+                                return;
+                            }
+                            if (!param.name || typeof param.name !== 'string') {
+                                alert(`API工具的data数组第${i+1}项必须包含name字段且为字符串`);
+                                return;
+                            }
+                            if (!param.description || typeof param.description !== 'string') {
+                                alert(`API工具的data数组第${i+1}项必须包含description字段且为字符串`);
+                                return;
+                            }
+                            if (!param.type || typeof param.type !== 'string') {
+                                alert(`API工具的data数组第${i+1}项必须包含type字段且为字符串`);
+                                return;
+                            }
+                        }
+                    } else {
+                        // 函数工具的参数格式验证
+                        parameters = JSON.parse(toolParameters);
+                        if (!Array.isArray(parameters)) {
+                            alert('函数工具的参数描述必须是JSON数组格式');
+                            return;
+                        }
+                        // 验证数组中的每个参数对象
+                        for (let i = 0; i < parameters.length; i++) {
+                            const param = parameters[i];
+                            if (typeof param !== 'object' || param === null) {
+                                alert(`函数工具的参数数组第${i+1}项必须是对象`);
+                                return;
+                            }
+                            if (!param.name || typeof param.name !== 'string') {
+                                alert(`函数工具的参数数组第${i+1}项必须包含name字段且为字符串`);
+                                return;
+                            }
+                            if (!param.description || typeof param.description !== 'string') {
+                                alert(`函数工具的参数数组第${i+1}项必须包含description字段且为字符串`);
+                                return;
+                            }
+                            if (typeof param.required !== 'boolean') {
+                                alert(`函数工具的参数数组第${i+1}项必须包含required字段且为布尔值`);
+                                return;
+                            }
+                            if (!param.type || typeof param.type !== 'string') {
+                                alert(`函数工具的参数数组第${i+1}项必须包含type字段且为字符串`);
+                                return;
+                            }
+                        }
                     }
                 } catch (e) {
                     alert('参数描述不是有效的JSON格式');
@@ -362,10 +436,58 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 let parameters = [];
                 try {
-                    parameters = JSON.parse(parametersText || '[]');
-                    if (!Array.isArray(parameters)) {
-                        alert('参数描述必须是JSON数组格式');
-                        return;
+                    // 根据工具类型确定参数验证方式
+                    if (tool.tool_type === 'api') {
+                        // API工具的参数格式验证
+                        parameters = JSON.parse(parametersText || '{}');
+                        // 确保是对象格式
+                        if (typeof parameters !== 'object' || parameters === null) {
+                            alert('API工具的参数描述必须是JSON对象格式');
+                            return;
+                        }
+                        // 验证method字段
+                        if (!parameters.method || typeof parameters.method !== 'string') {
+                            alert('API工具的参数描述必须包含method字段且为字符串');
+                            return;
+                        }
+                        // 验证method值
+                        const validMethods = ['get', 'post', 'put', 'delete', 'patch'];
+                        if (!validMethods.includes(parameters.method.toLowerCase())) {
+                            alert('API工具的method字段必须是有效的HTTP方法（get、post、put、delete、patch）');
+                            return;
+                        }
+                        // 验证data字段
+                        if (!parameters.data || !Array.isArray(parameters.data)) {
+                            alert('API工具的参数描述必须包含data字段且为数组');
+                            return;
+                        }
+                        // 验证data数组中的每个参数对象
+                        for (let i = 0; i < parameters.data.length; i++) {
+                            const param = parameters.data[i];
+                            if (typeof param !== 'object' || param === null) {
+                                alert(`API工具的data数组第${i+1}项必须是对象`);
+                                return;
+                            }
+                            if (!param.name || typeof param.name !== 'string') {
+                                alert(`API工具的data数组第${i+1}项必须包含name字段且为字符串`);
+                                return;
+                            }
+                            if (!param.description || typeof param.description !== 'string') {
+                                alert(`API工具的data数组第${i+1}项必须包含description字段且为字符串`);
+                                return;
+                            }
+                            if (!param.type || typeof param.type !== 'string') {
+                                alert(`API工具的data数组第${i+1}项必须包含type字段且为字符串`);
+                                return;
+                            }
+                        }
+                    } else {
+                        // 函数工具的参数格式验证（原有逻辑）
+                        parameters = JSON.parse(parametersText || '[]');
+                        if (!Array.isArray(parameters)) {
+                            alert('函数工具的参数描述必须是JSON数组格式');
+                            return;
+                        }
                     }
                 } catch (e) {
                     alert('参数描述不是有效的JSON格式');

@@ -54,7 +54,10 @@ class ChatManager(DatabaseConnection):
         try:
             self._ensure_connection()
             
-            query = "SELECT id, user_id, plan, user_message, bot_response, timestamp, model_name FROM chat_history"
+            query = "SELECT id, user_id, plan, user_message, bot_response, timestamp, model_name FROM chat_history "
+        
+            
+            # 如果指定了限制数量，添加LIMIT条件
             params = []
             
             # 如果指定了用户ID，添加WHERE条件
@@ -63,7 +66,7 @@ class ChatManager(DatabaseConnection):
                 params.append(user_id)
             
             # 按时间排序
-            query += " ORDER BY timestamp DESC"
+            query += " ORDER BY timestamp ASC"
             
             # 如果指定了限制，添加LIMIT子句
             if limit is not None:

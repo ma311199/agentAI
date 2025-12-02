@@ -101,13 +101,22 @@ def get_chat_history():
         session_id = request.args.get('session_id', 'default')
         limit = request.args.get('limit', 10, type=int)
         history = db.get_chat_history(user_id=session['user_id'], limit=limit)
-        response = "📝 **记忆摘要**\n\n展示最近的10次对话历史记录：\n"
-        if not history:
-            response += "**没有找到对话历史记录。**"
-        else:
-            for i, record in enumerate(history, 1):
-                response += f"记忆 ({i})->模型：{record['model_name']} 【用户问题：“{record['user_message']}”；AGENT回答：“{record['bot_response']}”】\n"
-        return jsonify({'response': response})
+        # 返回结构化的JSON数据，而不是格式化字符串
+        return jsonify({
+            'status': 'success',
+            'total': len(history),
+            'items': [
+                {
+                    'id': i,
+                    'model_name': record['model_name'],
+                    'user_message': record['user_message'],
+                    'bot_response': record['bot_response'],
+                    'date': record.get('timestamp', ''),
+                    'plan': record.get('plan', '')
+                }
+                for i, record in enumerate(history, 1)
+            ]
+        })
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
@@ -134,7 +143,8 @@ def get_execution_history():
         result_list = []
         for i, record in enumerate(tool_history, 1):
             execution_result = str(record.get('execution_result', ''))
-            truncated_result = execution_result[:100] + ('...' if len(execution_result) > 100 else '')
+            # truncated_result = execution_result[:200] + ('...' if len(execution_result) > 200 else '')
+            truncated_result = execution_result
             result_list.append({
                 'index': i,
                 'question': record.get('question'),

@@ -4,16 +4,17 @@ from log import logger, debug, info, warning, error, critical, exception
 from datetime import datetime
 
 
-class FunctionToolManager(DatabaseConnection):
-    """函数工具管理模块，处理函数工具相关的所有操作"""
+class ToolManager(DatabaseConnection):
+    """API和函数工具管理模块，处理函数工具相关的所有操作"""
     
-    def add_function_tool(self, user_id, tool_name, description, parameters, is_active=True, tool_flag=0, label='通用', code_content=None):
+    def add_tool(self, user_id, tool_name, tool_type, description, parameters, is_active=True, tool_flag=0, label='通用', code_content=None):
         """
         添加新的函数工具
         
         Args:   
             user_id: 用户ID (可选)          
             tool_name: 工具名称
+            tool_type: 工具类型
             description: 工具描述
             parameters: 参数定义（JSON字符串）
             is_active: 是否启用，默认为True
@@ -26,7 +27,7 @@ class FunctionToolManager(DatabaseConnection):
             self._ensure_connection()
             
             # 检查工具名称是否已存在
-            self.cursor.execute("SELECT tool_id FROM function_tools WHERE user_id = ? AND tool_name = ?", (user_id, tool_name,))
+            self.cursor.execute("SELECT tool_id FROM tools WHERE user_id = ? AND tool_name = ?", (user_id, tool_name,))
             existing_tool = self.cursor.fetchone()
             if existing_tool:
                 debug(f"函数工具 {tool_name} 已存在，跳过添加")
@@ -38,19 +39,19 @@ class FunctionToolManager(DatabaseConnection):
             
             # 插入新工具
             self.cursor.execute(
-                "INSERT INTO function_tools (user_id, tool_name, description, parameters, is_active, create_time, update_time, tool_flag, label, code_content) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                (user_id, tool_name, description, parameters, 1 if is_active else 0, current_time, current_time, tool_flag, label, code_content)
+                "INSERT INTO tools (user_id, tool_name, tool_type, description, parameters, is_active, create_time, update_time, tool_flag, label, code_content) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (user_id, tool_name, tool_type, description, parameters, 1 if is_active else 0, current_time, current_time, tool_flag, label, code_content)
             )
             self.conn.commit()
             tool_id = self.cursor.lastrowid
             
-            info(f"函数工具添加成功 - 工具名称: {tool_name}, 工具ID: {tool_id}, 用户ID: {user_id}, 工具类型: {label}")
+            info(f"函数工具添加成功 - 工具名称: {tool_name}, 工具ID: {tool_id}, 用户ID: {user_id}, 工具使用类型: {label}")
             return True, tool_id
         except Exception as e:
             exception(f"添加函数工具 {tool_name} 时出错: {e}")
             return False, str(e)
     
-    def get_all_function_tools(self, user_id):  
+    def get_all_tools(self, user_id):  
         """
         获取所有函数工具
         
@@ -62,7 +63,7 @@ class FunctionToolManager(DatabaseConnection):
 
             debug("获取所有函数工具")
             self.cursor.execute(
-                "SELECT distinct tool_id, tool_name, description, parameters, is_active, create_time, update_time, tool_flag, label, code_content FROM function_tools WHERE user_id = ? or tool_flag = 0 ORDER BY tool_id",
+                "SELECT distinct tool_id, tool_name, tool_type, description, parameters, is_active, create_time, update_time, tool_flag, label, code_content FROM tools WHERE user_id = ? or tool_flag = 0 ORDER BY tool_id",
                 (user_id,)
             )
             
@@ -71,14 +72,15 @@ class FunctionToolManager(DatabaseConnection):
                 tools.append({
                     'tool_id': tool[0],
                     'tool_name': tool[1],
-                    'description': tool[2],
-                    'parameters': tool[3],
-                    'is_active': bool(tool[4]),
-                    'create_time': tool[5],
-                    'update_time': tool[6],
-                    'tool_flag': tool[7],
-                    'label': tool[8],
-                    'code_content': tool[9]
+                    'tool_type': tool[2],
+                    'description': tool[3],
+                    'parameters': tool[4],
+                    'is_active': bool(tool[5]),
+                    'create_time': tool[6],
+                    'update_time': tool[7],
+                    'tool_flag': tool[8],
+                    'label': tool[9],
+                    'code_content': tool[10]
                 })
             
             info(f"成功获取函数工具列表 - 工具数: {len(tools)}")
@@ -87,7 +89,7 @@ class FunctionToolManager(DatabaseConnection):
             exception(f"获取函数工具列表时出错: {e}")
             return []
     
-    def get_function_tool_by_id(self, user_id, tool_id):
+    def get_tool_by_id(self, user_id, tool_id):
         """
         根据ID获取函数工具
         
@@ -103,7 +105,7 @@ class FunctionToolManager(DatabaseConnection):
             
             debug(f"获取函数工具 - 工具ID: {tool_id}, 用户ID: {user_id}")
             self.cursor.execute(
-                "SELECT tool_id, tool_name, description, parameters, is_active, create_time, update_time, tool_flag, label, code_content FROM function_tools WHERE user_id = ? AND tool_id = ?",
+                "SELECT tool_id, tool_name, tool_type, description, parameters, is_active, create_time, update_time, tool_flag, label, code_content FROM tools WHERE user_id = ? AND tool_id = ?",
                 (user_id, tool_id,)
             )
             tool = self.cursor.fetchone()
@@ -114,14 +116,15 @@ class FunctionToolManager(DatabaseConnection):
             tool_info = {
                 'tool_id': tool[0],
                 'tool_name': tool[1],
-                'description': tool[2],
-                'parameters': tool[3],
-                'is_active': bool(tool[4]),
-                'create_time': tool[5],
-                'update_time': tool[6],
-                'tool_flag': tool[7],
-                'label': tool[8],
-                'code_content': tool[9]
+                'tool_type': tool[2],
+                'description': tool[3],
+                'parameters': tool[4],
+                'is_active': bool(tool[5]),
+                'create_time': tool[6],
+                'update_time': tool[7],
+                'tool_flag': tool[8],
+                'label': tool[9],
+                'code_content': tool[10]
             }
             
             return tool_info
@@ -129,7 +132,7 @@ class FunctionToolManager(DatabaseConnection):
             exception(f"获取函数工具时出错 (tool_id={tool_id}, user_id={user_id}): {e}")
             return None
 
-    def get_function_tool_name(self, tool_name):
+    def get_tool_name(self, tool_name):
         """
         根据工具名获取函数工具
         
@@ -144,7 +147,7 @@ class FunctionToolManager(DatabaseConnection):
             
             debug(f"获取函数工具 - 工具名: {tool_name}")
             self.cursor.execute(
-                "SELECT tool_id, tool_name, description, parameters, is_active, create_time, update_time, tool_flag, label, code_content FROM function_tools WHERE tool_name = ?",
+                "SELECT tool_id, tool_name, tool_type, description, parameters, is_active, create_time, update_time, tool_flag, label, code_content FROM tools WHERE tool_name = ?",
                 (tool_name,)
             )
             tool = self.cursor.fetchone()
@@ -155,14 +158,15 @@ class FunctionToolManager(DatabaseConnection):
             tool_info = {
                 'tool_id': tool[0],
                 'tool_name': tool[1],
-                'description': tool[2],
-                'parameters': tool[3],
-                'is_active': bool(tool[4]),
-                'create_time': tool[5],
-                'update_time': tool[6],
-                'tool_flag': tool[7],
-                'label': tool[8],
-                'code_content': tool[9]
+                'tool_type': tool[2],
+                'description': tool[3],
+                'parameters': tool[4],
+                'is_active': bool(tool[5]),
+                'create_time': tool[6],
+                'update_time': tool[7],
+                'tool_flag': tool[8],
+                'label': tool[9],
+                'code_content': tool[10]
             }
             
             return tool_info
@@ -170,7 +174,7 @@ class FunctionToolManager(DatabaseConnection):
             exception(f"获取函数工具时出错 (tool_name={tool_name}): {e}")
             return None
 
-    def get_function_tool_by_name(self, user_id, tool_name):
+    def get_tool_by_name(self, user_id, tool_name):
         """
         根据工具名获取函数工具
         
@@ -186,7 +190,7 @@ class FunctionToolManager(DatabaseConnection):
             
             debug(f"获取函数工具 - 工具名: {tool_name}, 用户ID: {user_id}")
             self.cursor.execute(
-                "SELECT tool_id, tool_name, description, parameters, is_active, create_time, update_time, tool_flag, label, code_content FROM function_tools WHERE user_id = ? AND tool_name = ?",
+                "SELECT tool_id, tool_name, tool_type, description, parameters, is_active, create_time, update_time, tool_flag, label, code_content FROM tools WHERE user_id = ? AND tool_name = ?",
                 (user_id, tool_name,)
             )
             tool = self.cursor.fetchone()
@@ -197,14 +201,15 @@ class FunctionToolManager(DatabaseConnection):
             tool_info = {
                 'tool_id': tool[0],
                 'tool_name': tool[1],
-                'description': tool[2],
-                'parameters': tool[3],
-                'is_active': bool(tool[4]),
-                'create_time': tool[5],
-                'update_time': tool[6],
-                'tool_flag': tool[7],
-                'label': tool[8],
-                'code_content': tool[9]
+                'tool_type': tool[2],
+                'description': tool[3],
+                'parameters': tool[4],
+                'is_active': bool(tool[5]),
+                'create_time': tool[6],
+                'update_time': tool[7],
+                'tool_flag': tool[8],
+                'label': tool[9],
+                'code_content': tool[10]
             }
             
             return tool_info
@@ -212,7 +217,7 @@ class FunctionToolManager(DatabaseConnection):
             exception(f"获取函数工具时出错 (tool_name={tool_name}): {e}")
             return None
     
-    def update_function_tool(self, user_id, tool_id, tool_name=None, description=None, parameters=None, is_active=None, tool_flag=None, label=None, code_content=None):
+    def update_tool(self, user_id, tool_id, tool_name=None, description=None, parameters=None, is_active=None, tool_flag=None, label=None, code_content=None):
         """
         更新函数工具
         
@@ -234,7 +239,7 @@ class FunctionToolManager(DatabaseConnection):
             self._ensure_connection()
             
             # 检查工具是否存在
-            if not self.get_function_tool_by_id(user_id, tool_id):
+            if not self.get_tool_by_id(user_id, tool_id):
                 warning(f"未找到函数工具 - 工具ID: {tool_id}, 用户ID: {user_id}")                       
                 return False
             
@@ -244,7 +249,7 @@ class FunctionToolManager(DatabaseConnection):
             
             if tool_name is not None:
                 # 检查新名称是否与其他工具重复
-                self.cursor.execute("SELECT tool_id FROM function_tools WHERE user_id = ? AND tool_name = ? AND tool_id != ?", (user_id, tool_name, tool_id))
+                self.cursor.execute("SELECT tool_id FROM tools WHERE user_id = ? AND tool_name = ? AND tool_id != ?", (user_id, tool_name, tool_id))
                 if self.cursor.fetchone():
                     warning(f"更新函数工具失败 - 工具名称 {tool_name} 已被其他工具使用, 用户ID: {user_id}")
                     return False
@@ -284,7 +289,7 @@ class FunctionToolManager(DatabaseConnection):
                 return True
             
             # 执行更新
-            update_sql = f"UPDATE function_tools SET {', '.join(update_fields)} WHERE user_id = ? AND tool_id = ?"
+            update_sql = f"UPDATE tools SET {', '.join(update_fields)} WHERE user_id = ? AND tool_id = ?"
             update_values.append(user_id)
             update_values.append(tool_id)
             
@@ -301,7 +306,7 @@ class FunctionToolManager(DatabaseConnection):
             exception(f"更新函数工具时出错 (工具ID: {tool_id}, 用户ID: {user_id}): {e}")
             return False
     
-    def delete_function_tool(self, user_id, tool_id):
+    def delete_tool(self, user_id, tool_id):
         """
         删除函数工具
         
@@ -317,7 +322,7 @@ class FunctionToolManager(DatabaseConnection):
             
             debug(f"删除函数工具 - 工具ID: {tool_id}, 用户ID: {user_id}")   
             
-            self.cursor.execute("DELETE FROM function_tools WHERE user_id = ? AND tool_id = ?", (user_id, tool_id))
+            self.cursor.execute("DELETE FROM tools WHERE user_id = ? AND tool_id = ?", (user_id, tool_id))
             
             if self.cursor.rowcount > 0:
                 self.conn.commit()
@@ -355,7 +360,7 @@ class FunctionToolManager(DatabaseConnection):
             
             # 插入执行记录
             self.cursor.execute(
-                "INSERT INTO function_tool_executions (user_id, tool_id, tool_name, question, execution_steps, execution_params, execution_result, execution_status, start_time, end_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO tool_executions (user_id, tool_id, tool_name, question, execution_steps, execution_params, execution_result, execution_status, start_time, end_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 (user_id, tool_id, tool_name, question, execution_steps, execution_params, execution_result, execution_status, start_time,end_time)
             )
             self.conn.commit()
@@ -395,7 +400,7 @@ class FunctionToolManager(DatabaseConnection):
                 update_values.append(execution_steps)
             
             # 执行更新
-            update_sql = f"UPDATE function_tool_executions SET {', '.join(update_fields)} WHERE execution_id = ?"
+            update_sql = f"UPDATE tool_executions SET {', '.join(update_fields)} WHERE execution_id = ?"
             update_values.append(execution_id)
             
             self.cursor.execute(update_sql, update_values)
@@ -427,7 +432,7 @@ class FunctionToolManager(DatabaseConnection):
             debug(f"获取函数工具执行记录 - 执行ID: {execution_id}")
             self.cursor.execute(
                 "SELECT execution_id, user_id, tool_id, tool_name, question, execution_steps, execution_params, "
-                "execution_result, execution_status, start_time, end_time FROM function_tool_executions WHERE execution_id = ?",
+                "execution_result, execution_status, start_time, end_time FROM tool_executions WHERE execution_id = ?",
                 (execution_id,)
             )
             execution = self.cursor.fetchone()
@@ -472,7 +477,7 @@ class FunctionToolManager(DatabaseConnection):
             debug(f"获取用户函数工具执行历史 - 用户ID: {user_id}, 限制: {limit}, 偏移: {offset}")
             self.cursor.execute(
                 "SELECT execution_id, user_id, tool_id, tool_name, question, execution_steps, execution_params, "
-                "execution_result, execution_status, start_time, end_time FROM function_tool_executions "
+                "execution_result, execution_status, start_time, end_time FROM tool_executions "
                 "WHERE user_id = ? ORDER BY start_time DESC LIMIT ? OFFSET ?",
                 (user_id, limit, offset)
             )
@@ -517,7 +522,7 @@ class FunctionToolManager(DatabaseConnection):
             debug(f"获取工具执行历史 - 工具ID: {tool_id}, 限制: {limit}, 偏移: {offset}")
             self.cursor.execute(
                 "SELECT execution_id, user_id, tool_id, tool_name, question, execution_steps, execution_params, "
-                "execution_result, execution_status, start_time, end_time FROM function_tool_executions "
+                "execution_result, execution_status, start_time, end_time FROM tool_executions "
                 "WHERE tool_id = ? ORDER BY start_time DESC LIMIT ? OFFSET ?",
                 (tool_id, limit, offset)
             )
@@ -559,7 +564,7 @@ class FunctionToolManager(DatabaseConnection):
             
             debug(f"删除函数工具执行记录 - 执行ID: {execution_id}")
             
-            self.cursor.execute("DELETE FROM function_tool_executions WHERE execution_id = ?", (execution_id,))
+            self.cursor.execute("DELETE FROM tool_executions WHERE execution_id = ?", (execution_id,))
             
             if self.cursor.rowcount > 0:
                 self.conn.commit()
@@ -587,7 +592,7 @@ class FunctionToolManager(DatabaseConnection):
             
             debug(f"删除用户{user_id}函数工具执行记录")
             
-            self.cursor.execute("DELETE FROM function_tool_executions WHERE user_id = ?", (user_id,))
+            self.cursor.execute("DELETE FROM tool_executions WHERE user_id = ?", (user_id,))
             self.conn.commit()
             
             if self.cursor.rowcount > 0:
@@ -632,19 +637,19 @@ class FunctionToolManager(DatabaseConnection):
             
             # 总执行次数
             where_clause = " AND ".join(conditions)
-            total_query = f"SELECT COUNT(*) FROM function_tool_executions WHERE {where_clause}"
+            total_query = f"SELECT COUNT(*) FROM tool_executions WHERE {where_clause}"
             self.cursor.execute(total_query, params)
             total_executions = self.cursor.fetchone()[0]
             
             # 成功执行次数
             success_params = params.copy()
-            success_query = f"SELECT COUNT(*) FROM function_tool_executions WHERE {where_clause} AND execution_status = 'success'"
+            success_query = f"SELECT COUNT(*) FROM tool_executions WHERE {where_clause} AND execution_status = 'success'"
             self.cursor.execute(success_query, success_params)
             successful_executions = self.cursor.fetchone()[0]
             
             # 失败执行次数
             failed_params = params.copy()
-            failed_query = f"SELECT COUNT(*) FROM function_tool_executions WHERE {where_clause} AND execution_status != 'success'"
+            failed_query = f"SELECT COUNT(*) FROM tool_executions WHERE {where_clause} AND execution_status != 'success'"
             self.cursor.execute(failed_query, failed_params)
             failed_executions = self.cursor.fetchone()[0]
             

@@ -11,7 +11,7 @@ class Toolregister:
     def __init__(self):
         self.tools: Dict[str, Tool] = {}
         
-        # 注册内置工具
+        # 注册内置工具，但是此处添加的内部工具无法被添加到数据库，需要重新衡量
         # self._register_builtin_tools()
     
     # 默认的快速注册函数

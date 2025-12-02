@@ -1,6 +1,8 @@
 from flask import Blueprint, request, jsonify, session
 import json
 import time
+import requests
+import validators
 from database import db
 from log import debug, info, warning, error, exception, log_api_call
 from security_review import review_tool_code
@@ -74,13 +76,55 @@ def validate_python_tool(code: str, tool_name: str | None, parameters):
     return True, None
 
 
+def validate_api_tool(api_url: str, tool_name: str | None, parameters) -> tuple:
+    """
+    验证API工具的有效性并生成Python包装函数
+    
+    Args:
+        api_url: API的URL字符串
+        tool_name: 工具名称
+        parameters: 工具参数定义
+    
+    Returns:
+        tuple: (是否有效, 错误信息)
+    """
+    # 验证工具名称
+    if tool_name:
+        name_val = str(tool_name).strip()
+        if not name_val:
+            return False, '工具名称为必填项'
+        if name_val.startswith('_') or (not re.fullmatch(r'[A-Za-z_]+', name_val)) or (not re.search(r'[A-Za-z]', name_val)):
+            return False, '工具名称不符合规则：只能包含英文字符和下划线，不能以下划线开头，且至少包含一个英文字符'
+    
+    # 验证URL格式
+    if not validators.url(api_url):
+        return False, 'API URL格式无效，请确保是完整的URL（包含http://或https://）, 本地请使用127.0.0.1'
+    
+    # 检查URL长度
+    if len(api_url) > 1000:
+        return False, 'API URL长度不能超过1000个字符'
+    
+    # 测试API可用性（可选，如果API可能暂时不可用，可以跳过这步）
+    try:
+        # 发送HEAD请求测试连接性（不下载完整内容，更高效）
+        response = requests.head(api_url, timeout=5, allow_redirects=True)
+        # 只要返回状态码不是4xx或5xx，就认为API可达
+        if response.status_code >= 400:
+            warning(f"API返回错误状态码: {response.status_code}")
+            # 不阻止添加，只记录警告
+    except requests.exceptions.RequestException as e:
+        warning(f"API可用性测试失败: {str(e)}")
+        # 不阻止添加，只记录警告
+    return True, None
+
+
 tools_bp = Blueprint('tools', __name__)
 
 @tools_bp.route('/api/tools')
 def get_tools():
     if 'user_id' not in session:
         return jsonify({'error': '未登录'}), 401
-    tools = db.get_all_function_tools(session['user_id'])
+    tools = db.get_all_tools(session['user_id'])
     def _parse_params(val):
         try:
             if isinstance(val, str):
@@ -112,7 +156,7 @@ def add_tool():
         label = data.get('label')
         if not tool_name:
             return jsonify({'error': '工具名称为必填项'}), 400
-        existing_tool = db.get_function_tool_by_name(user_id, tool_name)
+        existing_tool = db.get_tool_by_name(user_id, tool_name)
         if existing_tool:
             log_api_call('/api/tools', 'POST', 400, user_id, (time.time() - start_time) * 1000)
             return jsonify({'error': '工具名称已存在'}), 400
@@ -145,9 +189,18 @@ def add_tool():
                 log_api_call('/api/tools', 'POST', 400, user_id, (time.time() - start_time) * 1000)
                 warning(f"工具安全审查未通过 - 用户ID: {user_id}, 工具名: {tool_name}, 问题: {review.get('issues')}")
                 return jsonify({'error': '安全审查未通过', 'issues': review.get('issues'), 'summary': review.get('summary')}), 400
-        success, result = db.add_function_tool(
+        # 新增：API接口合规校验（URL/请求方法/参数）
+        if tool_type == 'api' and isinstance(code_or_url, str) and code_or_url.strip():
+            ok, msg = validate_api_tool(code_or_url, tool_name, parameters)
+            if not ok:
+                log_api_call('/api/tools', 'POST', 400, user_id, (time.time() - start_time) * 1000)
+                warning(f"API接口合规校验失败 - 用户ID: {user_id}, 工具名: {tool_name}, 错误: {msg}")
+                return jsonify({'error': msg}), 400
+                
+        success, result = db.add_tool(
             user_id,
             tool_name,
+            tool_type,
             description,
             parameters_json,
             True,
@@ -176,7 +229,7 @@ def get_tool_by_id(tool_id):
     if 'user_id' not in session:
         return jsonify({'error': '未登录'}), 401
     try:
-        tool_info = db.get_function_tool_by_id(user_id, tool_id)
+        tool_info = db.get_tool_by_id(user_id, tool_id)
         if not tool_info:
             log_api_call(f'/api/tools/{tool_id}', 'GET', 404, user_id, (time.time() - start_time) * 1000)
             return jsonify({'error': '工具不存在'}), 404
@@ -240,7 +293,7 @@ def update_tool(tool_id):
                 log_api_call(f'/api/tools/{tool_id}', 'PUT', 400, user_id, (time.time() - start_time) * 1000)
                 warning(f"工具安全审查未通过 - 用户ID: {user_id}, 工具ID: {tool_id}, 问题: {review.get('issues')}")
                 return jsonify({'error': '安全审查未通过', 'issues': review.get('issues'), 'summary': review.get('summary')}), 400
-        success = db.update_function_tool(
+        success = db.update_tool(
             user_id,
             tool_id,
             tool_name=tool_name,
@@ -272,11 +325,11 @@ def delete_tool(tool_id):
     if 'user_id' not in session:
         return jsonify({'error': '未登录'}), 401
     try:
-        tool_info = db.get_function_tool_by_id(user_id, tool_id)
+        tool_info = db.get_tool_by_id(user_id, tool_id)
         if not tool_info:
             log_api_call(f'/api/tools/{tool_id}', 'DELETE', 404, user_id, (time.time() - start_time) * 1000)
             return jsonify({'error': '工具不存在或无权限删除'}), 404
-        success = db.delete_function_tool(user_id, tool_id)
+        success = db.delete_tool(user_id, tool_id)
         if success:
             # 失效用户工具缓存
             invalidate_user_tools(user_id)

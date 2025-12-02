@@ -34,6 +34,7 @@ LOG_FILE = os.path.join(LOG_DIR, f"{Config.LOG_FILE_PREFIX}{current_date}.log")
 # 创建logger实例（名称从配置读取）
 logger = logging.getLogger(Config.LOGGER_NAME)
 logger.setLevel(logging.DEBUG)  # 保留最低级别，便于捕获所有日志
+logger.propagate = False  # 防止日志传播到根记录器，避免重复输出
 
 # 创建日志格式化器（格式与时间格式从配置读取）
 formatter = logging.Formatter(

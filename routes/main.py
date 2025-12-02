@@ -13,7 +13,7 @@ def index():
     start_time = time.time()
     user_id = session.get('user_id')
     try:
-        tools = db.get_all_function_tools(user_id)
+        tools = db.get_all_tools(user_id)
         def _parse_params(val):
             try:
                 if isinstance(val, str):

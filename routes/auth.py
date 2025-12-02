@@ -99,3 +99,26 @@ def logout():
         if request.method == 'POST' or 'application/json' in (request.headers.get('Accept') or ''):
             return jsonify({'error': '登出失败'}), 500
         return redirect(url_for('main.index'))
+
+
+@auth_bp.route('/api/user_profile', methods=['GET'])
+def get_user_profile():
+    """获取用户个人资料"""
+    if 'user_id' not in session:
+        return jsonify({'error': '未登录'}), 401
+    try:
+        user_id = session['user_id']
+        # 使用数据库方法获取用户资料
+        user_info = db.get_user_info(user_id)
+        if not user_info:
+            return jsonify({'error': '用户资料不存在'}), 404
+        # 返回用户资料，注意不返回密码等敏感信息
+        return jsonify({
+            'user_id': user_info.get('user_id',user_id),
+            'username': user_info.get('username'),
+            'role': user_info.get('description'),
+            'registration_date': user_info.get('created_at')
+        })
+    except Exception as e:
+        logger.error(f"获取用户资料失败: {str(e)}")
+        return jsonify({'error': '获取用户资料失败'}), 500

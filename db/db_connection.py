@@ -119,10 +119,11 @@ class DatabaseConnection:
             
             # 创建函数工具表
             self.cursor.execute('''
-                CREATE TABLE IF NOT EXISTS function_tools (
+                CREATE TABLE IF NOT EXISTS tools (
                     user_id INTEGER NOT NULL,
                     tool_id INTEGER PRIMARY KEY AUTOINCREMENT,
                     tool_name TEXT UNIQUE NOT NULL,
+                    tool_type TEXT NOT NULL,
                     description TEXT,
                     parameters TEXT,
                     is_active INTEGER DEFAULT 1,
@@ -137,7 +138,7 @@ class DatabaseConnection:
             
             # 创建函数工具执行记录表
             self.cursor.execute('''
-                CREATE TABLE IF NOT EXISTS function_tool_executions (
+                CREATE TABLE IF NOT EXISTS tool_executions (
                     execution_id INTEGER PRIMARY KEY AUTOINCREMENT,
                     user_id INTEGER,
                     tool_id INTEGER,

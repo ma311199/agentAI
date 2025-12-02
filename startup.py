@@ -16,9 +16,10 @@ def initialize_add_tool_and_admin():
     try:
         for tool in in_tools:
             debug(f"添加内部工具信息: {tool['tool_name']}")
-            db.add_function_tool(
+            db.add_tool(
                 user_id=1,
                 tool_name=tool['tool_name'],
+                tool_type= "function",
                 description=tool['description'],
                 parameters=json.dumps(tool['parameters']),
                 tool_flag=0,

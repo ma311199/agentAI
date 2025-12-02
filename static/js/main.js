@@ -78,6 +78,18 @@ window.toggleModelActive = function(checkbox) {
     });
 }
 
+// 全局展开/收起功能函数
+window.toggleExpand = function(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        if (element.style.display === 'none') {
+            element.style.display = 'table-row';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+}
+
 // 显示加载状态
 showLoading = function(message = '正在处理您的请求...') {
     const loadingMessage = document.getElementById('loadingMessage');
@@ -187,10 +199,82 @@ document.addEventListener('DOMContentLoaded', function() {
                     hideLoading();
                     if (data.error) {
                         addBotMessage(`获取记忆失败: ${data.error}`);
+                    } else if (data.status === 'success') {
+                        // 美化显示对话历史
+                        let historyHtml = `<div class="execution-history" style="width: 100%; max-width: 100%; overflow-x: auto;">
+                            <h3>🧠对话历史记录 (共${data.total}条)</h3>
+                            <div class="execution-table">
+                                <table style="width: 100%; min-width: 800px; border-collapse: collapse; margin: 10px 0; background-color: white; border-radius: 8px; overflow: hidden;">
+                                    <thead>
+                                        <tr style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                                            <th style="padding: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; width: 40px;">序号</th>
+                                            <th style="padding: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; width: 80px;">模型</th>
+                                            <th style="padding: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; width: 120px;">日期</th>
+                                            <th style="padding: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; min-width: 180px;">用户问题</th>
+                                            <th style="padding: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; min-width: 250px;">AI回复</th>
+                                            <th style="padding: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; min-width: 300px;">执行计划</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>`;
+                        
+                        // 辅助函数：截断文本并添加点击展开功能
+                        function truncateAndAddExpand(text, maxLength = 30) {
+                            if (!text || text.length <= maxLength) {
+                                return text || '';
+                            }
+                            const truncated = text.substring(0, maxLength) + '...';
+                            return `<span class="expandable-text" data-full-text="${encodeURIComponent(text)}">${truncated} <span style="color: blue; cursor: pointer;">[展开]</span></span>`;
+                        }
+                        
+                        data.items.forEach(item => {
+                            historyHtml += `
+                                <tr style="border-bottom: 1px solid #f1f5f9; transition: background-color 0.2s ease;">
+                                    <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; width: 40px;">${item.id}</td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; width: 80px;">${item.model_name || '未知'}</td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; width: 120px;">${item.date}</td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; min-width: 180px; max-width: 300px; word-break: break-word;">
+                                        <div title="${item.user_message}">${truncateAndAddExpand(item.user_message)}</div>
+                                    </td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; min-width: 250px; max-width: 300px; word-break: break-word; overflow-wrap: break-word;">
+                                        <div title="${item.bot_response || '无回复'}">${truncateAndAddExpand(item.bot_response || '无回复')}</div>
+                                    </td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #f1f5f9; min-width: 300px; max-width: 450px; word-break: break-word; overflow-wrap: break-word;">
+                                        <div title="${item.plan || '无回复'}">${truncateAndAddExpand(item.plan || '无计划')}</div>
+                                    </td>
+                                </tr>`;
+                        });
+                        
+                        historyHtml += `</tbody></table></div></div>`;
+                        // 直接将HTML内容插入到聊天区域，而不是通过addBotMessage函数
+                        const chatContainer = document.getElementById('chatHistory');
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = 'message bot-message memory-message';
+                        messageDiv.innerHTML = historyHtml;
+                        chatContainer.appendChild(messageDiv);
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                        
+                        // 添加点击展开事件监听器
+                        setTimeout(() => {
+                            const expandableElements = messageDiv.querySelectorAll('.expandable-text');
+                            expandableElements.forEach(element => {
+                                element.addEventListener('click', function() {
+                                    const fullText = decodeURIComponent(this.getAttribute('data-full-text'));
+                                    this.innerHTML = fullText + ' <span style="color: blue; cursor: pointer;">[收起]</span>';
+                                    
+                                    // 添加收起事件监听器
+                                    this.querySelector('span').addEventListener('click', function(e) {
+                                        e.stopPropagation(); // 防止冒泡触发展开事件
+                                        const truncated = fullText.substring(0, 30) + '...';
+                                        const parent = this.parentNode;
+                                        parent.innerHTML = truncated + ' <span style="color: blue; cursor: pointer;">[展开]</span>';
+                                    });
+                                });
+                            });
+                        }, 100); // 添加小延迟确保DOM已经渲染完成
                     } else {
-                    addBotMessage(data.response, false, true);
-                }
-            })
+                        addBotMessage('获取记忆成功，但数据格式异常');
+                    }
+                })
             .catch(error => {
                 hideLoading();
                 addBotMessage(`获取记忆时出错: ${error.message}`);
@@ -297,8 +381,25 @@ document.addEventListener('DOMContentLoaded', function() {
             return '<div class="execution-history"><h3>工具执行历史</h3><p>暂无执行历史</p></div>';
         }
         
-        // 创建文本格式的历史记录
-        let textContent = '<div class="execution-history"><h3>工具执行历史</h3><pre class="execution-text">序号 | 问题 | 工具名称 | 工具参数 | 执行开始时间 | 执行结束时间 | 执行结果\n';
+        // 创建表格格式的历史记录
+        let tableContent = `
+        <div class="execution-history">
+            <h3>🛠️ 工具执行历史</h3>
+            <div class="table-container" style="max-height: 400px; overflow-y: auto; margin-top: 10px;">
+                <table class="execution-history-table" style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                    <thead>
+                        <tr style="background-color: #f8f9fa; position: sticky; top: 0;">
+                            <th style="border: 1px solid #ddd; padding: 8px; text-align: left; width: 5%;">序号</th>
+                            <th style="border: 1px solid #ddd; padding: 8px; text-align: left; width: 20%;">问题</th>
+                            <th style="border: 1px solid #ddd; padding: 8px; text-align: left; width: 10%;">工具名称</th>
+                            <th style="border: 1px solid #ddd; padding: 8px; text-align: left; width: 15%;">工具参数</th>
+                            <th style="border: 1px solid #ddd; padding: 8px; text-align: left; width: 12%;">开始时间</th>
+                            <th style="border: 1px solid #ddd; padding: 8px; text-align: left; width: 12%;">结束时间</th>
+                            <th style="border: 1px solid #ddd; padding: 8px; text-align: left; width: 26%;">执行结果</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
         
         // 处理不同类型的输入
         let records = [];
@@ -331,7 +432,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // console.log('处理后的记录列表:', records);
         
-        // 添加每条记录为一行文本
+        // 添加每条记录为表格行
         records.forEach((record, index) => {
             // console.log('处理单条记录:', record, typeof record);
             
@@ -385,9 +486,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 question = String(record);
             }
             
-            // 限制显示长度
-            const questionText = question.length > 30 ? question.substring(0, 30) + '...' : question;
-            const paramsText = params.length > 50 ? params.substring(0, 50) + '...' : params;
+            // 检查是否被截断并生成可展开的内容
+            const questionText = question.length > 40 ? question.substring(0, 40) + '...' : question;
+            const paramsText = params.length > 30 ? params.substring(0, 30) + '...' : params;
+            const resultText = result.length > 50 ? result.substring(0, 50) + '...' : result;
+            
+            const isQuestionTruncated = question.length > 40;
+            const isParamsTruncated = params.length > 30;
+            const isResultTruncated = result.length > 50;
             
             // 安全转义HTML
             const safeQuestionText = escapeHTML(questionText);
@@ -395,20 +501,81 @@ document.addEventListener('DOMContentLoaded', function() {
             const safeParamsText = escapeHTML(paramsText);
             const safeStartTime = escapeHTML(startTime);
             const safeEndTime = escapeHTML(endTime);
-            const safeResult = escapeHTML(result);
+            const safeResult = escapeHTML(resultText);
             
-            // 添加一条记录为一行文本，使用 " | " 分隔各元素
-            textContent += `${recordIndex} | ${safeQuestionText} | ${safeToolName} | ${safeParamsText} | ${safeStartTime} | ${safeEndTime} | ${safeResult}\n`;
+            // 生成唯一ID用于展开功能
+            const uniqueId = `record_${index}_${Date.now()}`;
+            
+            // 添加一条记录为表格行
+            tableContent += `
+                <tr style="background-color: ${index % 2 === 0 ? '#ffffff' : '#f8f9fa'};">
+                    <td style="border: 1px solid #ddd; padding: 8px; font-weight: bold;">${recordIndex}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px; position: relative;">
+                        ${safeQuestionText}
+                        ${isQuestionTruncated ? `<button class="expand-btn" onclick="toggleExpand('${uniqueId}_question')" style="margin-left: 5px; padding: 2px 6px; font-size: 10px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer;">展开</button>` : ''}
+                    </td>
+                    <td style="border: 1px solid #ddd; padding: 8px; font-weight: 600; color: #007bff;">${safeToolName}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px; position: relative;">
+                        <span style="font-family: monospace; background-color: #f8f9fa;">${safeParamsText}</span>
+                        ${isParamsTruncated ? `<button class="expand-btn" onclick="toggleExpand('${uniqueId}_params')" style="margin-left: 5px; padding: 2px 6px; font-size: 10px; background: #28a745; color: white; border: none; border-radius: 3px; cursor: pointer;">展开</button>` : ''}
+                    </td>
+                    <td style="border: 1px solid #ddd; padding: 8px; color: #666;">${safeStartTime}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px; color: #666;">${safeEndTime}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px; position: relative;">
+                        ${safeResult}
+                        ${isResultTruncated ? `<button class="expand-btn" onclick="toggleExpand('${uniqueId}_result')" style="margin-left: 5px; padding: 2px 6px; font-size: 10px; background: #dc3545; color: white; border: none; border-radius: 3px; cursor: pointer;">展开</button>` : ''}
+                    </td>
+                </tr>
+            `;
+            
+            // 如果内容被截断，添加隐藏的完整内容
+            if (isQuestionTruncated) {
+                tableContent += `
+                <tr id="${uniqueId}_question" style="display: none; background-color: #fff3cd;">
+                    <td colspan="7" style="border: 1px solid #ddd; padding: 8px; font-style: italic;">
+                        <strong>完整问题：</strong>${escapeHTML(question)}
+                        <button class="collapse-btn" onclick="toggleExpand('${uniqueId}_question')" style="float: right; margin-left: 10px; padding: 2px 6px; font-size: 10px; background: #6c757d; color: white; border: none; border-radius: 3px; cursor: pointer;">收起</button>
+                    </td>
+                </tr>
+                `;
+            }
+            
+            if (isParamsTruncated) {
+                tableContent += `
+                <tr id="${uniqueId}_params" style="display: none; background-color: #d4edda;">
+                    <td colspan="7" style="border: 1px solid #ddd; padding: 8px; font-family: monospace; font-style: italic;">
+                        <strong>完整参数：</strong>${escapeHTML(params)}
+                        <button class="collapse-btn" onclick="toggleExpand('${uniqueId}_params')" style="float: right; margin-left: 10px; padding: 2px 6px; font-size: 10px; background: #6c757d; color: white; border: none; border-radius: 3px; cursor: pointer;">收起</button>
+                    </td>
+                </tr>
+                `;
+            }
+            
+            if (isResultTruncated) {
+                tableContent += `
+                <tr id="${uniqueId}_result" style="display: none; background-color: #f8d7da;">
+                    <td colspan="7" style="border: 1px solid #ddd; padding: 8px; font-style: italic;">
+                        <strong>完整结果：</strong>${escapeHTML(result)}
+                        <button class="collapse-btn" onclick="toggleExpand('${uniqueId}_result')" style="float: right; margin-left: 10px; padding: 2px 6px; font-size: 10px; background: #6c757d; color: white; border: none; border-radius: 3px; cursor: pointer;">收起</button>
+                    </td>
+                </tr>
+                `;
+            }
         });
         
-        // 结束文本内容
-        textContent += '</pre></div>';
+        // 结束表格内容
+        tableContent += `
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        `;
         
-        console.log('生成的文本内容:', textContent);
-        return textContent;
+        console.log('生成的表格内容:', tableContent);
+        return tableContent;
     }
-
-    // 处理执行历史按钮点击
+ 
+     // 处理执行历史按钮点击
     historyBtn.addEventListener('click', function() {
         showLoading('获取执行历史...');
         fetch('/api/execution_history')

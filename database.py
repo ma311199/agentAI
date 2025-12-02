@@ -11,7 +11,7 @@ from log import logger, debug, info, warning, error, critical, exception
 from db.user_manager import UserManager
 from db.chat_manager import ChatManager
 from db.model_manager import ModelManager
-from db.function_tool_manager import FunctionToolManager
+from db.tool_manager import ToolManager
 from config import Config
 
 
@@ -58,13 +58,13 @@ class ChatDatabase(DatabaseConnection):
         manager = ModelManager(self.db_path)
         return manager.delete_model(user_id, model_id)
         
-    def get_all_function_tools(self, user_id):
-        manager = FunctionToolManager(self.db_path)
-        return manager.get_all_function_tools(user_id)
+    def get_all_tools(self, user_id):
+        manager = ToolManager(self.db_path)
+        return manager.get_all_tools(user_id)
         
-    def add_function_tool(self, user_id, tool_name, description, parameters, is_active=True, tool_flag=0, label='通用', code_content=None):
-        manager = FunctionToolManager(self.db_path)
-        return manager.add_function_tool(user_id=user_id, tool_name=tool_name, description=description, parameters=parameters, is_active=is_active, tool_flag=tool_flag, label=label, code_content=code_content)
+    def add_tool(self, user_id, tool_name, tool_type, description, parameters, is_active=True, tool_flag=0, label='通用', code_content=None):
+        manager = ToolManager(self.db_path)
+        return manager.add_tool(user_id=user_id, tool_name=tool_name, tool_type=tool_type,description=description, parameters=parameters, is_active=is_active, tool_flag=tool_flag, label=label, code_content=code_content)
         
     def get_user_info(self, user_id):
         manager = UserManager(self.db_path)
@@ -106,56 +106,56 @@ class ChatDatabase(DatabaseConnection):
         manager = ModelManager(self.db_path)
         return manager.update_model(user_id, model_id, model_name, model_url, api_key, temperature, max_tokens, is_active, desc, model_flag)
         
-    def get_function_tool_by_id(self, user_id, tool_id):
-        manager = FunctionToolManager(self.db_path)
-        return manager.get_function_tool_by_id(user_id, tool_id)
+    def get_tool_by_id(self, user_id, tool_id):
+        manager = ToolManager(self.db_path)
+        return manager.get_tool_by_id(user_id, tool_id)
         
-    def get_function_tool_by_name(self, user_id, tool_name):
-        manager = FunctionToolManager(self.db_path)
-        return manager.get_function_tool_by_name(user_id, tool_name)
+    def get_tool_by_name(self, user_id, tool_name):
+        manager = ToolManager(self.db_path)
+        return manager.get_tool_by_name(user_id, tool_name)
     
-    def get_function_tool_name(self, tool_name):
-        manager = FunctionToolManager(self.db_path)
-        return manager.get_function_tool_name(tool_name)
+    def get_tool_name(self, tool_name):
+        manager = ToolManager(self.db_path)
+        return manager.get_tool_name(tool_name)
         
-    def update_function_tool(self, user_id, tool_id, tool_name=None, description=None, parameters=None, is_active=None, tool_flag=None, label=None, code_content=None):
-        manager = FunctionToolManager(self.db_path)
-        return manager.update_function_tool(user_id, tool_id, tool_name, description, parameters, is_active, tool_flag, label, code_content)
+    def update_tool(self, user_id, tool_id, tool_name=None, description=None, parameters=None, is_active=None, tool_flag=None, label=None, code_content=None):
+        manager = ToolManager(self.db_path)
+        return manager.update_tool(user_id, tool_id, tool_name, description, parameters, is_active, tool_flag, label, code_content)
         
-    def delete_function_tool(self, user_id, tool_id):
-        manager = FunctionToolManager(self.db_path)
-        return manager.delete_function_tool(user_id, tool_id)
+    def delete_tool(self, user_id, tool_id):
+        manager = ToolManager(self.db_path)
+        return manager.delete_tool(user_id, tool_id)
         
     def add_tool_execution(self, user_id, tool_id, tool_name, question=None, execution_steps=None, execution_params=None, execution_result=None, execution_status="success", start_time=None, end_time=None):
-        manager = FunctionToolManager(self.db_path)
+        manager = ToolManager(self.db_path)
         return manager.add_tool_execution(user_id, tool_id, tool_name, question, execution_steps, execution_params, execution_result, execution_status, start_time, end_time)
         
     def update_tool_execution_result(self, execution_id, execution_result, execution_steps=None, execution_status='success'):
-        manager = FunctionToolManager(self.db_path)
+        manager = ToolManager(self.db_path)
         return manager.update_tool_execution_result(execution_id, execution_result, execution_steps, execution_status)
         
     def get_tool_execution_by_id(self, execution_id):
-        manager = FunctionToolManager(self.db_path)
+        manager = ToolManager(self.db_path)
         return manager.get_tool_execution_by_id(execution_id)
         
     def get_user_tool_executions(self, user_id, limit=50, offset=0):
-        manager = FunctionToolManager(self.db_path)
+        manager = ToolManager(self.db_path)
         return manager.get_user_tool_executions(user_id, limit, offset)
         
     def get_tool_execution_history(self, tool_id, limit=50, offset=0):
-        manager = FunctionToolManager(self.db_path)
+        manager = ToolManager(self.db_path)
         return manager.get_tool_execution_history(tool_id, limit, offset)
         
     def delete_tool_execution(self, execution_id):
-        manager = FunctionToolManager(self.db_path)
+        manager = ToolManager(self.db_path)
         return manager.delete_tool_execution(execution_id)
     
     def delete_all_tool_execution(self, user_id):
-        manager = FunctionToolManager(self.db_path)
+        manager = ToolManager(self.db_path)
         return manager.delete_all_tool_execution(user_id)
         
     def get_execution_statistics(self, user_id=None, tool_id=None, days=7):
-        manager = FunctionToolManager(self.db_path)
+        manager = ToolManager(self.db_path)
         return manager.get_execution_statistics(user_id, tool_id, days)
 
 

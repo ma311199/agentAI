@@ -1,6 +1,6 @@
 # React增强型智能Agent（Flask + 原生前端）
 
-一个可扩展的 Web 版 React Agent，支持“思考 → 规划 → 行动（工具） → 观察 → 响应”全流程，内置工具动态注册、模型管理、记忆与执行历史可视化、CSRF 保护与日志审计，适合学习、演示与二次开发。
+一个可扩展的 Web 版 React Agent，支持“思考 → 规划 → 行动 → 观察 → 重新评估 → 调整计划 → 下一步行动”全流程，内置工具动态注册、模型管理、记忆与执行历史可视化、CSRF 保护与日志审计，适合学习、演示与二次开发。
 
 ## 特性概览
 - React 推理模式：生成可视化的执行计划与最终回复。
@@ -20,12 +20,6 @@
 4) 启动：`python app.py`，访问 `http://127.0.0.1:5000/`
 5) 默认账户：`admin / 123456`（启动时自动注册，见 `startup.initialize_add_tool_and_admin`）。
 6) 默认内置工具：在internal_tools.py中添加，启动时自动注册，可根据自己添加、删除、编辑内置工具。
-
-### 使用界面：
-<img width="1883" height="862" alt="image" src="https://github.com/user-attachments/assets/625c0422-4947-47e5-8c1e-df83ab7830b6" />
-
-<img width="1912" height="836" alt="image" src="https://github.com/user-attachments/assets/78665325-2293-4730-b467-a1b336a78bf4" />
-
 
 ## 架构与数据流
 - 后端入口：`app.py`（创建 Flask 应用、注册蓝图、初始化内置工具与 CSRF）。
