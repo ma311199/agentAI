@@ -84,22 +84,29 @@
      - LLM 生成计划（JSON 数组或回退“直接回答”）。
      - 从响应中提取计划 `_extract_plan_from_response()`。
 
-5. 逐步执行计划：
+5. 执行计划评估生成：
+   - `ReactAgent._reevaluate_plan()`：
+     - 在执行过程中动态评估当前计划是否需要调整
+     - 接收用户输入、当前计划、已完成步骤索引和工具执行结果
+     - 分析已完成步骤和剩余步骤，生成调整后的执行计划
+     - 实现了Agent的自适应执行能力
+
+6. 逐步执行计划：
    - 遍历计划步骤，若需要调用工具：
      - 参数与工具校验 `_validate_parsed_result()`。
      - 执行 `Tool.execute(**kwargs)`。
      - 记录工具执行摘要到 DB（开始/结束时间、参数、结果截断）。
    - 若“直接回答”，走 `_generate_direct_answer()`。
 
-6. 整理结果与记忆：
+7. 整理结果与记忆：
    - 拼装“计划文本 + 最终回复”。
    - 写入 `chat_history`（模型名、计划、用户消息、最终回复、时间戳）。
 
-7. 返回响应：
+8. 返回响应：
    - 将“计划+最终回复”返回给前端并呈现。
    - 侧栏或弹窗可查询“工具执行历史”“对话记忆摘要”。
 
-8. 保护与审计：
+9. 保护与审计：
    - CSRF：`routes/common.py` 的 `init_csrf` 挂载 `before_request` 校验。
    - 日志：`log_api_call`/`log_db_operation`、文件轮转与保留清理（`log.py`）。
 ```
@@ -126,10 +133,16 @@
 
 ## 工具管理
 - 路由：`GET/POST /api/tools`、`GET/PUT/DELETE /api/tools/<id>`。
-- 提交字段：`tool_name`、`description`、`parameters`（JSON 数组）、`code_or_url`（函数型工具传代码字符串）、`tool_flag`（0共享/1私有）、`label`。
-- 合规校验：`validate_python_tool` 检查语法/函数同名/参数匹配/依赖模块；未通过直接拒绝。
+- 提交字段：
+  - 函数型工具：`tool_name`、`description`、`parameters`（JSON 数组）、`code_or_url`（函数代码字符串）、`tool_flag`（0共享/1私有）、`label`。
+  - API型工具：`tool_name`、`description`、`parameters`（JSON 对象，包含method字段和data数组）、`code_or_url`（API URL）、`tool_flag`（0共享/1私有）、`label`、`tool_type="api"`。
+- 合规校验：
+  - 函数型：`validate_python_tool` 检查语法/函数同名/参数匹配/依赖模块；未通过直接拒绝。
+  - API型：检查parameters格式（必须包含method和data字段）；method必须是get/post/put/delete/patch之一。
 - 安全审查：`security_review.review_tool_code`；不安全代码会返回 `issues` 与 `summary` 并拒绝入库。
-- 执行机制：DB 存储 → 运行时转换为函数对象 → 注册至内存字典 → `Tool.execute(**kwargs)` 执行。
+- 执行机制：
+  - 函数型：DB 存储 → 运行时转换为函数对象 → 注册至内存字典 → `Tool.execute(**kwargs)` 执行。
+  - API型：`tools_cache.py` 中动态生成Python函数，根据HTTP方法（get/post/put/delete/patch）构造请求，仅传递用户参数，支持错误处理和JSON响应解析。
 
 示例（字符串代码工具）：
 ```python
@@ -140,6 +153,26 @@ def circle_area(radius: float) -> float:
     return math.pi * radius * radius
 """
 # 前端或 API 提交：保证 tool_name 与函数名一致可优先匹配
+
+示例（API工具parameters格式）：
+```json
+{
+  "method": "get",
+  "data": [
+    {
+      "name": "city",
+      "description": "城市名称",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "date",
+      "description": "日期",
+      "type": "string",
+      "required": false
+    }
+  ]
+}
 ```
 
 ## 安全与配置（`config.py`）
