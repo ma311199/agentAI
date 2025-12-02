@@ -171,6 +171,12 @@ templates/      # Jinja2 模板（index/login/register）
 static/js|css   # 前端交互与样式
 ```
 
+## 浏览
+<img width="1915" height="922" alt="image" src="https://github.com/user-attachments/assets/f8dfcdd8-c459-4f0a-beb2-aa9ae0f4bce0" />
+
+<img width="1804" height="899" alt="image" src="https://github.com/user-attachments/assets/f7d2e396-cdd4-46af-bdf5-ff71600a7425" />
+
+
 ## 备注
 - 生产环境请修改 `config.py` 的 `SECRET_KEY` 与 Cookie 安全参数，并根据需求调整 CSRF、日志与缓存策略。
 - 若提交工具代码失败，请根据返回的合规/安全提示修正后重试。
